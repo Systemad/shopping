@@ -1,4 +1,5 @@
-﻿using backend.Features.Product.Models;
+﻿using backend.Features.Inventory;
+using backend.Features.Product.Models;
 using Orleans.Runtime;
 
 namespace backend.Features.Product;
@@ -6,30 +7,52 @@ namespace backend.Features.Product;
 public class ProductGrain : Grain, IProductGrain
 {
 
-    private IPersistentState<ProductDetail> _productDetail;
+    private IPersistentState<ProductDetail> _state;
 
-    public ProductGrain([PersistentState(stateName: "Product", storageName:"shopping-card")] IPersistentState<ProductDetail> productDetail)
+    public ProductGrain([PersistentState(stateName: "Product", storageName:"shopping-cart")] IPersistentState<ProductDetail> state)
     {
-        _productDetail = productDetail;
+        _state = state;
     }
 
-    public Task<(bool isAvailable, ProductDetail? productDetail)> TakeProduct(int quantity)
+    public async Task<(bool isAvailable, ProductDetail? productDetail)> TakeProduct(int quantity)
     {
-        throw new NotImplementedException();
+        if (_state.State.Quantity < quantity)
+            return (false, null);
+
+        var updateState = _state.State with
+        {
+             Quantity = _state.State.Quantity - quantity
+        };
+
+        await UpdateState(updateState);        
+        return (true, updateState);
     }
 
-    public Task<ProductDetail> GetProductDetails()
-    {
-        throw new NotImplementedException();
-    }
+    public Task<ProductDetail> GetProductDetails() => Task.FromResult(_state.State);
 
-    public Task CreateOrUpdateProduct(ProductDetail productDetail)
-    {
-        throw new NotImplementedException();
-    }
+    public Task CreateOrUpdateProduct(ProductDetail productDetail) => UpdateState(productDetail);
 
-    public Task<int> GetProductAvailability()
+    public Task<int> GetProductAvailability() => Task.FromResult(_state.State.Quantity);
+
+    public Task ReturnProduct(int quantity) =>
+        UpdateState(_state.State with
+        {
+            Quantity = _state.State.Quantity + quantity
+        });
+    
+    private async Task UpdateState(ProductDetail productDetail)
     {
-        throw new NotImplementedException();
+        var oldCategory = _state.State.Category;
+        _state.State = productDetail;
+        await _state.WriteStateAsync();
+        
+        var newInventory = GrainFactory.GetGrain<IInventoryGrain>(_state.State.Category.ToString());
+        await newInventory.AddOrUpdateProduct(productDetail);
+        
+        if (oldCategory != _state.State.Category)
+        {
+            var oldInventory = GrainFactory.GetGrain<IInventoryGrain>(oldCategory.ToString());
+            await oldInventory.RemoveProduct(productDetail.Id);
+        }
     }
 }
