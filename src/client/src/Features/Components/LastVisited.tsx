@@ -1,21 +1,16 @@
 import { Flex, Stack, Button, Text, Divider, Image } from "@mantine/core";
+import SectionWrapper from "./SectionWrapper";
 
 const LastVisited = () => {
   return (
-    <Stack
-      sx={(theme) => ({
-        backgroundColor:
-          theme.colorScheme === "dark"
-            ? theme.colors.dark[8]
-            : theme.colors.gray[0],
-        height: 180,
-      })}
-    >
-      <Text>Last visited</Text>
-      <LastVisitedItem />
-      <LastVisitedItem />
-      <LastVisitedItem />
-    </Stack>
+    <SectionWrapper>
+      <Stack h={180}>
+        <Text>Last visited</Text>
+        <LastVisitedItem />
+        <LastVisitedItem />
+        <LastVisitedItem />
+      </Stack>
+    </SectionWrapper>
   );
 };
 

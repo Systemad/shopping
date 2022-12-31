@@ -1,7 +1,10 @@
-import { Grid, Skeleton, Container } from "@mantine/core";
+import { Grid, Skeleton, Container, Button } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import LastVisited from "./Components/LastVisited";
-import OnSaleSection from "./Components/OnSale";
+import { OnSaleSection } from "./Components/OnSale";
+import { Categories } from "./Components/Categories";
+import { SwitchToggle } from "./Theme/SwitchToggle";
+import { Campaign } from "./Components/Campaign";
 
 const child = <Skeleton height={220} radius="md" animate={false} />;
 const Home = () => {
@@ -9,7 +12,6 @@ const Home = () => {
     <Container my="md">
       <Grid>
         <Grid.Col xs={12}>
-          {" "}
           <Carousel
             sx={{ width: "100%" }}
             mx="auto"
@@ -34,11 +36,16 @@ const Home = () => {
           <LastVisited />
         </Grid.Col>
 
-        <Grid.Col xs={6}>{child}</Grid.Col>
-        <Grid.Col xs={6}>{child}</Grid.Col>
+        <Grid.Col xs={6}>
+          <Campaign />
+        </Grid.Col>
+        <Grid.Col xs={6}>
+          <Campaign />
+        </Grid.Col>
 
-        <Grid.Col xs={12}>{child}</Grid.Col>
-        <Grid.Col xs={12}>{child}</Grid.Col>
+        <Grid.Col xs={12}>
+          <Categories />
+        </Grid.Col>
       </Grid>
     </Container>
   );

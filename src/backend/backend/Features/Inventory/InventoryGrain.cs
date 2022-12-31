@@ -9,6 +9,7 @@ namespace backend.Features.Inventory;
 public class InventoryGrain : Grain, IInventoryGrain
 {
     private readonly IPersistentState<HashSet<string>> _state;
+    private readonly IPersistentState<string> _categoryImg;
     private readonly Dictionary<string, ProductDetail> _cache = new();
 
     public InventoryGrain([PersistentState(stateName: "Inventory", "shopping-cart")] IPersistentState<HashSet<string>> state)

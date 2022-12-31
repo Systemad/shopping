@@ -17,6 +17,7 @@
     "@mantine/hooks": "^5.9.5",
     "@reduxjs/toolkit": "^1.9.1",
     "@rtk-query/codegen-openapi": "^1.0.0",
+    "@tabler/icons": "^1.119.0",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",
     "embla-carousel-react": "^7.0.5",

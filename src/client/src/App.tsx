@@ -1,7 +1,19 @@
-import { MantineProvider, Text, AppShell, Navbar, Header } from "@mantine/core";
+import {
+  MantineProvider,
+  AppShell,
+  Navbar,
+  Header,
+  Affix,
+  Button,
+  Text,
+  ColorSchemeProvider,
+  ColorScheme,
+  Transition,
+} from "@mantine/core";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./Features/Home";
 import MainHeader, { HeaderLink } from "./Features/Components/MainHeader";
+import Home from "./Features/Home";
+import { useState } from "react";
 
 const router = createBrowserRouter([
   {
@@ -20,27 +32,40 @@ const Links: HeaderLink[] = [
 ];
 
 function App() {
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
-      <AppShell
-        padding="md"
-        header={
-          <Header height={80} mb={120} p="md">
-            <MainHeader links={Links} />
-          </Header>
-        }
-        styles={(theme) => ({
-          main: {
-            backgroundColor:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
-          },
-        })}
+    <ColorSchemeProvider
+      colorScheme={colorScheme}
+      toggleColorScheme={toggleColorScheme}
+    >
+      <MantineProvider
+        theme={{ colorScheme }}
+        withGlobalStyles
+        withNormalizeCSS
       >
-        <RouterProvider router={router} />
-      </AppShell>
-    </MantineProvider>
+        <AppShell
+          padding="md"
+          header={
+            <Header height={80} mb={120} p="md">
+              <MainHeader links={Links} />
+            </Header>
+          }
+          styles={(theme) => ({
+            main: {
+              backgroundColor:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[8]
+                  : theme.colors.gray[0],
+            },
+          })}
+        >
+          <RouterProvider router={router} />
+        </AppShell>
+      </MantineProvider>
+    </ColorSchemeProvider>
   );
 }
 
