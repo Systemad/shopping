@@ -9,7 +9,7 @@ namespace backend.Features.Inventory;
 public class InventoryGrain : Grain, IInventoryGrain
 {
     private readonly IPersistentState<HashSet<string>> _state;
-    private readonly IPersistentState<string> _categoryImg;
+    //private readonly IPersistentState<string> _categoryImg;
     private readonly Dictionary<string, ProductDetail> _cache = new();
 
     public InventoryGrain([PersistentState(stateName: "Inventory", "shopping-cart")] IPersistentState<HashSet<string>> state)
@@ -17,9 +17,11 @@ public class InventoryGrain : Grain, IInventoryGrain
         _state = state;
     }
 
+    private string GrainKey => this.GetPrimaryKeyString(); 
     public override async Task OnActivateAsync(CancellationToken cancellationToken)
     {
         await SeedCache();
+        await base.OnActivateAsync(cancellationToken);
     }
 
     public async Task AddOrUpdateProduct(ProductDetail productDetail)
@@ -33,7 +35,6 @@ public class InventoryGrain : Grain, IInventoryGrain
     {
         _state.State.Remove(id);
         _cache.Remove(id);
-
         await _state.WriteStateAsync();
     }
 

@@ -11,8 +11,8 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
     if (builder.Environment.IsDevelopment())
     {
         siloBuilder.UseLocalhostClustering();
-        siloBuilder.AddMemoryGrainStorageAsDefault();
-        siloBuilder.AddMemoryGrainStorage("shopping-card");
+        //siloBuilder.AddMemoryGrainStorageAsDefault();
+        siloBuilder.AddMemoryGrainStorage("shopping-cart");
         siloBuilder.UseInMemoryReminderService();
     }
     else
@@ -28,7 +28,7 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
             options.Invariant = invariant;
             options.ConnectionString = connectionString;
         });
-        siloBuilder.AddAdoNetGrainStorage("urls", options =>
+        siloBuilder.AddAdoNetGrainStorage("shopping-cart", options =>
         {
             options.Invariant = invariant;
             options.ConnectionString = connectionString;
@@ -41,6 +41,33 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
             options.ServiceId = "shortingService";
         });
     }
+
+    siloBuilder.AddStartupTask<SeedData>();
+});
+
+builder.Services.AddControllers();
+builder.Services.AddSwaggerDocument(config =>
+{
+    config.PostProcess = document =>
+    {
+        document.Info.Version = "v1";
+        document.Info.Title = "Shopping APi";
+        document.Info.Description = "Web API for Shopping";
+        document.Info.TermsOfService = "None";
+        document.Info.Contact = new NSwag.OpenApiContact
+        {
+            Name = "systemad",
+            Email = string.Empty,
+            Url = "https://github.com/Systemad/"
+        };
+        /*
+        document.Info.License = new NSwag.OpenApiLicense
+        {
+            Name = "Use under LICX",
+            Url = "https://example.com/license"
+        };
+        */
+    };
 });
 
 var app = builder.Build();
@@ -52,9 +79,12 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseOpenApi();
+app.UseSwaggerUi3();
 app.UseHttpsRedirection();
 app.UseRouting();
 
 app.MapGet("/", () => "Hello World!");
+app.MapControllers();
 
 app.Run();

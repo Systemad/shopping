@@ -9,16 +9,16 @@ import { Campaign } from "./Components/Campaign";
 const child = <Skeleton height={220} radius="md" animate={false} />;
 const Home = () => {
   return (
-    <Container my="md">
+    <Container size="lg" my="xl">
       <Grid>
-        <Grid.Col xs={12}>
+        <Grid.Col xs={8}>
           <Carousel
             sx={{ width: "100%" }}
             mx="auto"
             slideSize="70%"
             height={225}
             align="start"
-            orientation="vertical"
+            orientation="horizontal"
             slideGap="md"
             controlSize={30}
             loop
@@ -28,16 +28,12 @@ const Home = () => {
             <Carousel.Slide>3</Carousel.Slide>
           </Carousel>
         </Grid.Col>
-
-        <Grid.Col xs={8}>
-          <OnSaleSection />
-        </Grid.Col>
         <Grid.Col xs={4}>
           <LastVisited />
         </Grid.Col>
 
         <Grid.Col xs={6}>
-          <Campaign />
+          <OnSaleSection />
         </Grid.Col>
         <Grid.Col xs={6}>
           <Campaign />
