@@ -51,7 +51,8 @@ public class ProductGrain : Grain, IProductGrain
         
         if (oldCategory != productDetail.Category)
         {
-            var oldInventory = GrainFactory.GetGrain<IInventoryGrain>(oldCategory.ToString());
+            // TODO: Dirty fix, all lower case requires
+            var oldInventory = GrainFactory.GetGrain<IInventoryGrain>(oldCategory.ToString().ToLower());
             await oldInventory.RemoveProduct(productDetail.Id);
         }
     }

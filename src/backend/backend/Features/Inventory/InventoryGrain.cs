@@ -23,7 +23,7 @@ public class InventoryGrain : Grain, IInventoryGrain
         await SeedCache();
         await base.OnActivateAsync(cancellationToken);
     }
-
+    
     public async Task AddOrUpdateProduct(ProductDetail productDetail)
     {
         _state.State.Add(productDetail.Id);
@@ -38,7 +38,11 @@ public class InventoryGrain : Grain, IInventoryGrain
         await _state.WriteStateAsync();
     }
 
-    public Task<HashSet<ProductDetail>> GetAllProducts() => Task.FromResult(_cache.Values.ToHashSet());
+    public Task<HashSet<ProductDetail>> GetAllProducts(int limit)
+    {
+        var products = _cache.Values.Take(limit).ToHashSet();
+        return Task.FromResult(products);
+    }
 
     private async Task SeedCache()
     {

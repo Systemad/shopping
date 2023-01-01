@@ -6,5 +6,5 @@ public interface IInventoryGrain : IGrainWithStringKey
 {
     Task AddOrUpdateProduct(ProductDetail productDetail);
     Task RemoveProduct(string id);
-    Task<HashSet<ProductDetail>> GetAllProducts();
+    Task<HashSet<ProductDetail>> GetAllProducts(int limit);
 }

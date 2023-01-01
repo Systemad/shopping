@@ -33,7 +33,6 @@ public class ShoppingCartGrain : Grain, IShoppingCartGrain
         _cart.State[claimed.Id] = item;
         await _cart.WriteStateAsync();
         return true;
-
     }
 
     public async Task RemoveItem(string productId, int quantity)

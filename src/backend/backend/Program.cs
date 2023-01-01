@@ -13,7 +13,8 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
         siloBuilder.UseLocalhostClustering();
         //siloBuilder.AddMemoryGrainStorageAsDefault();
         siloBuilder.AddMemoryGrainStorage("shopping-cart");
-        siloBuilder.UseInMemoryReminderService();
+        //siloBuilder.UseInMemoryReminderService();
+        siloBuilder.AddStartupTask<SeedData>();
     }
     else
     {
@@ -37,12 +38,10 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
 
         siloBuilder.Configure<ClusterOptions>(options =>
         {
-            options.ClusterId = "shortingCluster";
-            options.ServiceId = "shortingService";
+            options.ClusterId = "shoppingCluster";
+            options.ServiceId = "shoppingService";
         });
     }
-
-    siloBuilder.AddStartupTask<SeedData>();
 });
 
 builder.Services.AddControllers();

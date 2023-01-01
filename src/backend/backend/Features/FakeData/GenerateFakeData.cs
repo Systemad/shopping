@@ -17,8 +17,7 @@ public static class GenerateFakeData
             .RuleFor(p => p.ImageUrl, (f, p) => f.Image.PicsumUrl())
             .RuleFor(p => p.Category, (f, p) => ProductCategory.Music);
             //.RuleFor(p => p.Category, (f, p) => f.PickRandom<ProductCategory>());
-    
-        return faker;
+            return faker;
     } 
     
     public static bool MatchesFilter(this ProductDetail product, string? filter)
