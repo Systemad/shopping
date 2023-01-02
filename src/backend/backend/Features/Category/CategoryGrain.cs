@@ -1,4 +1,5 @@
-﻿using backend.Features.Product;
+﻿using backend.Features.Category;
+using backend.Features.Product;
 using backend.Features.Product.Models;
 using Orleans.Concurrency;
 using Orleans.Runtime;
@@ -6,13 +7,13 @@ using Orleans.Runtime;
 namespace backend.Features.Inventory;
 
 [Reentrant]
-public class InventoryGrain : Grain, IInventoryGrain
+public class CategoryGrain : Grain, ICategoryGrain
 {
     private readonly IPersistentState<HashSet<string>> _state;
     //private readonly IPersistentState<string> _categoryImg;
     private readonly Dictionary<string, ProductDetail> _cache = new();
 
-    public InventoryGrain([PersistentState(stateName: "Inventory", "shopping-cart")] IPersistentState<HashSet<string>> state)
+    public CategoryGrain([PersistentState(stateName: "Inventory", "shopping-cart")] IPersistentState<HashSet<string>> state)
     {
         _state = state;
     }

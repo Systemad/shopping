@@ -1,8 +1,8 @@
 ﻿using backend.Features.Product.Models;
 
-namespace backend.Features.Inventory;
+namespace backend.Features.Category;
 
-public interface IInventoryGrain : IGrainWithStringKey
+public interface ICategoryGrain : IGrainWithStringKey
 {
     Task AddOrUpdateProduct(ProductDetail productDetail);
     Task RemoveProduct(string id);

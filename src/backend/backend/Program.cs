@@ -59,6 +59,7 @@ builder.Services.AddSwaggerDocument(config =>
             Email = string.Empty,
             Url = "https://github.com/Systemad/"
         };
+        
         /*
         document.Info.License = new NSwag.OpenApiLicense
         {

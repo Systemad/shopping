@@ -17,12 +17,12 @@ public class ShoppingCartGrain : Grain, IShoppingCartGrain
         _cart = cart;
     }
 
-    public async Task<bool> AddOrUpdateItem(int quantity, ProductDetail productDetail)
+    public async Task<bool> AddOrUpdateItem(string productId, int quantity)
     {
-        var product = GrainFactory.GetGrain<IProductGrain>(productDetail.Id);
+        var product = GrainFactory.GetGrain<IProductGrain>(productId);
         int? adjustedQuantity = null!;
 
-        if (_cart.State.TryGetValue(productDetail.Id, out var existingItem))
+        if (_cart.State.TryGetValue(productId, out var existingItem))
         {
             adjustedQuantity = quantity - existingItem.Quantity;
         }

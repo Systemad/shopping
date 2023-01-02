@@ -1,14 +1,17 @@
 ﻿using backend.Features.Product.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Features.Inventory;
-
+namespace backend.Features.Category;
+// TODO: Add Pagination
+/// <summary>
+/// API Controller for Inventory grain. An Inventory represents a category, which consists of products
+/// </summary>
 [ApiController]
 [Route("inventory")]
 public class InventoryController : ControllerBase
 {
     private readonly IGrainFactory _grainFactory;
-    // GET
+
     public InventoryController(IGrainFactory grainFactory)
     {
         _grainFactory = grainFactory;
@@ -24,7 +27,7 @@ public class InventoryController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductDetail>))]
     public async Task<ActionResult> GetItemsForCategory(string category, [FromQuery] int limit = 10)
     {
-        var inventoryGrain = _grainFactory.GetGrain<IInventoryGrain>(category);
+        var inventoryGrain = _grainFactory.GetGrain<ICategoryGrain>(category);
         var products  = await inventoryGrain.GetAllProducts(limit);
         return Ok(products.ToList());
     }
@@ -41,7 +44,7 @@ public class InventoryController : ControllerBase
         Array values = Enum.GetValues<ProductCategory>();
         var random = new Random();
         var category = (ProductCategory)values.GetValue(random.Next(values.Length));
-        var inventoryGrain = _grainFactory.GetGrain<IInventoryGrain>(category.ToString());
+        var inventoryGrain = _grainFactory.GetGrain<ICategoryGrain>(category.ToString());
         var products = await inventoryGrain.GetAllProducts(limit);
         return Ok(products.ToList());
     }

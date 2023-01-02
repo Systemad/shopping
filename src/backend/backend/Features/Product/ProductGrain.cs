@@ -1,4 +1,5 @@
-﻿using backend.Features.Inventory;
+﻿using backend.Features.Category;
+using backend.Features.Inventory;
 using backend.Features.Product.Models;
 using Orleans.Runtime;
 
@@ -46,13 +47,13 @@ public class ProductGrain : Grain, IProductGrain
         _state.State = productDetail;
         await _state.WriteStateAsync();
         
-        var newInventory = GrainFactory.GetGrain<IInventoryGrain>(_state.State.Category.ToString());
+        var newInventory = GrainFactory.GetGrain<ICategoryGrain>(_state.State.Category.ToString());
         await newInventory.AddOrUpdateProduct(productDetail);
         
         if (oldCategory != productDetail.Category)
         {
             // TODO: Dirty fix, all lower case requires
-            var oldInventory = GrainFactory.GetGrain<IInventoryGrain>(oldCategory.ToString().ToLower());
+            var oldInventory = GrainFactory.GetGrain<ICategoryGrain>(oldCategory.ToString().ToLower());
             await oldInventory.RemoveProduct(productDetail.Id);
         }
     }
