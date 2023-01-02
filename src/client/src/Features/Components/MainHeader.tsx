@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { createStyles, Header, Container, Group, Burger } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { createStyles, Container, Group, Box } from "@mantine/core";
 import { SwitchToggle } from "../Theme/SwitchToggle";
-
+import { Link } from "react-router-dom";
 const useStyles = createStyles((theme) => ({
   header: {
     display: "flex",
@@ -66,24 +65,24 @@ interface MainHeaderProps {
 }
 
 const MainHeader = ({ links }: MainHeaderProps) => {
-  const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
 
   const items = links.map((link) => (
-    <a
+    <Box
       key={link.label}
-      href={link.link}
+      component={Link}
+      to={link.link}
       className={cx(classes.link, {
         [classes.linkActive]: active === link.link,
       })}
       onClick={(event) => {
-        event.preventDefault();
+        //event.preventDefault();
         setActive(link.link);
       }}
     >
       {link.label}
-    </a>
+    </Box>
   ));
 
   return (
@@ -91,13 +90,6 @@ const MainHeader = ({ links }: MainHeaderProps) => {
       <Group spacing={5} className={classes.links}>
         {items}
       </Group>
-
-      <Burger
-        opened={opened}
-        onClick={toggle}
-        className={classes.burger}
-        size="sm"
-      />
       <SwitchToggle />
     </Container>
   );
