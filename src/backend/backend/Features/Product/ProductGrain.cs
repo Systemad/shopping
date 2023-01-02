@@ -1,5 +1,4 @@
 ﻿using backend.Features.Category;
-using backend.Features.Inventory;
 using backend.Features.Product.Models;
 using Orleans.Runtime;
 

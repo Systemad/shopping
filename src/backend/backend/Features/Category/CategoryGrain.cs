@@ -1,19 +1,17 @@
-﻿using backend.Features.Category;
-using backend.Features.Product;
+﻿using backend.Features.Product;
 using backend.Features.Product.Models;
 using Orleans.Concurrency;
 using Orleans.Runtime;
 
-namespace backend.Features.Inventory;
+namespace backend.Features.Category;
 
 [Reentrant]
 public class CategoryGrain : Grain, ICategoryGrain
 {
-    private readonly IPersistentState<HashSet<string>> _state;
-    //private readonly IPersistentState<string> _categoryImg;
+    private readonly IPersistentState<CategoryState> _state;
     private readonly Dictionary<string, ProductDetail> _cache = new();
 
-    public CategoryGrain([PersistentState(stateName: "Inventory", "shopping-cart")] IPersistentState<HashSet<string>> state)
+    public CategoryGrain([PersistentState(stateName: "Inventory", "shopping-cart")] IPersistentState<CategoryState> state)
     {
         _state = state;
     }
@@ -27,15 +25,17 @@ public class CategoryGrain : Grain, ICategoryGrain
     
     public async Task AddOrUpdateProduct(ProductDetail productDetail)
     {
-        _state.State.Add(productDetail.Id);
+        _state.State.ProductIds.Add(productDetail.Id);
         _cache[productDetail.Id] = productDetail;
+        _state.State.ItemsAmount = _cache.Count;
         await _state.WriteStateAsync();
     }
 
     public async Task RemoveProduct(string id)
     {
-        _state.State.Remove(id);
+        _state.State.ProductIds.Remove(id);
         _cache.Remove(id);
+        _state.State.ItemsAmount = _cache.Count;
         await _state.WriteStateAsync();
     }
 
@@ -47,12 +47,12 @@ public class CategoryGrain : Grain, ICategoryGrain
 
     private async Task SeedCache()
     {
-        if (_state is not { State.Count: > 0  })
+        if (_state is not { State.ProductIds.Count: > 0  })
         {
             return;
         }
         
-        await Parallel.ForEachAsync(_state.State, async (id, _) =>
+        await Parallel.ForEachAsync(_state.State.ProductIds, async (id, _) =>
         {
             var productGrain = GrainFactory.GetGrain<IProductGrain>(id);
             _cache[id] = await productGrain.GetProductDetails();

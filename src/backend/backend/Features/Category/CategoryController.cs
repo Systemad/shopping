@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Features.Category;
-// TODO: Add Pagination
 /// <summary>
 /// API Controller for Inventory grain. An Inventory represents a category, which consists of products
 /// </summary>
