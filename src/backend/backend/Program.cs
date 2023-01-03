@@ -56,7 +56,7 @@ builder.Services.AddSwaggerDocument(config =>
         document.Info.Version = "v1";
         document.Info.Title = "Shopping APi";
         document.Info.Description = "Web API for Shopping";
-        document.Info.TermsOfService = "None";
+        //document.Info.TermsOfService = "None";
         document.Info.Contact = new NSwag.OpenApiContact
         {
             Name = "systemad",
