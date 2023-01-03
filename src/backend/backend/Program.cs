@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Orleans.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,7 +45,10 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
     }
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 builder.Services.AddSwaggerDocument(config =>
 {
     config.PostProcess = document =>

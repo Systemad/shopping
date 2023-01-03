@@ -4,7 +4,7 @@
 public class CategoryState
 {
     [Id(0)]
-    public HashSet<string> ProductIds { get; set; }
+    public HashSet<string> ProductIds { get; set; } = new();
     [Id(1)]
     public int ItemsAmount { get; set; }
     [Id(2)]

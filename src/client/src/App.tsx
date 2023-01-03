@@ -4,18 +4,17 @@ import {
   Header,
   ColorSchemeProvider,
   ColorScheme,
+  Text,
 } from "@mantine/core";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import MainHeader, { HeaderLink } from "./Features/Components/MainHeader";
 import Home from "./Features/Home";
 import { useState } from "react";
 import { CategoriesPage } from "./Features/Product/CategoriesPage";
+import { CategoryPage } from "./Features/Product/CategoryPage";
 
 // TODO:
 /*
-  - Add chilren / nested links
-  -- Categories, categories:specificCategory https://reactrouter.com/en/main/routers/create-browser-router
-  -- Product, products: specificproduct
 
   -- Fix categories page
   -- Add nice product overview of a product
@@ -33,8 +32,14 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/categories",
+        path: "categories",
         element: <CategoriesPage />,
+        children: [
+          {
+            path: ":categoryId",
+            element: <CategoryPage />,
+          },
+        ],
       },
     ],
   },
@@ -42,7 +47,7 @@ const router = createBrowserRouter([
 
 const Links: HeaderLink[] = [
   { link: "/", label: "Home" },
-  { link: "/categories", label: "Categories" },
+  { link: "categories", label: "Categories" },
 ];
 
 function App() {

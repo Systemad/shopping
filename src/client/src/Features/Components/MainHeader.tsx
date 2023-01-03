@@ -16,23 +16,17 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  burger: {
-    [theme.fn.largerThan("xs")]: {
-      display: "none",
-    },
-  },
-
   link: {
     display: "block",
     lineHeight: 1,
     padding: "8px 12px",
-    borderRadius: theme.radius.sm,
+    borderRadius: theme.radius.md,
     textDecoration: "none",
     color:
       theme.colorScheme === "dark"
         ? theme.colors.dark[0]
         : theme.colors.gray[7],
-    fontSize: theme.fontSizes.sm,
+    fontSize: theme.fontSizes.lg,
     fontWeight: 500,
 
     "&:hover": {

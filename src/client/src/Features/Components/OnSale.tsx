@@ -1,4 +1,13 @@
-import { Flex, Stack, Image, Text, Group, Paper, Divider } from "@mantine/core";
+import {
+  Flex,
+  Stack,
+  Image,
+  Text,
+  Group,
+  Paper,
+  Divider,
+  Box,
+} from "@mantine/core";
 import SectionWrapper from "./SectionWrapper";
 
 export function OnSaleSection() {
@@ -21,7 +30,7 @@ export function OnSaleSection() {
 function OnSaleItem() {
   return (
     <Flex>
-      <div style={{ width: 135 }}>
+      <Box style={{ width: 135 }}>
         <Text ta="center" fz="lg">
           Candy
         </Text>
@@ -36,7 +45,7 @@ function OnSaleItem() {
         <Text c="red" fz="lg" ta="center">
           $8.99
         </Text>
-      </div>
+      </Box>
     </Flex>
   );
 }

@@ -1,4 +1,4 @@
-import { Flex, Stack, Button, Text, Divider, Image } from "@mantine/core";
+import { Flex, Stack, Button, Text, Divider, Image, Box } from "@mantine/core";
 import SectionWrapper from "./SectionWrapper";
 
 const LastVisited = () => {
@@ -17,13 +17,13 @@ const LastVisited = () => {
 const LastVisitedItem = () => {
   return (
     <Flex justify="flex-start" align="flex-start" direction="row" gap="md">
-      <div style={{ width: 60 }}>
+      <Box style={{ width: 60 }}>
         <Image
           radius="md"
           src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
           alt="Random unsplash image"
         />
-      </div>
+      </Box>
       <Text>Candy - $8.99</Text>
     </Flex>
   );

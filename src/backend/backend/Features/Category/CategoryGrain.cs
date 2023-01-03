@@ -8,7 +8,7 @@ namespace backend.Features.Category;
 [Reentrant]
 public class CategoryGrain : Grain, ICategoryGrain
 {
-    private readonly IPersistentState<CategoryState> _state;
+    private IPersistentState<CategoryState> _state;
     private readonly Dictionary<string, ProductDetail> _cache = new();
 
     public CategoryGrain([PersistentState(stateName: "Inventory", "shopping-cart")] IPersistentState<CategoryState> state)
@@ -27,7 +27,7 @@ public class CategoryGrain : Grain, ICategoryGrain
     {
         _state.State.ProductIds.Add(productDetail.Id);
         _cache[productDetail.Id] = productDetail;
-        _state.State.ItemsAmount = _cache.Count;
+        //_state.State.ItemsAmount = _cache.Count;
         await _state.WriteStateAsync();
     }
 
@@ -35,7 +35,7 @@ public class CategoryGrain : Grain, ICategoryGrain
     {
         _state.State.ProductIds.Remove(id);
         _cache.Remove(id);
-        _state.State.ItemsAmount = _cache.Count;
+        //_state.State.ItemsAmount = _cache.Count;
         await _state.WriteStateAsync();
     }
 
