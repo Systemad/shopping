@@ -3,3 +3,8 @@
 - Add rate limiting https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-7.0
 
 Frontend:
+- Add fetchHooks in category page to fetch products
+- Add specific product page
+
+All: 
+- Add sub category

@@ -13,15 +13,10 @@ import Home from "./Features/Home";
 import { useState } from "react";
 import { CategoriesPage } from "./Features/Product/CategoriesPage";
 import { CategoryPage } from "./Features/Product/CategoryPage";
+import { ProductPage } from "./Features/Product/ProductPage";
 
 // TODO:
 /*
-
-  -- Fix categories page
-  -- Add nice product overview of a product
-
-  Add react query with openAPI (orval) https://orval.dev/guides/react-query
-  Use loafer in react browswe to fetch data??
 
   // add load https://github.com/fabien0102/openapi-codegen#generatereactqueryfunctions-frontend
   */
@@ -43,13 +38,21 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "product",
+        element: <ProductPage />,
+      },
     ],
   },
 ]);
 
 const Links: HeaderLink[] = [
   { link: "/", label: "Home" },
-  { link: "categories", label: "Categories" },
+  { link: "hardware", label: "Hardware" },
+  { link: "software", label: "Software" },
+  { link: "accessories", label: "Accessories" },
+  { link: "books", label: "Books" },
+  { link: "categories", label: "All Categories" },
 ];
 
 const queryClient = new QueryClient();

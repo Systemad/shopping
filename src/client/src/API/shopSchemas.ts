@@ -36,5 +36,4 @@ export type ProductCategory =
   | "Movies"
   | "Music"
   | "Games"
-  | "Clothes"
   | "Other";

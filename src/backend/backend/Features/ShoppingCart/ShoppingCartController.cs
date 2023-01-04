@@ -46,18 +46,20 @@ public class ShoppingCartController : ControllerBase
         var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
         var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(clientSession);
         await cartGrain.AddOrUpdateItem(id, quantity);
-        return Ok();
+        var cart = await cartGrain.GetAllItems();
+        return Ok(cart);
     }
     
     [AllowAnonymous]
     [HttpGet("remove/{id}/{quantity:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CartItem>))]
     public async Task<ActionResult> RemoveItemFromCart(string id, int quantity)
     {
         var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
         var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(clientSession);
         await cartGrain.RemoveItem(id, quantity);
-        return Ok();
+        var cart = await cartGrain.GetAllItems();
+        return Ok(cart);
     }
     
     [AllowAnonymous]

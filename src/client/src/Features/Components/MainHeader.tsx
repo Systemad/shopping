@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { createStyles, Container, Group, Box } from "@mantine/core";
+import {
+  createStyles,
+  Container,
+  Group,
+  Box,
+  Breadcrumbs,
+  Anchor,
+} from "@mantine/core";
 import { SwitchToggle } from "../Theme/SwitchToggle";
 import { Link } from "react-router-dom";
 const useStyles = createStyles((theme) => ({
@@ -79,9 +86,16 @@ const MainHeader = ({ links }: MainHeaderProps) => {
     </Box>
   ));
 
+  const breadcrum = links.map((item, index) => (
+    <Anchor href={item.link} key={index}>
+      {item.label}
+    </Anchor>
+    //<Breadcrumbs>{breadcrum}</Breadcrumbs>
+  ));
+
   return (
     <Container className={classes.header}>
-      <Group spacing={5} className={classes.links}>
+      <Group mr="lg" spacing={5} className={classes.links}>
         {items}
       </Group>
       <SwitchToggle />

@@ -64,6 +64,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSwaggerDocument(config =>
 {
+    // fix operationId, fix controller name to scamel and no underscore
+    // controller_GetId => controllerGetId;
     config.PostProcess = document =>
     {
         document.Info.Version = "v1";
