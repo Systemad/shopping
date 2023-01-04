@@ -1,5 +1,6 @@
 ﻿namespace backend.Features.Product.Models;
 
+// TODO: Add Subcategories
 public enum ProductCategory
 {
     Accessories,
@@ -11,4 +12,9 @@ public enum ProductCategory
     Clothes,
     Games,
     Other
+}
+
+public enum SubProductCategory
+{
+    
 }
