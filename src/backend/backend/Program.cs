@@ -49,6 +49,19 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        ops =>
+        {
+            ops
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 builder.Services.AddSwaggerDocument(config =>
 {
     config.PostProcess = document =>
@@ -83,6 +96,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseCors("CorsPolicy");
 app.UseOpenApi();
 app.UseSwaggerUi3();
 app.UseHttpsRedirection();

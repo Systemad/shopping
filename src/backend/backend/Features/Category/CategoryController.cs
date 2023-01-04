@@ -1,4 +1,5 @@
 ﻿using backend.Features.Product.Models;
+using backend.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Features.Category;
@@ -6,16 +7,29 @@ namespace backend.Features.Category;
 /// API Controller for Inventory grain. An Inventory represents a category, which consists of products
 /// </summary>
 [ApiController]
-[Route("inventory")]
-public class InventoryController : ControllerBase
+[Route("category")]
+public class CategoryController : ControllerBase
 {
     private readonly IGrainFactory _grainFactory;
 
-    public InventoryController(IGrainFactory grainFactory)
+    public CategoryController(IGrainFactory grainFactory)
     {
         _grainFactory = grainFactory;
     }
-
+    /// <summary>
+    /// Get all categories
+    /// </summary>
+    /// <returns>A list of ProductCategory</returns>
+    [HttpGet("all")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductCategory>))]
+    public ActionResult GetCategories()
+    {
+        var categories = EnumHelpers.GetEnumsAsList();
+        //var inventoryGrain = _grainFactory.GetGrain<ICategoryGrain>(category.ToString());
+        //var products  = await inventoryGrain.GetAllProducts(limit);
+        return Ok(categories);
+    }
+    
     /// <summary>
     /// Get items of a specific category, default is 10
     /// </summary>

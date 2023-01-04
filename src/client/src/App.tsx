@@ -7,6 +7,7 @@ import {
   Text,
 } from "@mantine/core";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MainHeader, { HeaderLink } from "./Features/Components/MainHeader";
 import Home from "./Features/Home";
 import { useState } from "react";
@@ -22,6 +23,7 @@ import { CategoryPage } from "./Features/Product/CategoryPage";
   Add react query with openAPI (orval) https://orval.dev/guides/react-query
   Use loafer in react browswe to fetch data??
 
+  // add load https://github.com/fabien0102/openapi-codegen#generatereactqueryfunctions-frontend
   */
 const router = createBrowserRouter([
   {
@@ -50,24 +52,28 @@ const Links: HeaderLink[] = [
   { link: "categories", label: "Categories" },
 ];
 
+const queryClient = new QueryClient();
+
 function App() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   return (
-    <ColorSchemeProvider
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
-    >
-      <MantineProvider
-        theme={{ colorScheme }}
-        withGlobalStyles
-        withNormalizeCSS
+    <QueryClientProvider client={queryClient}>
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
       >
-        <RouterProvider router={router} />
-      </MantineProvider>
-    </ColorSchemeProvider>
+        <MantineProvider
+          theme={{ colorScheme }}
+          withGlobalStyles
+          withNormalizeCSS
+        >
+          <RouterProvider router={router} />
+        </MantineProvider>
+      </ColorSchemeProvider>
+    </QueryClientProvider>
   );
 }
 

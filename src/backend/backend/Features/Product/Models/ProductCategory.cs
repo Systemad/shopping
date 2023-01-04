@@ -8,6 +8,7 @@ public enum ProductCategory
     Books,
     Movies,
     Music,
+    Clothes,
     Games,
     Other
 }

@@ -4,7 +4,6 @@
   "info": {
     "title": "Shopping APi",
     "description": "Web API for Shopping",
-    "termsOfService": "None",
     "contact": {
       "name": "systemad",
       "url": "https://github.com/Systemad/",
@@ -124,11 +123,30 @@
         }
       }
     },
-    "/inventory/{category}": {
+    "/category/all": {
       "get": {
-        "tags": ["Inventory"],
+        "tags": ["Category"],
+        "operationId": "Category_GetCategories",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductCategory"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category/{category}": {
+      "get": {
+        "tags": ["Category"],
         "summary": "Get items of a specific category, default is 10",
-        "operationId": "Inventory_GetItemsForCategory",
+        "operationId": "Category_GetItemsForCategory",
         "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
@@ -176,11 +194,11 @@
         }
       }
     },
-    "/inventory/random": {
+    "/category/random": {
       "get": {
-        "tags": ["Inventory"],
+        "tags": ["Category"],
         "summary": "Get total items of a random category, default is 10",
-        "operationId": "Inventory_GetItemsOfRandomCategory",
+        "operationId": "Category_GetItemsOfRandomCategory",
         "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
