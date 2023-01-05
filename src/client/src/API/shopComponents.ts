@@ -146,6 +146,8 @@ export type ShoppingCartRemoveItemFromCartPathParams = {
 export type ShoppingCartRemoveItemFromCartError =
   Fetcher.ErrorWrapper<undefined>;
 
+export type ShoppingCartRemoveItemFromCartResponse = Schemas.CartItem[];
+
 export type ShoppingCartRemoveItemFromCartVariables = {
   pathParams: ShoppingCartRemoveItemFromCartPathParams;
 } & ShopContext["fetcherOptions"];
@@ -155,7 +157,7 @@ export const fetchShoppingCartRemoveItemFromCart = (
   signal?: AbortSignal
 ) =>
   shopFetch<
-    undefined,
+    ShoppingCartRemoveItemFromCartResponse,
     ShoppingCartRemoveItemFromCartError,
     undefined,
     {},
@@ -168,11 +170,13 @@ export const fetchShoppingCartRemoveItemFromCart = (
     signal,
   });
 
-export const useShoppingCartRemoveItemFromCart = <TData = undefined>(
+export const useShoppingCartRemoveItemFromCart = <
+  TData = ShoppingCartRemoveItemFromCartResponse
+>(
   variables: ShoppingCartRemoveItemFromCartVariables,
   options?: Omit<
     reactQuery.UseQueryOptions<
-      undefined,
+      ShoppingCartRemoveItemFromCartResponse,
       ShoppingCartRemoveItemFromCartError,
       TData
     >,
@@ -181,7 +185,7 @@ export const useShoppingCartRemoveItemFromCart = <TData = undefined>(
 ) => {
   const { fetcherOptions, queryOptions, queryKeyFn } = useShopContext(options);
   return reactQuery.useQuery<
-    undefined,
+    ShoppingCartRemoveItemFromCartResponse,
     ShoppingCartRemoveItemFromCartError,
     TData
   >(
@@ -233,40 +237,6 @@ export const useShoppingCartEmptyCart = <TData = undefined>(
     }),
     ({ signal }) =>
       fetchShoppingCartEmptyCart({ ...fetcherOptions, ...variables }, signal),
-    {
-      ...options,
-      ...queryOptions,
-    }
-  );
-};
-
-export type ProductIndexError = Fetcher.ErrorWrapper<undefined>;
-
-export type ProductIndexVariables = ShopContext["fetcherOptions"];
-
-export const fetchProductIndex = (
-  variables: ProductIndexVariables,
-  signal?: AbortSignal
-) =>
-  shopFetch<Blob, ProductIndexError, undefined, {}, {}, {}>({
-    url: "/product",
-    method: "get",
-    ...variables,
-    signal,
-  });
-
-export const useProductIndex = <TData = Blob>(
-  variables: ProductIndexVariables,
-  options?: Omit<
-    reactQuery.UseQueryOptions<Blob, ProductIndexError, TData>,
-    "queryKey" | "queryFn"
-  >
-) => {
-  const { fetcherOptions, queryOptions, queryKeyFn } = useShopContext(options);
-  return reactQuery.useQuery<Blob, ProductIndexError, TData>(
-    queryKeyFn({ path: "/product", operationId: "productIndex", variables }),
-    ({ signal }) =>
-      fetchProductIndex({ ...fetcherOptions, ...variables }, signal),
     {
       ...options,
       ...queryOptions,
@@ -328,15 +298,7 @@ export type CategoryGetItemsForCategoryPathParams = {
   /**
    * Enter a category to fetch items of
    */
-  category:
-    | "Accessories"
-    | "Hardware"
-    | "Software"
-    | "Books"
-    | "Movies"
-    | "Music"
-    | "Games"
-    | "Other";
+  category: string;
 };
 
 export type CategoryGetItemsForCategoryQueryParams = {
@@ -495,11 +457,6 @@ export type QueryOperation =
       path: "/shopping-cart/empty";
       operationId: "shoppingCartEmptyCart";
       variables: ShoppingCartEmptyCartVariables;
-    }
-  | {
-      path: "/product";
-      operationId: "productIndex";
-      variables: ProductIndexVariables;
     }
   | {
       path: "/category/all";

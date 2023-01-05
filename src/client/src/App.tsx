@@ -4,7 +4,6 @@ import {
   Header,
   ColorSchemeProvider,
   ColorScheme,
-  Text,
 } from "@mantine/core";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -15,11 +14,8 @@ import { CategoriesPage } from "./Features/Product/CategoriesPage";
 import { CategoryPage } from "./Features/Product/CategoryPage";
 import { ProductPage } from "./Features/Product/ProductPage";
 
-// TODO:
-/*
+const queryClient = new QueryClient();
 
-  // add load https://github.com/fabien0102/openapi-codegen#generatereactqueryfunctions-frontend
-  */
 const router = createBrowserRouter([
   {
     element: <AppShellWrapper />,
@@ -31,12 +27,18 @@ const router = createBrowserRouter([
       {
         path: "categories",
         element: <CategoriesPage />,
+        /* // FIX NESTED
         children: [
           {
             path: ":categoryId",
             element: <CategoryPage />,
           },
         ],
+        */
+      },
+      {
+        path: "categories/:categoryId",
+        element: <CategoryPage />,
       },
       {
         path: "product",
@@ -46,16 +48,16 @@ const router = createBrowserRouter([
   },
 ]);
 
+const baseCategory = "categories";
+
 const Links: HeaderLink[] = [
   { link: "/", label: "Home" },
-  { link: "hardware", label: "Hardware" },
-  { link: "software", label: "Software" },
-  { link: "accessories", label: "Accessories" },
-  { link: "books", label: "Books" },
+  { link: `${baseCategory}/hardware`, label: "Hardware" },
+  { link: `${baseCategory}/software`, label: "Software" },
+  { link: `${baseCategory}/accessories`, label: "Accessories" },
+  { link: `${baseCategory}/books`, label: "Books" },
   { link: "categories", label: "All Categories" },
 ];
-
-const queryClient = new QueryClient();
 
 function App() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");

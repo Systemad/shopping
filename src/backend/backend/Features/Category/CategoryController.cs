@@ -38,9 +38,9 @@ public class CategoryController : ControllerBase
     /// <returns>List of products</returns>
     [HttpGet("{category}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductDetail>))]
-    public async Task<ActionResult> GetItemsForCategory(ProductCategory category, [FromQuery] int limit = 10)
+    public async Task<ActionResult> GetItemsForCategory(string category, [FromQuery] int limit = 10)
     {
-        var inventoryGrain = _grainFactory.GetGrain<ICategoryGrain>(category.ToString());
+        var inventoryGrain = _grainFactory.GetGrain<ICategoryGrain>(category);
         var products  = await inventoryGrain.GetAllProducts(limit);
         return Ok(products);
     }

@@ -73,6 +73,7 @@
       "get": {
         "tags": ["ShoppingCart"],
         "operationId": "ShoppingCart_RemoveItemFromCart",
+        "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
             "type": "string",
@@ -92,7 +93,14 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CartItem"
+              }
+            }
           }
         }
       }
@@ -108,30 +116,16 @@
         }
       }
     },
-    "/product": {
-      "get": {
-        "tags": ["Product"],
-        "operationId": "Product_Index",
-        "responses": {
-          "200": {
-            "x-nullable": true,
-            "description": "",
-            "schema": {
-              "type": "file"
-            }
-          }
-        }
-      }
-    },
     "/category/all": {
       "get": {
         "tags": ["Category"],
+        "summary": "Get all categories",
         "operationId": "Category_GetCategories",
         "produces": ["text/plain", "application/json", "text/json"],
         "responses": {
           "200": {
             "x-nullable": false,
-            "description": "",
+            "description": "A list of ProductCategory",
             "schema": {
               "type": "array",
               "items": {
@@ -155,20 +149,7 @@
             "in": "path",
             "required": true,
             "description": "Enter a category to fetch items of",
-            "x-schema": {
-              "$ref": "#/definitions/ProductCategory"
-            },
-            "x-nullable": false,
-            "enum": [
-              "Accessories",
-              "Hardware",
-              "Software",
-              "Books",
-              "Movies",
-              "Music",
-              "Games",
-              "Other"
-            ]
+            "x-nullable": true
           },
           {
             "type": "integer",

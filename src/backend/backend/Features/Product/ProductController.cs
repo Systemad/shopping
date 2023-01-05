@@ -12,10 +12,5 @@ public class ProductController : ControllerBase
     {
         _grainFactory = grainFactory;
     }
-
-    public IActionResult Index()
-    {
-        //return View();
-        return Ok();
-    }
+    
 }

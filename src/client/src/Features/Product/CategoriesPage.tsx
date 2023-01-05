@@ -1,17 +1,9 @@
 import { SimpleGrid } from "@mantine/core";
-import { QueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useCategoryGetCategories } from "../../API/shopComponents";
 import { PageContainer } from "../Components/PageContainer";
 import { CategoryCard } from "./Components/CategoryCard";
 
-/*
-export const loader = (queryClient: QueryClient) => async () => {
-  await queryClient.fetchQuery(
-    ...useCategoryGetCategories({ queryParams: {} }),
-    {}
-  );
-};
-*/
 export function CategoriesPage() {
   const { data, error, isLoading } = useCategoryGetCategories({
     queryParams: {},
