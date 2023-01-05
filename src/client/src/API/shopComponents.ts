@@ -244,6 +244,121 @@ export const useShoppingCartEmptyCart = <TData = undefined>(
   );
 };
 
+export type ProductGetProductQueryParams = {
+  /**
+   * The ID of the product
+   */
+  productId?: string;
+};
+
+export type ProductGetProductError = Fetcher.ErrorWrapper<undefined>;
+
+export type ProductGetProductVariables = {
+  queryParams?: ProductGetProductQueryParams;
+} & ShopContext["fetcherOptions"];
+
+export const fetchProductGetProduct = (
+  variables: ProductGetProductVariables,
+  signal?: AbortSignal
+) =>
+  shopFetch<
+    Schemas.ProductDetail,
+    ProductGetProductError,
+    undefined,
+    {},
+    ProductGetProductQueryParams,
+    {}
+  >({ url: "/product/productId", method: "get", ...variables, signal });
+
+export const useProductGetProduct = <TData = Schemas.ProductDetail>(
+  variables: ProductGetProductVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      Schemas.ProductDetail,
+      ProductGetProductError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >
+) => {
+  const { fetcherOptions, queryOptions, queryKeyFn } = useShopContext(options);
+  return reactQuery.useQuery<
+    Schemas.ProductDetail,
+    ProductGetProductError,
+    TData
+  >(
+    queryKeyFn({
+      path: "/product/productId",
+      operationId: "productGetProduct",
+      variables,
+    }),
+    ({ signal }) =>
+      fetchProductGetProduct({ ...fetcherOptions, ...variables }, signal),
+    {
+      ...options,
+      ...queryOptions,
+    }
+  );
+};
+
+export type ProductGetProductsByIdQueryParams = {
+  productIds?: string[];
+};
+
+export type ProductGetProductsByIdError = Fetcher.ErrorWrapper<undefined>;
+
+export type ProductGetProductsByIdResponse = Schemas.ProductDetail[];
+
+export type ProductGetProductsByIdVariables = {
+  queryParams?: ProductGetProductsByIdQueryParams;
+} & ShopContext["fetcherOptions"];
+
+export const fetchProductGetProductsById = (
+  variables: ProductGetProductsByIdVariables,
+  signal?: AbortSignal
+) =>
+  shopFetch<
+    ProductGetProductsByIdResponse,
+    ProductGetProductsByIdError,
+    undefined,
+    {},
+    ProductGetProductsByIdQueryParams,
+    {}
+  >({ url: "/product/productIds", method: "get", ...variables, signal });
+
+export const useProductGetProductsById = <
+  TData = ProductGetProductsByIdResponse
+>(
+  variables: ProductGetProductsByIdVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<
+      ProductGetProductsByIdResponse,
+      ProductGetProductsByIdError,
+      TData
+    >,
+    "queryKey" | "queryFn"
+  >
+) => {
+  const { fetcherOptions, queryOptions, queryKeyFn } = useShopContext(options);
+  return reactQuery.useQuery<
+    ProductGetProductsByIdResponse,
+    ProductGetProductsByIdError,
+    TData
+  >(
+    queryKeyFn({
+      path: "/product/productIds",
+      operationId: "productGetProductsById",
+      variables,
+    }),
+    ({ signal }) =>
+      fetchProductGetProductsById({ ...fetcherOptions, ...variables }, signal),
+    {
+      ...options,
+      ...queryOptions,
+    }
+  );
+};
+
 export type CategoryGetCategoriesError = Fetcher.ErrorWrapper<undefined>;
 
 export type CategoryGetCategoriesResponse = Schemas.ProductCategory[];
@@ -457,6 +572,16 @@ export type QueryOperation =
       path: "/shopping-cart/empty";
       operationId: "shoppingCartEmptyCart";
       variables: ShoppingCartEmptyCartVariables;
+    }
+  | {
+      path: "/product/productId";
+      operationId: "productGetProduct";
+      variables: ProductGetProductVariables;
+    }
+  | {
+      path: "/product/productIds";
+      operationId: "productGetProductsById";
+      variables: ProductGetProductsByIdVariables;
     }
   | {
       path: "/category/all";

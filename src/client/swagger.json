@@ -116,6 +116,63 @@
         }
       }
     },
+    "/product/productId": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Fetch a product by its ID",
+        "operationId": "Product_GetProduct",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "productId",
+            "in": "query",
+            "description": "The ID of the product",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "A ProductDetail object",
+            "schema": {
+              "$ref": "#/definitions/ProductDetail"
+            }
+          }
+        }
+      }
+    },
+    "/product/productIds": {
+      "get": {
+        "tags": ["Product"],
+        "operationId": "Product_GetProductsById",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "array",
+            "name": "productIds",
+            "in": "query",
+            "collectionFormat": "multi",
+            "x-nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductDetail"
+              }
+            }
+          }
+        }
+      }
+    },
     "/category/all": {
       "get": {
         "tags": ["Category"],

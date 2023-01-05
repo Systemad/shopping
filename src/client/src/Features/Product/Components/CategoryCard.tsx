@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import { IconArrowRight } from "@tabler/icons";
+import { useNavigate } from "react-router-dom";
 import { DynamicTablerIcons } from "../../Components/DynamicTablerIcons";
 
 interface CategoryCardProps {
@@ -36,6 +37,7 @@ const useStyles = createStyles((theme) => ({
 export function CategoryCard({ name }: CategoryCardProps) {
   const { classes, cx } = useStyles();
   const { hovered, ref } = useHover();
+  const navigate = useNavigate();
   return (
     <Paper ref={ref} className={cx(classes.card)}>
       <Center>
@@ -47,6 +49,7 @@ export function CategoryCard({ name }: CategoryCardProps) {
             <>
               Render sub category list
               <Button
+                onClick={() => navigate(name.toLowerCase())}
                 pos={"absolute"}
                 bottom="0.5rem"
                 right="0.5rem"

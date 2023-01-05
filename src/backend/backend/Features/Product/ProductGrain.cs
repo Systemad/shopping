@@ -46,7 +46,7 @@ public class ProductGrain : Grain, IProductGrain
         _state.State = productDetail;
         await _state.WriteStateAsync();
         
-        var newInventory = GrainFactory.GetGrain<ICategoryGrain>(_state.State.Category.ToString());
+        var newInventory = GrainFactory.GetGrain<ICategoryGrain>(_state.State.Category.ToString().ToLower());
         await newInventory.AddOrUpdateProduct(productDetail);
         
         if (oldCategory != productDetail.Category)

@@ -7,6 +7,7 @@ import {
 } from "@mantine/core";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import MainHeader, { HeaderLink } from "./Features/Components/MainHeader";
 import Home from "./Features/Home";
 import { useState } from "react";
@@ -81,6 +82,8 @@ function App() {
     </QueryClientProvider>
   );
 }
+
+//<ReactQueryDevtools initialIsOpen={true} />;
 
 function AppShellWrapper() {
   return (

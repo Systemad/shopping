@@ -15,8 +15,7 @@ public static class GenerateFakeData
             .RuleFor(p => p.Price, (f, p) => decimal.Parse(f.Commerce.Price(max: 170)))
             .RuleFor(p => p.Quantity, (f, p) => f.Random.Number(0, 1_200))
             .RuleFor(p => p.ImageUrl, (f, p) => f.Image.PicsumUrl())
-            .RuleFor(p => p.Category, (f, p) => ProductCategory.Music);
-            //.RuleFor(p => p.Category, (f, p) => f.PickRandom<ProductCategory>());
+            .RuleFor(p => p.Category, (f, p) => f.PickRandom<ProductCategory>());
             return faker;
     } 
     
