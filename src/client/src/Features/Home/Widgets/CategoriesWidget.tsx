@@ -1,9 +1,9 @@
 import { Text, Paper, Box, Group, ScrollArea } from "@mantine/core";
-import SectionWrapper from "./SectionWrapper";
+import { WidgetWrapper } from "./WidgetWrapper";
 
-export function Categories() {
+export function CategoriesWidget() {
   return (
-    <SectionWrapper>
+    <WidgetWrapper>
       <ScrollArea type="always">
         <Group p={2} position="center" noWrap>
           <CategoryItem />
@@ -15,7 +15,7 @@ export function Categories() {
           <CategoryItem />
         </Group>
       </ScrollArea>
-    </SectionWrapper>
+    </WidgetWrapper>
   );
 }
 

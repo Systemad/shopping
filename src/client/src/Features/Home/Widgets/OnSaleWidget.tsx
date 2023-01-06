@@ -8,12 +8,13 @@ import {
   Divider,
   Box,
 } from "@mantine/core";
-import SectionWrapper from "./SectionWrapper";
 
-export function OnSaleSection() {
+import { WidgetWrapper } from "./WidgetWrapper";
+
+export function OnSaleWidget() {
   return (
     <>
-      <SectionWrapper>
+      <WidgetWrapper>
         <Text fz="xl" ta="center">
           ON SALE!
         </Text>
@@ -22,7 +23,7 @@ export function OnSaleSection() {
           <OnSaleItem />
           <OnSaleItem />
         </Group>
-      </SectionWrapper>
+      </WidgetWrapper>
     </>
   );
 }

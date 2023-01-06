@@ -10,7 +10,10 @@ import {
   Paper,
   ActionIcon,
 } from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
 import { IconHeart } from "@tabler/icons";
+import { useNavigate } from "react-router-dom";
+import { ProductDetail } from "../../../API/shopSchemas";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -53,22 +56,35 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function ProductCard() {
+interface ProductCardProps {
+  product: ProductDetail;
+}
+
+export function ProductCard({ product }: ProductCardProps) {
   const { classes } = useStyles();
+
+  const navigate = useNavigate();
+
+  const [lastVisitedIds, setLastVisitedids] = useLocalStorage<string[]>({
+    key: "last-visisted",
+  });
+
+  const navigateTo = () => {
+    setLastVisitedids([...lastVisitedIds, product.id]);
+    navigate(product.id);
+  };
 
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section className={classes.imageSection}>
-        <Image src="https://i.imgur.com/ZL52Q2D.png" alt="Tesla Model S" />
+        <Image src={product.imageUrl} alt={product.name} />
       </Card.Section>
 
-      <Group position="apart" mt="md">
-        <div>
-          <Text weight={500}>Tesla Model S</Text>
-          <Text size="xl" weight={700} sx={{ lineHeight: 2 }}>
-            $168.00
-          </Text>
-        </div>
+      <Group position="apart" mt="xs">
+        <Text weight={500}>{product.name}</Text>
+        <Text size="xl" weight={700} sx={{ lineHeight: 2 }}>
+          ${product.price}
+        </Text>
         <Badge variant="outline">25% off</Badge>
       </Group>
 

@@ -1,13 +1,16 @@
-import { Grid, Skeleton, Container, Button } from "@mantine/core";
+import { Grid, Skeleton, Container } from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
 import { Carousel } from "@mantine/carousel";
-import LastVisited from "./Components/LastVisited";
-import { OnSaleSection } from "./Components/OnSale";
-import { Categories } from "./Components/Categories";
-import { SwitchToggle } from "./Theme/SwitchToggle";
-import { Campaign } from "./Components/Campaign";
+import { LastVisitedWidget } from "./Home/Widgets/LastVisitedWidget";
+import { OnSaleWidget } from "./Home/Widgets/OnSaleWidget";
+import { CategoriesWidget } from "./Home/Widgets/CategoriesWidget";
+import { CampaignWidget } from "./Home/Widgets/CampaignWidget";
 
-const child = <Skeleton height={220} radius="md" animate={false} />;
 const Home = () => {
+  // Extract to own hook?
+  const [lastVisitedIds, setLastVisitedids] = useLocalStorage<string[]>({
+    key: "last-visisted",
+  });
   return (
     <Container size="lg" my="xl">
       <Grid>
@@ -29,18 +32,18 @@ const Home = () => {
           </Carousel>
         </Grid.Col>
         <Grid.Col xs={4}>
-          <LastVisited />
+          <LastVisitedWidget productIds={lastVisitedIds} />
         </Grid.Col>
 
         <Grid.Col xs={6}>
-          <OnSaleSection />
+          <OnSaleWidget />
         </Grid.Col>
         <Grid.Col xs={6}>
-          <Campaign />
+          <CampaignWidget />
         </Grid.Col>
 
         <Grid.Col xs={12}>
-          <Categories />
+          <CategoriesWidget />
         </Grid.Col>
       </Grid>
     </Container>
