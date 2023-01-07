@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
-    "@mantine/carousel": "^5.9.5",
+    "@mantine/carousel": "^5.10.0",
     "@mantine/core": "^5.9.5",
     "@mantine/form": "^5.9.5",
     "@mantine/hooks": "^5.9.5",
@@ -22,6 +22,7 @@
     "@types/node": "^18.11.18",
     "ajv": "^8.12.0",
     "core-js": "^3.27.1",
+    "embla-carousel-autoplay": "^7.0.5",
     "embla-carousel-react": "^7.0.5",
     "framer-motion": "^6.5.1",
     "localforage": "^1.10.0",
