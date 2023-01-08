@@ -6,9 +6,13 @@ import {
   Box,
   Breadcrumbs,
   Anchor,
+  Button,
+  ActionIcon,
 } from "@mantine/core";
 import { SwitchToggle } from "../Theme/SwitchToggle";
 import { Link } from "react-router-dom";
+import { IconShoppingCart } from "@tabler/icons";
+import { ShoppingCartMenu } from "../ShoppingCart/Components/ShoppingCartMenu";
 const useStyles = createStyles((theme) => ({
   header: {
     display: "flex",
@@ -63,9 +67,10 @@ export interface HeaderLink {
 
 interface MainHeaderProps {
   links: HeaderLink[];
+  toggleShoppingCartDrawer: () => void;
 }
 
-const MainHeader = ({ links }: MainHeaderProps) => {
+const MainHeader = ({ links, toggleShoppingCartDrawer }: MainHeaderProps) => {
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
 
@@ -86,6 +91,17 @@ const MainHeader = ({ links }: MainHeaderProps) => {
     </Box>
   ));
 
+  const DrawerButton = (
+    <ActionIcon
+      size="xl"
+      radius={"md"}
+      variant="filled"
+      onClick={() => toggleShoppingCartDrawer()}
+    >
+      <IconShoppingCart />
+    </ActionIcon>
+  );
+
   const breadcrum = links.map((item, index) => (
     <Anchor href={item.link} key={index}>
       {item.label}
@@ -97,6 +113,7 @@ const MainHeader = ({ links }: MainHeaderProps) => {
     <Container className={classes.header}>
       <Group mr="lg" spacing={5} className={classes.links}>
         {items}
+        <ShoppingCartMenu />
       </Group>
       <SwitchToggle />
     </Container>

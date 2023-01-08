@@ -14,6 +14,7 @@ import { useState } from "react";
 import { CategoriesPage } from "./Features/Product/CategoriesPage";
 import { CategoryPage } from "./Features/Product/CategoryPage";
 import { ProductPage } from "./Features/Product/ProductPage";
+import { ShoppingCardOverlay } from "./Features/ShoppingCart/Components/ShoppingCartOverlay";
 
 const queryClient = new QueryClient();
 
@@ -86,12 +87,17 @@ function App() {
 //<ReactQueryDevtools initialIsOpen={true} />;
 
 function AppShellWrapper() {
+  const [opened, setOpened] = useState(false);
+
   return (
     <AppShell
       padding="md"
       header={
         <Header height={80} mb={120} p="md">
-          <MainHeader links={Links} />
+          <MainHeader
+            links={Links}
+            toggleShoppingCartDrawer={() => setOpened(!opened)}
+          />
         </Header>
       }
       styles={(theme) => ({
@@ -104,6 +110,10 @@ function AppShellWrapper() {
       })}
     >
       <Outlet />
+      <ShoppingCardOverlay
+        isOpen={opened}
+        toggleOpen={() => setOpened(!opened)}
+      />
     </AppShell>
   );
 }
