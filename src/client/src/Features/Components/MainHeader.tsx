@@ -12,7 +12,7 @@ import {
 import { SwitchToggle } from "../Theme/SwitchToggle";
 import { Link } from "react-router-dom";
 import { IconShoppingCart } from "@tabler/icons";
-import { ShoppingCartMenu } from "../ShoppingCart/Components/ShoppingCartMenu";
+
 const useStyles = createStyles((theme) => ({
   header: {
     display: "flex",
@@ -107,13 +107,13 @@ const MainHeader = ({ links, toggleShoppingCartDrawer }: MainHeaderProps) => {
       {item.label}
     </Anchor>
     //<Breadcrumbs>{breadcrum}</Breadcrumbs>
+    //  <ShoppingCartMenu />
   ));
 
   return (
     <Container className={classes.header}>
       <Group mr="lg" spacing={5} className={classes.links}>
         {items}
-        <ShoppingCartMenu />
       </Group>
       <SwitchToggle />
     </Container>

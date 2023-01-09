@@ -13,11 +13,14 @@ import {
   Avatar,
 } from "@mantine/core";
 import { IconExternalLink, IconShoppingCart } from "@tabler/icons";
-import { useShoppingCartGetShoppingCart } from "../../../API/shopComponents";
-import { CartItem } from "../../../API/shopSchemas";
 
 export function ShoppingCartMenu() {
-  const { data, error, isLoading } = useShoppingCartGetShoppingCart({});
+  const totalCost = data?.reduce((sum: number, product: CartItem) => {
+    sum += product.productDetail.price * product.quantity;
+    return sum;
+  }, 0);
+
+  const UpdateCart = async () => {};
 
   return (
     <Popover width={300} position="bottom" withArrow shadow="md" radius={"md"}>
@@ -37,8 +40,8 @@ export function ShoppingCartMenu() {
         ))}
 
         <Group p="xs" position="apart">
-          <Text>Total: </Text>
-          <Text>$999</Text>
+          <Text>Total</Text>
+          <Text>${totalCost}</Text>
         </Group>
         <Button fullWidth variant="filled">
           Checkout
