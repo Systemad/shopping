@@ -6,12 +6,19 @@ const config: ConfigFile = {
   apiImport: "emptySplitApi",
   outputFiles: {
     "./src/Features/ShoppingCart/API/shoppingCartAPI.ts": {
-      filterEndpoints: [/shopping-cart/i],
+      filterEndpoints: [/cart/i],
       exportName: "shoppingCartSplitApi",
+      tag: true,
     },
     "./src/Features/Product/API/productAPI.ts": {
-      filterEndpoints: [/product/i, /category/i],
+      filterEndpoints: [/product/i],
       exportName: "productSpliApi",
+      tag: true,
+    },
+    "./src/Features/Product/API/categoryAPI.ts": {
+      filterEndpoints: [/category/i],
+      exportName: "productSpliApi",
+      tag: true,
     },
   },
   hooks: true,

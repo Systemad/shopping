@@ -1,7 +1,10 @@
 import { Flex, Stack, Button, Text, Divider, Image, Box } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
-import { useProductGetProductsById } from "../../../API/shopComponents";
-import { ProductDetail } from "../../../API/shopSchemas";
+import {
+  ProductDetail,
+  useProductGetProductsByIdQuery,
+} from "../../Product/API/productAPI";
+
 import { WidgetWrapper } from "./WidgetWrapper";
 
 export function LastVisitedWidget() {
@@ -9,8 +12,8 @@ export function LastVisitedWidget() {
   const [lastVisitedIds, setLastVisitedids] = useLocalStorage<string[]>({
     key: "last-visisted",
   });
-  const { data, error, isLoading } = useProductGetProductsById({
-    queryParams: { productIds: lastVisitedIds },
+  const { data, error, isLoading } = useProductGetProductsByIdQuery({
+    productIds: lastVisitedIds,
   });
   return (
     <WidgetWrapper>

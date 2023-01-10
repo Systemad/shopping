@@ -10,10 +10,12 @@ import {
   Paper,
   ActionIcon,
 } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useLocalStorage } from "@mantine/hooks";
 import { IconHeart } from "@tabler/icons";
 import { useNavigate } from "react-router-dom";
-import { ProductDetail } from "../../../API/shopSchemas";
+import { ProductDetail } from "../API/productAPI";
+import { useShoppingCartAddItemToCartMutation } from "../../ShoppingCart/API/shoppingCartAPI";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -61,8 +63,18 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const { classes } = useStyles();
+  const [add] = useShoppingCartAddItemToCartMutation();
 
+  const addProductToCart = () => {
+    add({ id: product!.id, quantity: 1 });
+    showNotification({
+      title: "Cart updated!",
+      message: `${product?.name} has successfully been added to the cart`,
+      radius: "md",
+    });
+  };
+
+  const { classes } = useStyles();
   const navigate = useNavigate();
 
   const [lastVisitedIds, setLastVisitedids] = useLocalStorage<string[]>({
@@ -90,7 +102,11 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <Card.Section className={classes.section}>
         <Group spacing={30}>
-          <Button radius="xl" style={{ flex: 1 }}>
+          <Button
+            onClick={() => addProductToCart()}
+            radius="xl"
+            style={{ flex: 1 }}
+          >
             Add to cart
           </Button>
           <ActionIcon color="red" size="xl" radius="xl" variant="transparent">

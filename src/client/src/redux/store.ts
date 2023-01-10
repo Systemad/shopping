@@ -1,8 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { emptySplitApi } from "./emptySplitApi";
 // ...
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    [emptySplitApi.reducerPath]: emptySplitApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(emptySplitApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -1,17 +1,22 @@
 import { SimpleGrid, Title, Divider } from "@mantine/core";
 import { useParams } from "react-router-dom";
-import { useCategoryGetItemsForCategory } from "../../API/shopComponents";
+
 import { PageContainer } from "../Components/PageContainer";
+import { useCategoryGetItemsForCategoryQuery } from "./API/categoryAPI";
+
 import { ProductCard } from "./Components/ProductCard";
 import { CategoryParam } from "./params";
 
 export function CategoryPage() {
   const { categoryId } = useParams<keyof CategoryParam>() as CategoryParam;
 
-  const { data, error, isLoading } = useCategoryGetItemsForCategory(
-    { pathParams: { category: categoryId }, queryParams: {} },
-    {}
-  );
+  const {
+    data: products,
+    error,
+    isLoading,
+  } = useCategoryGetItemsForCategoryQuery({
+    category: categoryId,
+  });
 
   return (
     <PageContainer>
@@ -20,7 +25,7 @@ export function CategoryPage() {
       </Title>
       <Divider my="xs" />
       <SimpleGrid cols={4}>
-        {data?.map((product) => (
+        {products?.map((product) => (
           <ProductCard product={product} />
         ))}
       </SimpleGrid>

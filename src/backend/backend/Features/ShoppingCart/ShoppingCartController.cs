@@ -8,7 +8,7 @@ namespace backend.Features.ShoppingCart;
 /// API Controller for shopping cart
 /// </summary>
 [ApiController]
-[Route("shopping-cart")]
+[Route("cart")]
 public class ShoppingCartController : ControllerBase
 {
     /// <summary>
@@ -39,7 +39,7 @@ public class ShoppingCartController : ControllerBase
     }
     
     [AllowAnonymous]
-    [HttpGet("add/{id}/{quantity:int}")]
+    [HttpPost("add/{id}/{quantity:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CartItem>))]
     public async Task<ActionResult> AddItemToCart(string id, int quantity)
     {
@@ -51,7 +51,7 @@ public class ShoppingCartController : ControllerBase
     }
     
     [AllowAnonymous]
-    [HttpGet("remove/{id}/{quantity:int}")]
+    [HttpPost("remove/{id}/{quantity:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CartItem>))]
     public async Task<ActionResult> RemoveItemFromCart(string id, int quantity)
     {
@@ -63,7 +63,7 @@ public class ShoppingCartController : ControllerBase
     }
     
     [AllowAnonymous]
-    [HttpGet("empty")]
+    [HttpPost("empty")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> EmptyCart()
     {

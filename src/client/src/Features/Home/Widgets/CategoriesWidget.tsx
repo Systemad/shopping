@@ -1,11 +1,10 @@
 import { Text, Paper, Box, Group, ScrollArea } from "@mantine/core";
-import { useCategoryGetCategories } from "../../../API/shopComponents";
+import { useCategoryGetCategoriesQuery } from "../../Product/API/categoryAPI";
+
 import { WidgetWrapper } from "./WidgetWrapper";
 
 export function CategoriesWidget() {
-  const { data, error, isLoading } = useCategoryGetCategories({
-    queryParams: {},
-  });
+  const { data: categories } = useCategoryGetCategoriesQuery();
   return (
     <WidgetWrapper>
       <Text fz="xl" ta="center">
@@ -13,7 +12,7 @@ export function CategoriesWidget() {
       </Text>
       <ScrollArea type="always">
         <Group p={2} position="center" noWrap>
-          {data?.map((cat) => (
+          {categories?.map((cat) => (
             <CategoryItem key={`widget-category-${cat}`} />
           ))}
         </Group>

@@ -1,7 +1,6 @@
-﻿using Microsoft.Net.Http.Headers;
+﻿namespace backend.Features.ShoppingCart;
 
-namespace backend.Features.ShoppingCart;
-
+// TODO: FIX
 internal static class HttpContextExtensions
 {
     internal static string SetOrCreateCookieCartId(this IHttpContextAccessor httpContextAccessor)
