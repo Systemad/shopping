@@ -43,8 +43,23 @@ public class ShoppingCartController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CartItem>))]
     public async Task<ActionResult> AddItemToCart(string id, int quantity)
     {
-        var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
-        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(clientSession);
+        //var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
+        var cookie = HttpContext.Request.Cookies["temp_cartId"];
+        //string newGuid;
+    
+        if (cookie == null)
+        {
+            cookie = Guid.NewGuid().ToString();
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(2),
+                IsEssential = true
+            };
+            HttpContext?.Response.Cookies.Append("temp_cartId", cookie, cookieOptions);
+        }
+        
+        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(cookie);
         await cartGrain.AddOrUpdateItem(id, quantity);
         var cart = await cartGrain.GetAllItems();
         return Ok(cart);

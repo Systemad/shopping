@@ -5,19 +5,20 @@ internal static class HttpContextExtensions
 {
     internal static string SetOrCreateCookieCartId(this IHttpContextAccessor httpContextAccessor)
     {
-        var cartKey = "temp_cartId";
-        var contextRequest = httpContextAccessor?.HttpContext;
-        if (contextRequest.Request.Cookies[cartKey] != null)
-        {
-            return contextRequest.Request.Cookies[cartKey];
-
-        }
-        Guid cookieId = Guid.NewGuid();
+        const string cartKey = "temp_cartId";
+        var cookie = httpContextAccessor?.HttpContext?.Request.Cookies[cartKey];
+        if (cookie is not null)
+            return cookie;
+        
+        var cookieId = Guid.NewGuid();
+        // Add reminder in grain to remove cart
         var options = new CookieOptions
         {
-            Expires = DateTime.Now.AddDays(1)
+            Expires = DateTime.UtcNow.AddDays(2)
         };
-        contextRequest.Response.Cookies.Append(cartKey, cookieId.ToString());
+        // // Set expiration of this cookie to yesterday to remove it.
+        // Response.Cookies["SetAspNetIdentityCookiesExpiration"].Expires = DateTime.UtcNow.AddDays(-1);
+        httpContextAccessor?.HttpContext?.Response.Cookies.Append(cartKey, cookieId.ToString(), options);
         return cookieId.ToString();
     }
 }

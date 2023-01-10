@@ -26,7 +26,7 @@ export function CategoryPage() {
       <Divider my="xs" />
       <SimpleGrid cols={4}>
         {products?.map((product) => (
-          <ProductCard product={product} />
+          <ProductCard key={product.id} product={product} />
         ))}
       </SimpleGrid>
     </PageContainer>

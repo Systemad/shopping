@@ -1,10 +1,8 @@
 import {
   Group,
-  SimpleGrid,
   Stack,
   Paper,
   Image,
-  Box,
   Text,
   Title,
   Rating,
@@ -17,19 +15,17 @@ import {
 import { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { PageContainer } from "../Components/PageContainer";
-import { ProductParams } from "./params";
+import { useCart } from "../ShoppingCart/Hooks/useCart";
 
-interface ProductPageComponent {
-  product: string;
-}
+import { ProductDetail, useProductGetProductQuery } from "./API/productAPI";
+import { ProductParams } from "./params";
 
 export function ProductPage() {
   const { productId } = useParams<keyof ProductParams>() as ProductParams;
 
-  //const { data, error, isLoading } = useCategoryGetItemsForCategory(
-  //  { pathParams: { category: categoryId }, queryParams: {} },
-  //  {}
-  //);
+  const { data: product } = useProductGetProductQuery({
+    productId: productId,
+  });
 
   return (
     <PageContainer>
@@ -48,33 +44,38 @@ export function ProductPage() {
           <Image src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1936&q=80" />
         </Grid.Col>
         <Grid.Col span="auto">
-          <ProductInformation />
+          <ProductInformation product={product} />
         </Grid.Col>
       </Grid>
     </PageContainer>
   );
 }
 
-function ProductInformation() {
+interface ProductInformationProps {
+  product?: ProductDetail;
+}
+function ProductInformation({ product }: ProductInformationProps) {
   const [value, setValue] = useState(0);
   const handlers = useRef<NumberInputHandlers>();
+
+  const { addProductToCart } = useCart();
+
   return (
     <Paper w={400}>
       <Stack color="red" p="md">
         <Title order={1} ta="center">
-          {" "}
-          PRODUCT
+          {product?.name}
         </Title>
 
         <Group position="apart">
-          <Title order={4}>Price: 999</Title>
+          <Title order={4}>Price: ${product?.price}</Title>
           <Rating value={3.5} fractions={2} readOnly />
         </Group>
 
         <Title order={2} fz="xl">
           Description
         </Title>
-        <Text>Description text</Text>
+        <Text>{product?.description}</Text>
 
         <Group position="center" spacing={5}>
           <ActionIcon
@@ -103,7 +104,9 @@ function ProductInformation() {
           >
             +
           </ActionIcon>
-          <Button>Add to cart</Button>
+          <Button onClick={() => addProductToCart(product!, value)}>
+            Add to cart
+          </Button>
         </Group>
       </Stack>
     </Paper>

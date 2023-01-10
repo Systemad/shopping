@@ -6,8 +6,8 @@ import {
   ColorScheme,
 } from "@mantine/core";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Provider } from "react-redux";
+import { NotificationsProvider } from "@mantine/notifications";
 import MainHeader, { HeaderLink } from "./Features/Components/MainHeader";
 import Home from "./Features/Home";
 import { useState } from "react";
@@ -15,8 +15,8 @@ import { CategoriesPage } from "./Features/Product/CategoriesPage";
 import { CategoryPage } from "./Features/Product/CategoryPage";
 import { ProductPage } from "./Features/Product/ProductPage";
 import { ShoppingCardOverlay } from "./Features/ShoppingCart/Components/ShoppingCartOverlay";
-
-const queryClient = new QueryClient();
+import { store } from "./redux/store";
+import { CheckoutPage } from "./Features/Checkout/Components/CheckoutPage";
 
 const router = createBrowserRouter([
   {
@@ -46,20 +46,13 @@ const router = createBrowserRouter([
         path: "product",
         element: <ProductPage />,
       },
+      {
+        path: "checkout",
+        element: <CheckoutPage />,
+      },
     ],
   },
 ]);
-
-const baseCategory = "categories";
-
-const Links: HeaderLink[] = [
-  { link: "/", label: "Home" },
-  { link: `${baseCategory}/hardware`, label: "Hardware" },
-  { link: `${baseCategory}/software`, label: "Software" },
-  { link: `${baseCategory}/accessories`, label: "Accessories" },
-  { link: `${baseCategory}/books`, label: "Books" },
-  { link: "categories", label: "All Categories" },
-];
 
 function App() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
@@ -67,7 +60,7 @@ function App() {
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <ColorSchemeProvider
         colorScheme={colorScheme}
         toggleColorScheme={toggleColorScheme}
@@ -77,14 +70,14 @@ function App() {
           withGlobalStyles
           withNormalizeCSS
         >
-          <RouterProvider router={router} />
+          <NotificationsProvider limit={5} autoClose={5000}>
+            <RouterProvider router={router} />
+          </NotificationsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
-    </QueryClientProvider>
+    </Provider>
   );
 }
-
-//<ReactQueryDevtools initialIsOpen={true} />;
 
 function AppShellWrapper() {
   const [opened, setOpened] = useState(false);
@@ -93,12 +86,7 @@ function AppShellWrapper() {
     <AppShell
       padding="md"
       header={
-        <Header height={80} mb={120} p="md">
-          <MainHeader
-            links={Links}
-            toggleShoppingCartDrawer={() => setOpened(!opened)}
-          />
-        </Header>
+        <MainHeader toggleShoppingCartDrawer={() => setOpened(!opened)} />
       }
       styles={(theme) => ({
         main: {

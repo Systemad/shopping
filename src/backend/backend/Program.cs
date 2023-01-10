@@ -45,22 +45,23 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
     }
 });
 
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-});
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
         ops =>
         {
             ops
-                .AllowAnyOrigin()
+                .WithOrigins("http://localhost:5173")
+                .AllowCredentials()
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
+});
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
 builder.Services.AddSwaggerDocument(config =>
@@ -102,6 +103,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseCors("CorsPolicy");
+// app.UseCookiePolicy(); https://learn.microsoft.com/en-us/aspnet/core/security/gdpr?view=aspnetcore-6.0
 app.UseOpenApi();
 app.UseSwaggerUi3();
 app.UseHttpsRedirection();
