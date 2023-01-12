@@ -10,12 +10,11 @@ import {
   Paper,
   ActionIcon,
 } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useLocalStorage } from "@mantine/hooks";
 import { IconHeart } from "@tabler/icons";
 import { useNavigate } from "react-router-dom";
 import { ProductDetail } from "../API/productAPI";
-import { useShoppingCartAddItemToCartMutation } from "../../ShoppingCart/API/shoppingCartAPI";
+import { useCart } from "../../ShoppingCart/Hooks/useCart";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -63,16 +62,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const [add] = useShoppingCartAddItemToCartMutation();
-
-  const addProductToCart = () => {
-    add({ id: product!.id, quantity: 1 });
-    showNotification({
-      title: "Cart updated!",
-      message: `${product?.name} has successfully been added to the cart`,
-      radius: "md",
-    });
-  };
+  const { cart, addProductToCart } = useCart();
 
   const { classes } = useStyles();
   const navigate = useNavigate();
@@ -103,7 +93,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <Card.Section className={classes.section}>
         <Group spacing={30}>
           <Button
-            onClick={() => addProductToCart()}
+            onClick={() => addProductToCart(product, 1)}
             radius="xl"
             style={{ flex: 1 }}
           >

@@ -8,15 +8,17 @@ import {
   Anchor,
   Button,
   ActionIcon,
+  Header,
 } from "@mantine/core";
 import { SwitchToggle } from "../Theme/SwitchToggle";
 import { Link } from "react-router-dom";
 import { IconShoppingCart } from "@tabler/icons";
+import { ShoppingCartMenu } from "../ShoppingCart/Components/ShoppingCartMenu";
 
 const useStyles = createStyles((theme) => ({
   header: {
     display: "flex",
-    justifyContent: "center",
+    //justifyContent: "center",
     alignItems: "center",
     height: "100%",
   },
@@ -66,15 +68,24 @@ export interface HeaderLink {
 }
 
 interface MainHeaderProps {
-  links: HeaderLink[];
   toggleShoppingCartDrawer: () => void;
 }
 
-const MainHeader = ({ links, toggleShoppingCartDrawer }: MainHeaderProps) => {
-  const [active, setActive] = useState(links[0].link);
+const baseCategory = "categories";
+const Links: HeaderLink[] = [
+  { link: "/", label: "Home" },
+  { link: `${baseCategory}/hardware`, label: "Hardware" },
+  { link: `${baseCategory}/software`, label: "Software" },
+  { link: `${baseCategory}/accessories`, label: "Accessories" },
+  { link: `${baseCategory}/books`, label: "Books" },
+  { link: "categories", label: "All Categories" },
+];
+
+const MainHeader = ({ toggleShoppingCartDrawer }: MainHeaderProps) => {
+  const [active, setActive] = useState(Links[0].link);
   const { classes, cx } = useStyles();
 
-  const items = links.map((link) => (
+  const items = Links.map((link) => (
     <Box
       key={link.label}
       component={Link}
@@ -102,7 +113,7 @@ const MainHeader = ({ links, toggleShoppingCartDrawer }: MainHeaderProps) => {
     </ActionIcon>
   );
 
-  const breadcrum = links.map((item, index) => (
+  const breadcrum = Links.map((item, index) => (
     <Anchor href={item.link} key={index}>
       {item.label}
     </Anchor>
@@ -111,12 +122,16 @@ const MainHeader = ({ links, toggleShoppingCartDrawer }: MainHeaderProps) => {
   ));
 
   return (
-    <Container className={classes.header}>
-      <Group mr="lg" spacing={5} className={classes.links}>
-        {items}
+    <Header fixed={true} height={80} px="xl">
+      <Group position="apart">
+        <Group />
+        <Group spacing={5}>{items}</Group>
+        <Group>
+          <ShoppingCartMenu />
+          <SwitchToggle />
+        </Group>
       </Group>
-      <SwitchToggle />
-    </Container>
+    </Header>
   );
 };
 

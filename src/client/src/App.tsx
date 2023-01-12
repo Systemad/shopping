@@ -8,7 +8,7 @@ import {
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Provider } from "react-redux";
 import { NotificationsProvider } from "@mantine/notifications";
-import MainHeader, { HeaderLink } from "./Features/Components/MainHeader";
+import MainHeader from "./Features/Components/MainHeader";
 import Home from "./Features/Home";
 import { useState } from "react";
 import { CategoriesPage } from "./Features/Product/CategoriesPage";
@@ -16,7 +16,7 @@ import { CategoryPage } from "./Features/Product/CategoryPage";
 import { ProductPage } from "./Features/Product/ProductPage";
 import { ShoppingCardOverlay } from "./Features/ShoppingCart/Components/ShoppingCartOverlay";
 import { store } from "./redux/store";
-import { CheckoutPage } from "./Features/Checkout/Components/CheckoutPage";
+import { CheckoutPage } from "./Features/Checkout/CheckoutPage";
 
 const router = createBrowserRouter([
   {
