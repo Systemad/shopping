@@ -28,28 +28,11 @@ const useStyles = createStyles((theme) => {
         theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
       borderRadius: theme.radius.lg,
       padding: 16,
-      border: `1px solid ${
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[8]
-          : theme.colors.gray[2]
-      }`,
     },
     title: {
       marginBottom: theme.spacing.xs,
       //fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     },
-    bottomSection: {
-      position: "absolute",
-      width: "100%",
-      bottom: theme.spacing.md,
-    },
-    invalid: {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.fn.rgba(theme.colors.red[8], 0.15)
-          : theme.colors.red[0],
-    },
-
     icon: {
       color: theme.colors.red[theme.colorScheme === "dark" ? 7 : 6],
     },
@@ -99,7 +82,7 @@ function CheckoutStepper() {
       city: "",
       phone: "",
     },
-    // functions will be used to validate values at corresponding key
+
     validate: {
       name: (value) =>
         value.length < 2 ? "Name must have at least 2 letters" : null,
@@ -117,7 +100,7 @@ function CheckoutStepper() {
     },
   });
 
-  const canMoveFromCheckout = form.isValid() && active === 1;
+  const checkoutComplete = form.isValid() && active === 1;
   return (
     <>
       <Stepper active={active} onStepClick={setActive} breakpoint="sm">
@@ -167,7 +150,7 @@ function CheckoutStepper() {
         <Button variant="default" onClick={prevStep}>
           Back
         </Button>
-        <Button disabled={canMoveFromCheckout} onClick={nextStep}>
+        <Button disabled={checkoutComplete} onClick={nextStep}>
           Next step
         </Button>
       </Group>

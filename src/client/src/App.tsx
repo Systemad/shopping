@@ -4,11 +4,12 @@ import {
   Header,
   ColorSchemeProvider,
   ColorScheme,
+  Global,
 } from "@mantine/core";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Provider } from "react-redux";
 import { NotificationsProvider } from "@mantine/notifications";
-import MainHeader from "./Features/Components/MainHeader";
+import MainHeader, { HeaderLink } from "./Features/Components/MainHeader";
 import Home from "./Features/Home";
 import { useState } from "react";
 import { CategoriesPage } from "./Features/Product/CategoriesPage";
@@ -66,9 +67,9 @@ function App() {
         toggleColorScheme={toggleColorScheme}
       >
         <MantineProvider
-          theme={{ colorScheme }}
           withGlobalStyles
           withNormalizeCSS
+          theme={{ colorScheme }}
         >
           <NotificationsProvider limit={5} autoClose={5000}>
             <RouterProvider router={router} />

@@ -9,6 +9,7 @@ import {
   Button,
   ActionIcon,
   Header,
+  Space,
 } from "@mantine/core";
 import { SwitchToggle } from "../Theme/SwitchToggle";
 import { Link } from "react-router-dom";
@@ -17,10 +18,10 @@ import { ShoppingCartMenu } from "../ShoppingCart/Components/ShoppingCartMenu";
 
 const useStyles = createStyles((theme) => ({
   header: {
-    display: "flex",
-    //justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
+    backgroundColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[7]
+        : theme.colors.gray[0],
   },
 
   links: {
@@ -122,15 +123,22 @@ const MainHeader = ({ toggleShoppingCartDrawer }: MainHeaderProps) => {
   ));
 
   return (
-    <Header fixed={true} height={80} px="xl">
-      <Group position="apart">
-        <Group />
+    <Header className={classes.header} height={{ base: 50, md: 70 }} p="md">
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
         <Group spacing={5}>{items}</Group>
-        <Group>
-          <ShoppingCartMenu />
-          <SwitchToggle />
-        </Group>
-      </Group>
+
+        <Space />
+
+        <ShoppingCartMenu />
+        <SwitchToggle />
+      </div>
     </Header>
   );
 };
