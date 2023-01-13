@@ -1,11 +1,12 @@
-﻿using backend.Features.Product.Models;
+﻿using backend.Features.Campaign.Models;
+using backend.Features.Product.Models;
 using Bogus;
 
 namespace backend.Features.FakeData;
 
 public static class GenerateFakeData
 {
-    public static Faker<ProductDetail> SetupBogusData(this ProductDetail productDetail)
+    public static Faker<ProductDetail> SetupFakeProductData(this ProductDetail productDetail)
     {
         var faker = new Faker<ProductDetail>()
             .StrictMode(true)
@@ -17,7 +18,20 @@ public static class GenerateFakeData
             .RuleFor(p => p.ImageUrl, (f, p) => f.Image.PicsumUrl())
             .RuleFor(p => p.Category, (f, p) => f.PickRandom<ProductCategory>());
             return faker;
-    } 
+    }
+    
+    public static Faker<CampaignSate> SetupFakeCampaignData(this CampaignSate campaignSate)
+    {
+        var faker = new Faker<CampaignSate>()
+            .StrictMode(true)
+            .RuleFor(p => p.Id, (f, p) => f.Random.Number(1, 100_000).ToString())
+            .RuleFor(p => p.Name, (f, p) => f.Commerce.ProductName())
+            .RuleFor(p => p.Description, (f, p) => f.Lorem.Sentence())
+            .RuleFor(p => p.BannerImg, (f, p) => f.Image.PicsumUrl());
+      
+        return faker;
+    }
+    
     
     public static bool MatchesFilter(this ProductDetail product, string? filter)
     {
