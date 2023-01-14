@@ -13,7 +13,10 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
     {
         siloBuilder.UseLocalhostClustering();
         //siloBuilder.AddMemoryGrainStorageAsDefault();
-        siloBuilder.AddMemoryGrainStorage("shopping-cart");
+        siloBuilder.AddMemoryGrainStorage("cartStore");
+        siloBuilder.AddMemoryGrainStorage("productStore");
+        siloBuilder.AddMemoryGrainStorage("categoryStore");
+        siloBuilder.AddMemoryGrainStorage("promotionStore");
         //siloBuilder.UseInMemoryReminderService();
         siloBuilder.AddStartupTask<SeedData>();
     }

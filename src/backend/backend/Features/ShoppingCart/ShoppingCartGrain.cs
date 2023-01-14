@@ -11,7 +11,7 @@ public class ShoppingCartGrain : Grain, IShoppingCartGrain
 {
     private readonly IPersistentState<Dictionary<string, CartItem>> _cart;
 
-    public ShoppingCartGrain([PersistentState(stateName:"shoppingCart", storageName:"shopping-cart")]
+    public ShoppingCartGrain([PersistentState(stateName:"ShoppingCart", storageName:"cartStore")]
         IPersistentState<Dictionary<string, CartItem>> cart)
     {
         _cart = cart;

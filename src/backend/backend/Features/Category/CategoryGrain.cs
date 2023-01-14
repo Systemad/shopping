@@ -11,7 +11,7 @@ public class CategoryGrain : Grain, ICategoryGrain
     private IPersistentState<CategoryState> _state;
     private readonly Dictionary<string, ProductDetail> _cache = new();
 
-    public CategoryGrain([PersistentState(stateName: "Inventory", "shopping-cart")] IPersistentState<CategoryState> state)
+    public CategoryGrain([PersistentState(stateName: "Category", "categoryStore")] IPersistentState<CategoryState> state)
     {
         _state = state;
     }

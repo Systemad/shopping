@@ -1,5 +1,4 @@
-﻿using backend.Features.Campaign;
-using backend.Features.Campaign.Interfaces;
+﻿using backend.Features.Campaign.Interfaces;
 using backend.Features.Campaign.Models;
 using backend.Features.FakeData;
 using backend.Features.Product;
@@ -19,44 +18,33 @@ public class SeedData : IStartupTask
     public async Task Execute(CancellationToken cancellationToken)
     {
         var productFaker = new ProductDetail().SetupFakeProductData();
-        
         var productId = new List<string>();
-        var campaignId = new List<string>
-        {
-            Guid.NewGuid().ToString(),
-            Guid.NewGuid().ToString(),
-            Guid.NewGuid().ToString()
-        };
-        
         foreach (var product in productFaker.GenerateLazy(50))
         {
             productId.Add(product.Id);
             var productGrain = _grainFactory.GetGrain<IProductGrain>(product.Id);
             await productGrain.CreateOrUpdateProduct(product);
         }
-        var campaign1Grain = _grainFactory.GetGrain<ICampaignGrain>(campaignId[0]);
-        await campaign1Grain.CreateCampaign("Winter Campaign", "All new winter campaign");
-        var campaign1ProductIds = productId.GetRange(1, 10);
-        foreach (var pr in campaign1ProductIds)
+
+        var promotion1 = new PromotionCreationDto
         {
-            await campaign1Grain.AddProduct(pr);
-        }
+            Name = "Winter sale",
+            Description = "all new winter sale!",
+            BannerImg = string.Empty,
+            Active = true
+        };
+        await CreatePromotion(Guid.NewGuid().ToString(), promotion1, productId.GetRange(1, 10));
+
+    }
+    
+    private async Task CreatePromotion(string promotionId, PromotionCreationDto promotionCreationDto, List<string> productIds)
+    {
+        var campaignGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionId);
+        await campaignGrain.CreatePromotion(promotionCreationDto);
         
-        var campaign2Grain = _grainFactory.GetGrain<ICampaignGrain>(campaignId[1]);
-        await campaign2Grain.CreateCampaign("New year campaign", "All new year campaign");
-        var campaign2ProductIds = productId.GetRange(11, 17);
-        foreach (var pr in campaign2ProductIds)
+        foreach (var pr in productIds)
         {
-            await campaign2Grain.AddProduct(pr);
-        }
-        
-        var campaign3Grain = _grainFactory.GetGrain<ICampaignGrain>(campaignId[2]);
-        await campaign3Grain.CreateCampaign("Back to school Campaign", "All new back to school campaign");
-        
-        var campaign3ProductIds = productId.GetRange(20, 30);
-        foreach (var pr in campaign3ProductIds)
-        {
-            await campaign3Grain.AddProduct(pr);
+            await campaignGrain.AddProduct(pr);
         }
     }
 }

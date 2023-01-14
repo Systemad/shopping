@@ -10,7 +10,7 @@ public class PromotionGrain : Grain, IPromotionGrain
 {
     private readonly IPersistentState<PromotionState> _state;
 
-    public PromotionGrain([PersistentState(stateName: "Inventory", "campaign")]  IPersistentState<PromotionState> state)
+    public PromotionGrain([PersistentState(stateName: "Promotion", "promotionStore")]  IPersistentState<PromotionState> state)
     {
         _state = state;
     }

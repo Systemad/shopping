@@ -4,13 +4,12 @@ using Orleans.Runtime;
 
 namespace backend.Features.Product;
 
-// TODO: Add new storages, each for grain
 public class ProductGrain : Grain, IProductGrain
 {
 
     private IPersistentState<ProductDetail> _state;
 
-    public ProductGrain([PersistentState(stateName: "Product", storageName:"shopping-cart")] IPersistentState<ProductDetail> state)
+    public ProductGrain([PersistentState(stateName: "Product", storageName:"productStore")] IPersistentState<ProductDetail> state)
     {
         _state = state;
     }
