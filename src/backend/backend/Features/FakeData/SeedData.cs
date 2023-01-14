@@ -1,4 +1,5 @@
 ﻿using backend.Features.Campaign;
+using backend.Features.Campaign.Interfaces;
 using backend.Features.Campaign.Models;
 using backend.Features.FakeData;
 using backend.Features.Product;

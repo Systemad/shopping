@@ -4,6 +4,7 @@ using Orleans.Runtime;
 
 namespace backend.Features.Product;
 
+// TODO: Add new storages, each for grain
 public class ProductGrain : Grain, IProductGrain
 {
 

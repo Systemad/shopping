@@ -1,7 +1,7 @@
 ﻿namespace backend.Features.Campaign.Models;
 
 [GenerateSerializer]
-public class CampaignSate
+public class PromotionState
 {
     [Id(0)]
     public string Id { get; set; }
@@ -14,5 +14,6 @@ public class CampaignSate
     [Id(4)]
     public string BannerImg { get; set; }
 
-    public bool Active { get; set; } = true;
+    [Id(5)]
+    public bool Active { get; set; }
 }

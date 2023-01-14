@@ -20,9 +20,9 @@ public static class GenerateFakeData
             return faker;
     }
     
-    public static Faker<CampaignSate> SetupFakeCampaignData(this CampaignSate campaignSate)
+    public static Faker<PromotionState> SetupFakeCampaignData(this PromotionState promotionState)
     {
-        var faker = new Faker<CampaignSate>()
+        var faker = new Faker<PromotionState>()
             .StrictMode(true)
             .RuleFor(p => p.Id, (f, p) => f.Random.Number(1, 100_000).ToString())
             .RuleFor(p => p.Name, (f, p) => f.Commerce.ProductName())

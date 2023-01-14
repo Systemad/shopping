@@ -1,10 +1,12 @@
 ﻿Backend:
 - Add pagination
 - Add rate limiting https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-7.0
+- Add role based authentication??
+https://www.reddit.com/r/dotnet/comments/we9qx8/a_comprehensive_overview_of_authentication_in/
 
-Frontend:
-- Add fetchHooks in category page to fetch products
-- Add specific product page
+Campaign: 
+Add global campaign grain, similar to category, i.e copy paste
+
 
 All: 
 - Add sub category
