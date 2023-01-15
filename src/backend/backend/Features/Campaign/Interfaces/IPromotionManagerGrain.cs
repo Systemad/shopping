@@ -6,5 +6,7 @@ public interface IPromotionManagerGrain : IGrainWithStringKey
 {
     Task AddOrUpdatePromotion(PromotionState promotion);
     Task<PromotionState> GetPromotion(string id);
-    Task<List<PromotionState>> GetAllPromotions(string id);
+    Task<List<PromotionState>> GetAllPromotions();
+    Task<List<PromotionState>> GetActivePromotions();
+    Task<List<PromotionState>> GetNonActivePromotions();
 }

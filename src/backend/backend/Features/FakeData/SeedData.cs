@@ -1,9 +1,10 @@
 ﻿using backend.Features.Campaign.Interfaces;
 using backend.Features.Campaign.Models;
-using backend.Features.FakeData;
 using backend.Features.Product;
 using backend.Features.Product.Models;
 using Orleans.Runtime;
+
+namespace backend.Features.FakeData;
 
 public class SeedData : IStartupTask
 {
@@ -13,8 +14,7 @@ public class SeedData : IStartupTask
     {
         _grainFactory = grainFactory;
     }
-
-    // very sloppy
+    
     public async Task Execute(CancellationToken cancellationToken)
     {
         var productFaker = new ProductDetail().SetupFakeProductData();
@@ -26,15 +26,12 @@ public class SeedData : IStartupTask
             await productGrain.CreateOrUpdateProduct(product);
         }
 
-        var promotion1 = new PromotionCreationDto
-        {
-            Name = "Winter sale",
-            Description = "all new winter sale!",
-            BannerImg = string.Empty,
-            Active = true
-        };
+        var promotion1 = PromotionData.CreatePromotion("Winter sale", "all new winter sale!", string.Empty);
+        var promotion2 = PromotionData.CreatePromotion("Random sale", "all new random sale!", string.Empty);
+        var promotion3 = PromotionData.CreatePromotion("New year sale", "all new year sale!", string.Empty);
         await CreatePromotion(Guid.NewGuid().ToString(), promotion1, productId.GetRange(1, 10));
-
+        await CreatePromotion(Guid.NewGuid().ToString(), promotion2, productId.GetRange(11, 20));
+        await CreatePromotion(Guid.NewGuid().ToString(), promotion3, productId.GetRange(21, 31));
     }
     
     private async Task CreatePromotion(string promotionId, PromotionCreationDto promotionCreationDto, List<string> productIds)

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using backend.Features.FakeData;
 using Orleans.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);

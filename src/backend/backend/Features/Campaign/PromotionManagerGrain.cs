@@ -1,6 +1,5 @@
 ﻿using backend.Features.Campaign.Interfaces;
 using backend.Features.Campaign.Models;
-using Orleans.Concurrency;
 using Orleans.Runtime;
 
 namespace backend.Features.Campaign;
@@ -9,9 +8,8 @@ namespace backend.Features.Campaign;
 public class PromotionManagerGrain : Grain, IPromotionManagerGrain
 {
     private readonly IPersistentState<PromotionManagerState> _state;
-    private readonly Dictionary<string, PromotionState> _activeCache = new();
-    private readonly Dictionary<string, PromotionState> _nonActiveCache = new();
-
+    private readonly Dictionary<string, PromotionState> _cache = new();
+    
     public PromotionManagerGrain([PersistentState(stateName: "Inventory", "promotionManager")]  IPersistentState<PromotionManagerState> state)
     {
         _state = state;
@@ -24,46 +22,30 @@ public class PromotionManagerGrain : Grain, IPromotionManagerGrain
 
     public async Task AddOrUpdatePromotion(PromotionState promotion)
     {
-        _state.State.ActivePromotions.Add(promotion.Id);
-        if(promotion.Active)
-            _activeCache[promotion.Id] = promotion;
-        else
-            _nonActiveCache[promotion.Id] = promotion;
+        _state.State.Promotions.Add(promotion.Id);
+        _cache[promotion.Id] = promotion;
+
             
         await _state.WriteStateAsync();
     }
-    
-    public async Task<PromotionState> GetPromotion(string id)
-    {
 
-        var promotionGrain = GrainFactory.GetGrain<IPromotionGrain>(id);
-        var state = await promotionGrain.GetPromotion();
-        return state;
-    }
+    public Task<PromotionState> GetPromotion(string id) => Task.FromResult(_cache[id]);
 
-    public Task<List<PromotionState>> GetAllPromotions(string id)
-    {
-        // TODO: for each loop, and get ICampaignGrain, get info, set in list and return
-        throw new NotImplementedException();
-    }
+    public Task<List<PromotionState>> GetAllPromotions() => Task.FromResult(_cache.Values.ToList());
     
+
+    public Task<List<PromotionState>> GetActivePromotions() => Task.FromResult(_cache.Values.Where(p => p.Active).ToList());
+    
+    public Task<List<PromotionState>> GetNonActivePromotions() => Task.FromResult(_cache.Values.Where(p => !p.Active).ToList());
+
     private async Task SeedCache()
     {
-        if (_state is { State.ActivePromotions.Count: > 0  })
+        if (_state is { State.Promotions.Count: > 0  })
         {
-            await Parallel.ForEachAsync(_state.State.ActivePromotions, async (id, _) =>
+            await Parallel.ForEachAsync(_state.State.Promotions, async (id, _) =>
             {
                 var productGrain = GrainFactory.GetGrain<IPromotionGrain>(id);
-                _activeCache[id] = await productGrain.GetPromotion();
-            });
-        }
-
-        if (_state is { State.ActivePromotions.Count: > 0 })
-        {
-            await Parallel.ForEachAsync(_state.State.NonActivePromotions, async (id, _) =>
-            {
-                var productGrain = GrainFactory.GetGrain<IPromotionGrain>(id);
-                _activeCache[id] = await productGrain.GetPromotion();
+                _cache[id] = await productGrain.GetPromotion();
             });
         }
     }

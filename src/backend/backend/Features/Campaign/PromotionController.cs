@@ -27,20 +27,41 @@ public class PromotionController : ControllerBase
     [AllowAnonymous]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PromotionState>))]
+    public async Task<ActionResult> GetAllPromotions()
+    {
+        var promotionManager = _grainFactory.GetGrain<IPromotionManagerGrain>(string.Empty);
+        var promotions = await promotionManager.GetAllPromotions();
+        return Ok(promotions);
+    }
+    
+    [AllowAnonymous]
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PromotionState>))]
     public async Task<ActionResult> GetActivePromotions()
     {
-  
-        return Ok();
+        var promotionManager = _grainFactory.GetGrain<IPromotionManagerGrain>(string.Empty);
+        var promotions = await promotionManager.GetActivePromotions();
+        return Ok(promotions);
+    }
+    
+    [AllowAnonymous]
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PromotionState>))]
+    public async Task<ActionResult> GetNonActivePromotions()
+    {
+        var promotionManager = _grainFactory.GetGrain<IPromotionManagerGrain>(string.Empty);
+        var promotions = await promotionManager.GetNonActivePromotions();
+        return Ok(promotions);
     }
     
     [HttpPost("add")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PromotionState>))]
     public async Task<ActionResult> CreatePromotion([FromBody] PromotionCreationDto promotionCreationDto)
     {
-        var newCampaignId = Guid.NewGuid();
-        var campaignGrain = _grainFactory.GetGrain<IPromotionGrain>(newCampaignId.ToString());
-        await campaignGrain.CreatePromotion(promotionCreationDto);
-        var campaign = await campaignGrain.GetPromotion();
+        var id = Guid.NewGuid();
+        var promotionGrain = _grainFactory.GetGrain<IPromotionGrain>(id.ToString());
+        await promotionGrain.CreatePromotion(promotionCreationDto);
+        var campaign = await promotionGrain.GetPromotion();
         return Ok(campaign);
     }
 
@@ -48,8 +69,8 @@ public class PromotionController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> AddProductToPromotion(string promotionId, string productId)
     {
-        var campaignGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionId);
-        await campaignGrain.AddProduct(productId);
+        var promotionGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionId);
+        await promotionGrain.AddProduct(productId);
         return Ok();
     }
     
@@ -57,8 +78,8 @@ public class PromotionController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> RemoveProductFromPromotion(string promotionId, string productId)
     {
-        var campaignGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionId);
-        await campaignGrain.RemoveProduct(productId);
+        var promotionGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionId);
+        await promotionGrain.RemoveProduct(productId);
         return Ok();
     }
     
@@ -66,8 +87,8 @@ public class PromotionController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> SetPromotionStatus(string promotionId, bool status)
     {
-        var campaignGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionId);
-        await campaignGrain.SetPromotionStatus(status);
+        var promotionGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionId);
+        await promotionGrain.SetPromotionStatus(status);
         return Ok();
     }
 }
