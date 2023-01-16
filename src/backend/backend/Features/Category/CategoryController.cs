@@ -21,7 +21,7 @@ public class CategoryController : ControllerBase
     /// </summary>
     /// <returns>A list of ProductCategory</returns>
     [HttpGet("all")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductCategory>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
     public ActionResult GetCategories()
     {
         var categories = EnumHelpers.GetEnumsAsList();

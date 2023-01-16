@@ -10,7 +10,7 @@ public class PromotionManagerGrain : Grain, IPromotionManagerGrain
     private readonly IPersistentState<PromotionManagerState> _state;
     private readonly Dictionary<string, PromotionState> _cache = new();
     
-    public PromotionManagerGrain([PersistentState(stateName: "Inventory", "promotionManager")]  IPersistentState<PromotionManagerState> state)
+    public PromotionManagerGrain([PersistentState(stateName: "PromotionManager", "promotionManagerStore")]  IPersistentState<PromotionManagerState> state)
     {
         _state = state;
     }
@@ -24,8 +24,6 @@ public class PromotionManagerGrain : Grain, IPromotionManagerGrain
     {
         _state.State.Promotions.Add(promotion.Id);
         _cache[promotion.Id] = promotion;
-
-            
         await _state.WriteStateAsync();
     }
 
@@ -33,20 +31,21 @@ public class PromotionManagerGrain : Grain, IPromotionManagerGrain
 
     public Task<List<PromotionState>> GetAllPromotions() => Task.FromResult(_cache.Values.ToList());
     
-
     public Task<List<PromotionState>> GetActivePromotions() => Task.FromResult(_cache.Values.Where(p => p.Active).ToList());
     
     public Task<List<PromotionState>> GetNonActivePromotions() => Task.FromResult(_cache.Values.Where(p => !p.Active).ToList());
 
     private async Task SeedCache()
     {
-        if (_state is { State.Promotions.Count: > 0  })
+        if (_state is not { State.Promotions.Count: > 0  })
         {
-            await Parallel.ForEachAsync(_state.State.Promotions, async (id, _) =>
-            {
-                var productGrain = GrainFactory.GetGrain<IPromotionGrain>(id);
-                _cache[id] = await productGrain.GetPromotion();
-            });
+            return;
         }
+        
+        await Parallel.ForEachAsync(_state.State.Promotions, async (id, _) =>
+        {
+            var productGrain = GrainFactory.GetGrain<IPromotionGrain>(id);
+            _cache[id] = await productGrain.GetPromotion();
+        });
     }
 }

@@ -25,28 +25,28 @@ public class PromotionGrain : Grain, IPromotionGrain
         _state.State.BannerImg = promotionCreationDto.BannerImg;
         
         await _state.WriteStateAsync();
-        await UpdateCampaignStatus();
+        await UpdatePromotion();
     }
 
     public async Task SetPromotionStatus(bool status)
     {
         _state.State.Active = status;
         await _state.WriteStateAsync();
-        await UpdateCampaignStatus();
+        await UpdatePromotion();
     }
 
     public async Task AddProduct(string id)
     {
         _state.State.ProductIds.Add(id);
         await _state.WriteStateAsync();
-        await UpdateCampaignStatus();
+        await UpdatePromotion();
     }
 
     public async Task RemoveProduct(string id)
     {
         _state.State.ProductIds.Remove(id);
         await _state.WriteStateAsync();
-        await UpdateCampaignStatus();
+        await UpdatePromotion();
     }
 
     public Task<PromotionState> GetPromotion()
@@ -56,7 +56,7 @@ public class PromotionGrain : Grain, IPromotionGrain
         return Task.FromResult(_state.State);
     }
 
-    private async Task UpdateCampaignStatus()
+    private async Task UpdatePromotion()
     {
         var promotionManager = GrainFactory.GetGrain<IPromotionManagerGrain>(string.Empty);
         await promotionManager.AddOrUpdatePromotion(_state.State);   

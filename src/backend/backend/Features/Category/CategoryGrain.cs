@@ -8,7 +8,7 @@ namespace backend.Features.Category;
 [Reentrant]
 public class CategoryGrain : Grain, ICategoryGrain
 {
-    private IPersistentState<CategoryState> _state;
+    private readonly IPersistentState<CategoryState> _state;
     private readonly Dictionary<string, ProductDetail> _cache = new();
 
     public CategoryGrain([PersistentState(stateName: "Category", "categoryStore")] IPersistentState<CategoryState> state)

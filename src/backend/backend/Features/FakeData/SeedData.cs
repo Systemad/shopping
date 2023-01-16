@@ -36,12 +36,12 @@ public class SeedData : IStartupTask
     
     private async Task CreatePromotion(string promotionId, PromotionCreationDto promotionCreationDto, List<string> productIds)
     {
-        var campaignGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionId);
-        await campaignGrain.CreatePromotion(promotionCreationDto);
+        var promotionGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionId);
+        await promotionGrain.CreatePromotion(promotionCreationDto);
         
         foreach (var pr in productIds)
         {
-            await campaignGrain.AddProduct(pr);
+            await promotionGrain.AddProduct(pr);
         }
     }
 }

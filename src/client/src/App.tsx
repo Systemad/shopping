@@ -18,6 +18,7 @@ import { ProductPage } from "./Features/Product/ProductPage";
 import { ShoppingCardOverlay } from "./Features/ShoppingCart/Components/ShoppingCartOverlay";
 import { store } from "./redux/store";
 import { CheckoutPage } from "./Features/Checkout/CheckoutPage";
+import GettingStartedExample from "./Features/Product/Admin/GettingStartedExample";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "checkout",
         element: <CheckoutPage />,
+      },
+      {
+        path: "test",
+        element: <GettingStartedExample />,
       },
     ],
   },

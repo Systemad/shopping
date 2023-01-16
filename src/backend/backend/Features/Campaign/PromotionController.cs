@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Features.Campaign;
 
 /// <summary>
-/// API Controller for campaign 
+/// API Controller for promotion 
 /// </summary>
 [ApiController]
 [Route("promotion")]

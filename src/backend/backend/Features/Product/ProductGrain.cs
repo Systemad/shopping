@@ -6,8 +6,7 @@ namespace backend.Features.Product;
 
 public class ProductGrain : Grain, IProductGrain
 {
-
-    private IPersistentState<ProductDetail> _state;
+    private readonly IPersistentState<ProductDetail> _state;
 
     public ProductGrain([PersistentState(stateName: "Product", storageName:"productStore")] IPersistentState<ProductDetail> state)
     {
@@ -51,7 +50,7 @@ public class ProductGrain : Grain, IProductGrain
         
         if (oldCategory != productDetail.Category)
         {
-            // TODO: Dirty fix, all lower case requires
+            // Dirty fix, all lower case requires
             var oldInventory = GrainFactory.GetGrain<ICategoryGrain>(oldCategory.ToString().ToLower());
             await oldInventory.RemoveProduct(productDetail.Id);
         }
