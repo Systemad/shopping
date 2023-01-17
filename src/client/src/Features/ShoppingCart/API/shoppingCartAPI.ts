@@ -78,6 +78,7 @@ export type ProductDetail = {
   quantity: number;
   price: number;
   imageUrl: string;
+  createdAt: string;
 };
 export type CartItem = {
   userId: string;

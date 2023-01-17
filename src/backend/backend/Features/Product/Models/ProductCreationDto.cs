@@ -1,22 +1,17 @@
 ﻿namespace backend.Features.Product.Models;
 
-[GenerateSerializer]
-public record ProductDetail
+public class ProductCreationDto
 {
     [Id(0)]
-    public string Id { get; set; } = null!;
-    [Id(1)]
     public string Name { get; set; } = null!;
-    [Id(2)]
+    [Id(1)]
     public string Description { get; set; } = null!;
-    [Id(3)]
+    [Id(2)]
     public ProductCategory Category { get; set; }
-    [Id(4)]
+    [Id(3)]
     public int Quantity { get; set; }
-    [Id(5)]
+    [Id(4)]
     public decimal Price { get; set; }
-    [Id(6)]
+    [Id(5)]
     public string ImageUrl { get; set; } = null!;
-    [Id(7)]
-    public DateTime CreatedAt { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using backend.Features.Product.Models;
+﻿using backend.Features.Product;
+using backend.Features.Product.Models;
 using backend.Helpers;
 using Microsoft.AspNetCore.Mvc;
 

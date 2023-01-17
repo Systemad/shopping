@@ -38,7 +38,7 @@ const injectedRtkApi = api
   });
 export { injectedRtkApi as productSpliApi };
 export type CategoryGetCategoriesApiResponse =
-  /** status 200 A list of ProductCategory */ ProductCategory[];
+  /** status 200 A list of ProductCategory */ string[];
 export type CategoryGetCategoriesApiArg = void;
 export type CategoryGetItemsForCategoryApiResponse =
   /** status 200 List of products */ ProductDetail[];
@@ -71,6 +71,7 @@ export type ProductDetail = {
   quantity: number;
   price: number;
   imageUrl: string;
+  createdAt: string;
 };
 export const {
   useCategoryGetCategoriesQuery,

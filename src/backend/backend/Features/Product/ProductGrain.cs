@@ -13,6 +13,8 @@ public class ProductGrain : Grain, IProductGrain
         _state = state;
     }
 
+    private string GrainKey => this.GetPrimaryKeyString();
+    
     public async Task<(bool isAvailable, ProductDetail? productDetail)> TakeProduct(int quantity)
     {
         if (_state.State.Quantity < quantity)
@@ -30,6 +32,16 @@ public class ProductGrain : Grain, IProductGrain
     public Task<ProductDetail> GetProductDetails() => Task.FromResult(_state.State);
 
     public Task CreateOrUpdateProduct(ProductDetail productDetail) => UpdateState(productDetail);
+    public async Task RemoveProduct()
+    {
+        if (_state.RecordExists)
+        {
+            var categoryGrain = GrainFactory.GetGrain<ICategoryGrain>(_state.State.Category.ToString().ToLower());
+            await categoryGrain.RemoveProduct(GrainKey);
+            await _state.ClearStateAsync();    
+        }
+        
+    }
 
     public Task<int> GetProductAvailability() => Task.FromResult(_state.State.Quantity);
 

@@ -24,8 +24,8 @@ public class PromotionController : ControllerBase
         _httpContextAccessor = httpContextAccessor;
     }
     
-    [AllowAnonymous]
-    [HttpGet]
+    //[AllowAnonymous]
+    [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PromotionState>))]
     public async Task<ActionResult> GetAllPromotions()
     {
@@ -35,7 +35,7 @@ public class PromotionController : ControllerBase
     }
     
     [AllowAnonymous]
-    [HttpGet]
+    [HttpGet("all/active")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PromotionState>))]
     public async Task<ActionResult> GetActivePromotions()
     {
@@ -44,8 +44,8 @@ public class PromotionController : ControllerBase
         return Ok(promotions);
     }
     
-    [AllowAnonymous]
-    [HttpGet]
+    //[AllowAnonymous]
+    [HttpGet("all/inactive")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PromotionState>))]
     public async Task<ActionResult> GetNonActivePromotions()
     {
@@ -55,7 +55,7 @@ public class PromotionController : ControllerBase
     }
     
     [HttpPost("add")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PromotionState>))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(IEnumerable<PromotionState>))]
     public async Task<ActionResult> CreatePromotion([FromBody] PromotionCreationDto promotionCreationDto)
     {
         var id = Guid.NewGuid();
@@ -74,7 +74,7 @@ public class PromotionController : ControllerBase
         return Ok();
     }
     
-    [HttpPost("remove/{promotionId}/{productId}")]
+    [HttpDelete("remove/{promotionId}/{productId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> RemoveProductFromPromotion(string promotionId, string productId)
     {
@@ -83,7 +83,7 @@ public class PromotionController : ControllerBase
         return Ok();
     }
     
-    [HttpPost("status/{promotionId}/{status:bool}")]
+    [HttpPut("status/{promotionId}/active/{status:bool}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> SetPromotionStatus(string promotionId, bool status)
     {

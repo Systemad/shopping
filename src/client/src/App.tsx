@@ -53,7 +53,7 @@ const router = createBrowserRouter([
         element: <CheckoutPage />,
       },
       {
-        path: "test",
+        path: "admin/test",
         element: <GettingStartedExample />,
       },
     ],

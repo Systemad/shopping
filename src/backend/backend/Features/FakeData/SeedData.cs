@@ -30,8 +30,8 @@ public class SeedData : IStartupTask
         var promotion2 = PromotionData.CreatePromotion("Random sale", "all new random sale!", string.Empty);
         var promotion3 = PromotionData.CreatePromotion("New year sale", "all new year sale!", string.Empty);
         await CreatePromotion(Guid.NewGuid().ToString(), promotion1, productId.GetRange(1, 10));
-        await CreatePromotion(Guid.NewGuid().ToString(), promotion2, productId.GetRange(11, 20));
-        await CreatePromotion(Guid.NewGuid().ToString(), promotion3, productId.GetRange(21, 31));
+        await CreatePromotion(Guid.NewGuid().ToString(), promotion2, productId.GetRange(11, 10));
+        await CreatePromotion(Guid.NewGuid().ToString(), promotion3, productId.GetRange(22, 10));
     }
     
     private async Task CreatePromotion(string promotionId, PromotionCreationDto promotionCreationDto, List<string> productIds)

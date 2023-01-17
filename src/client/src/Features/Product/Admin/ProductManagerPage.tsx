@@ -32,7 +32,7 @@ export function ProductManagerPage() {
 
   return (
     <Table captionSide="bottom">
-      <Select value={value} onChange={setValue} data={categories} />
+      <Select value={value} onChange={setValue} data={categories!} />
       <caption>Some elements from periodic table</caption>
       <thead>{ths}</thead>
       <tbody>{rows}</tbody>

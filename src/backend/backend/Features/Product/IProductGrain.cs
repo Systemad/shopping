@@ -7,6 +7,7 @@ public interface IProductGrain: IGrainWithStringKey
     Task<(bool isAvailable, ProductDetail? productDetail)> TakeProduct(int quantity);
     Task<ProductDetail> GetProductDetails();
     Task CreateOrUpdateProduct(ProductDetail productDetail);
+    Task RemoveProduct();
     Task<int> GetProductAvailability();
     Task ReturnProduct(int quantity);
 }

@@ -20,6 +20,7 @@ public class PromotionGrain : Grain, IPromotionGrain
     public async Task CreatePromotion(PromotionCreationDto promotionCreationDto)
     {
         _state.State.Name = promotionCreationDto.Name;
+        _state.State.Id = GrainKey;
         _state.State.Description = promotionCreationDto.Description;
         _state.State.Active = promotionCreationDto.Active;
         _state.State.BannerImg = promotionCreationDto.BannerImg;

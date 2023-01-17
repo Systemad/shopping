@@ -71,9 +71,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 builder.Services.AddSwaggerDocument(config =>
 {
-    // fix operationId, fix controller name to scamel and no underscore
-    // controller_GetId => controllerGetId;
-    
     config.PostProcess = document =>
     {
         document.Info.Version = "v1";
@@ -86,17 +83,9 @@ builder.Services.AddSwaggerDocument(config =>
             Email = string.Empty,
             Url = "https://github.com/Systemad/"
         };
-        
-        /*
-        document.Info.License = new NSwag.OpenApiLicense
-        {
-            Name = "Use under LICX",
-            Url = "https://example.com/license"
-        };
-        */
     };
 });
-
+// builder.Services.AddOutputCache();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
