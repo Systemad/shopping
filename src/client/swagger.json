@@ -204,6 +204,29 @@
         }
       }
     },
+    "/promotion/update": {
+      "put": {
+        "tags": ["Promotion"],
+        "operationId": "Promotion_UpdatePromotion",
+        "consumes": ["application/json", "text/json", "application/*+json"],
+        "parameters": [
+          {
+            "name": "promotionState",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PromotionState"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/promotion/add/{promotionId}/{productId}": {
       "post": {
         "tags": ["Promotion"],
@@ -376,6 +399,83 @@
             "in": "path",
             "required": true,
             "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/product/update": {
+      "put": {
+        "tags": ["Product"],
+        "operationId": "Product_UpdateProduct",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "Id",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Name",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Description",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Category",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/ProductCategory"
+            },
+            "x-nullable": false,
+            "enum": [
+              "Accessories",
+              "Hardware",
+              "Software",
+              "Books",
+              "Movies",
+              "Music",
+              "Games",
+              "Other"
+            ]
+          },
+          {
+            "type": "integer",
+            "name": "Quantity",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "number",
+            "name": "Price",
+            "in": "query",
+            "format": "decimal",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "ImageUrl",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "CreatedAt",
+            "in": "query",
+            "format": "date-time",
+            "x-nullable": false
           }
         ],
         "responses": {

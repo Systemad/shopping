@@ -67,6 +67,26 @@ const injectedRtkApi = api
         }),
         invalidatesTags: ["Product"],
       }),
+      productUpdateProduct: build.mutation<
+        ProductUpdateProductApiResponse,
+        ProductUpdateProductApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/product/update`,
+          method: "PUT",
+          params: {
+            Id: queryArg.id,
+            Name: queryArg.name,
+            Description: queryArg.description,
+            Category: queryArg.category,
+            Quantity: queryArg.quantity,
+            Price: queryArg.price,
+            ImageUrl: queryArg.imageUrl,
+            CreatedAt: queryArg.createdAt,
+          },
+        }),
+        invalidatesTags: ["Product"],
+      }),
     }),
     overrideExisting: false,
   });
@@ -99,6 +119,25 @@ export type ProductCreateProductApiArg = {
 export type ProductDeleteProductByIdApiResponse = unknown;
 export type ProductDeleteProductByIdApiArg = {
   productId: string;
+};
+export type ProductUpdateProductApiResponse = unknown;
+export type ProductUpdateProductApiArg = {
+  id?: string;
+  name?: string;
+  description?: string;
+  category?:
+    | "Accessories"
+    | "Hardware"
+    | "Software"
+    | "Books"
+    | "Movies"
+    | "Music"
+    | "Games"
+    | "Other";
+  quantity?: number;
+  price?: number;
+  imageUrl?: string;
+  createdAt?: string;
 };
 export type ProductCategory =
   | "Accessories"
@@ -134,4 +173,5 @@ export const {
   useProductGetProductsByIdQuery,
   useProductCreateProductMutation,
   useProductDeleteProductByIdMutation,
+  useProductUpdateProductMutation,
 } = injectedRtkApi;

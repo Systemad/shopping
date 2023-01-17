@@ -15,6 +15,7 @@
     "@mantine/core": "^5.10.0",
     "@mantine/form": "^5.9.5",
     "@mantine/hooks": "^5.10.0",
+    "@mantine/modals": "^5.10.1",
     "@mantine/notifications": "^5.10.0",
     "@reduxjs/toolkit": "^1.9.1",
     "@rtk-query/codegen-openapi": "^1.0.0",

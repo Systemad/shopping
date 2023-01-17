@@ -6,6 +6,7 @@ import {
   ColorScheme,
   Global,
 } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Provider } from "react-redux";
 import { NotificationsProvider } from "@mantine/notifications";
@@ -76,9 +77,11 @@ function App() {
           withNormalizeCSS
           theme={{ colorScheme }}
         >
-          <NotificationsProvider limit={5} autoClose={5000}>
-            <RouterProvider router={router} />
-          </NotificationsProvider>
+          <ModalsProvider>
+            <NotificationsProvider limit={5} autoClose={5000}>
+              <RouterProvider router={router} />
+            </NotificationsProvider>
+          </ModalsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </Provider>
