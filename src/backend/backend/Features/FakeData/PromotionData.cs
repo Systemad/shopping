@@ -1,4 +1,4 @@
-﻿using backend.Features.Campaign.Models;
+﻿using backend.Features.Promotion.Models;
 
 namespace backend.Features.FakeData;
 

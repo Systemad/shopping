@@ -1,7 +1,7 @@
-﻿using backend.Features.Campaign.Interfaces;
-using backend.Features.Campaign.Models;
-using backend.Features.Product;
+﻿using backend.Features.Product;
 using backend.Features.Product.Models;
+using backend.Features.Promotion.Interfaces;
+using backend.Features.Promotion.Models;
 using Orleans.Runtime;
 
 namespace backend.Features.FakeData;

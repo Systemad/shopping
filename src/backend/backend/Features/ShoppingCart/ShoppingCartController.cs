@@ -52,7 +52,7 @@ public class ShoppingCartController : ControllerBase
             cookie = Guid.NewGuid().ToString();
             var cookieOptions = new CookieOptions
             {
-                Path = "/",
+                //Path = "/",
                 HttpOnly = false,
                 Expires = DateTime.UtcNow.AddDays(2),
                 IsEssential = true

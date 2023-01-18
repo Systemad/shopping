@@ -19,7 +19,7 @@ public class CategoryGrain : Grain, ICategoryGrain
     private string GrainKey => this.GetPrimaryKeyString(); 
     public override async Task OnActivateAsync(CancellationToken cancellationToken)
     {
-        await SeedCache();
+        await SeedCache(); // Fix potential seeding issue
         await base.OnActivateAsync(cancellationToken);
     }
     

@@ -74,4 +74,12 @@ public class ProductController : ControllerBase
         return Ok();
     }
     
+    [HttpPut("update")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateProduct([FromQuery] ProductDetail productDetail)
+    {
+        var productGrain = _grainFactory.GetGrain<IProductGrain>(productDetail.Id);
+        await productGrain.CreateOrUpdateProduct(productDetail);
+        return Ok();
+    }
 }

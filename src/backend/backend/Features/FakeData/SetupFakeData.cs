@@ -1,5 +1,5 @@
-﻿using backend.Features.Campaign.Models;
-using backend.Features.Product.Models;
+﻿using backend.Features.Product.Models;
+using backend.Features.Promotion.Models;
 using Bogus;
 
 namespace backend.Features.FakeData;

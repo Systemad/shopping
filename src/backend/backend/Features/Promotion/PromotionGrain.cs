@@ -1,9 +1,9 @@
-﻿using backend.Features.Campaign.Interfaces;
-using backend.Features.Campaign.Models;
+﻿using backend.Features.Promotion.Interfaces;
+using backend.Features.Promotion.Models;
 using Orleans.Concurrency;
 using Orleans.Runtime;
 
-namespace backend.Features.Campaign;
+namespace backend.Features.Promotion;
 
 [Reentrant]
 public class PromotionGrain : Grain, IPromotionGrain
@@ -24,30 +24,36 @@ public class PromotionGrain : Grain, IPromotionGrain
         _state.State.Description = promotionCreationDto.Description;
         _state.State.Active = promotionCreationDto.Active;
         _state.State.BannerImg = promotionCreationDto.BannerImg;
-        
         await _state.WriteStateAsync();
-        await UpdatePromotion();
+        await UpdateState();
+    }
+
+    public async Task UpdatePromotion(PromotionState promotionState)
+    {
+        _state.State = promotionState;
+        await _state.WriteStateAsync();
+        await UpdateState();
     }
 
     public async Task SetPromotionStatus(bool status)
     {
         _state.State.Active = status;
         await _state.WriteStateAsync();
-        await UpdatePromotion();
+        await UpdateState();
     }
 
     public async Task AddProduct(string id)
     {
         _state.State.ProductIds.Add(id);
         await _state.WriteStateAsync();
-        await UpdatePromotion();
+        await UpdateState();
     }
 
     public async Task RemoveProduct(string id)
     {
         _state.State.ProductIds.Remove(id);
         await _state.WriteStateAsync();
-        await UpdatePromotion();
+        await UpdateState();
     }
 
     public Task<PromotionState> GetPromotion()
@@ -57,7 +63,7 @@ public class PromotionGrain : Grain, IPromotionGrain
         return Task.FromResult(_state.State);
     }
 
-    private async Task UpdatePromotion()
+    private async Task UpdateState()
     {
         var promotionManager = GrainFactory.GetGrain<IPromotionManagerGrain>(string.Empty);
         await promotionManager.AddOrUpdatePromotion(_state.State);   

@@ -1,16 +1,17 @@
-﻿using backend.Features.Campaign.Interfaces;
-using backend.Features.Campaign.Models;
+﻿using backend.Features.Promotion.Interfaces;
+using backend.Features.Promotion.Models;
 using Orleans.Runtime;
 
-namespace backend.Features.Campaign;
-
+namespace backend.Features.Promotion;
 
 public class PromotionManagerGrain : Grain, IPromotionManagerGrain
 {
     private readonly IPersistentState<PromotionManagerState> _state;
     private readonly Dictionary<string, PromotionState> _cache = new();
     
-    public PromotionManagerGrain([PersistentState(stateName: "PromotionManager", "promotionManagerStore")]  IPersistentState<PromotionManagerState> state)
+    public PromotionManagerGrain(
+        [PersistentState(stateName: "PromotionManager", "promotionManagerStore")]
+        IPersistentState<PromotionManagerState> state)
     {
         _state = state;
     }

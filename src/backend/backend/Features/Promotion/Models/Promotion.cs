@@ -1,4 +1,4 @@
-﻿namespace backend.Features.Campaign.Models;
+﻿namespace backend.Features.Promotion.Models;
 
 [GenerateSerializer]
 public class PromotionState

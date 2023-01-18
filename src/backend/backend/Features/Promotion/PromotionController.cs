@@ -1,5 +1,5 @@
-﻿using backend.Features.Campaign.Interfaces;
-using backend.Features.Campaign.Models;
+﻿using backend.Features.Promotion.Interfaces;
+using backend.Features.Promotion.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,6 +61,16 @@ public class PromotionController : ControllerBase
         var id = Guid.NewGuid();
         var promotionGrain = _grainFactory.GetGrain<IPromotionGrain>(id.ToString());
         await promotionGrain.CreatePromotion(promotionCreationDto);
+        var campaign = await promotionGrain.GetPromotion();
+        return Ok(campaign);
+    }
+    
+    [HttpPut("update")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult> UpdatePromotion([FromBody] PromotionState promotionState)
+    {
+        var promotionGrain = _grainFactory.GetGrain<IPromotionGrain>(promotionState.Id);
+        await promotionGrain.UpdatePromotion(promotionState);
         var campaign = await promotionGrain.GetPromotion();
         return Ok(campaign);
     }

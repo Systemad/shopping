@@ -41,7 +41,7 @@ public class CategoryController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductDetail>))]
     public async Task<ActionResult> GetItemsForCategory(string category, [FromQuery] int limit = 10)
     {
-        var inventoryGrain = _grainFactory.GetGrain<ICategoryGrain>(category);
+        var inventoryGrain = _grainFactory.GetGrain<ICategoryGrain>(category.ToLower());
         var products  = await inventoryGrain.GetAllProducts(limit);
         return Ok(products);
     }

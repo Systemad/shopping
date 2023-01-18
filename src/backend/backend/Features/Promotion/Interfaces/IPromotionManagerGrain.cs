@@ -1,6 +1,6 @@
-﻿using backend.Features.Campaign.Models;
+﻿using backend.Features.Promotion.Models;
 
-namespace backend.Features.Campaign.Interfaces;
+namespace backend.Features.Promotion.Interfaces;
 
 public interface IPromotionManagerGrain : IGrainWithStringKey
 {
