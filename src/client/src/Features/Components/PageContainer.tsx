@@ -1,13 +1,9 @@
-import { Container } from "@mantine/core";
+import { Container } from "@chakra-ui/react";
 
 interface PageContainerProps {
   children: React.ReactNode;
 }
 
 export function PageContainer({ children }: PageContainerProps) {
-  return (
-    <Container size="lg" my="xl">
-      {children}
-    </Container>
-  );
+  return <Container centerContent>{children}</Container>;
 }

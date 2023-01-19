@@ -1,4 +1,4 @@
-import { showNotification } from "@mantine/notifications";
+import { useToast } from "@chakra-ui/react";
 import { ProductDetail } from "../../Product/API/productAPI";
 import {
   CartItem,
@@ -18,6 +18,7 @@ type UseCart = {
 
 export function useCart(): UseCart {
   const { data: cartItems } = useShoppingCartGetShoppingCartQuery();
+  const toast = useToast();
   const [addProduct] = useShoppingCartAddItemToCartMutation();
   const [removeProduct] = useShoppingCartRemoveItemFromCartMutation();
   const [emptyCartMutation] = useShoppingCartEmptyCartMutation();
@@ -32,29 +33,32 @@ export function useCart(): UseCart {
     totalCost: cost,
     addProductToCart(product, quantity) {
       addProduct({ id: product!.id, quantity: quantity });
-      showNotification({
-        title: "Cart updated!",
-        message: `${product?.name} has successfully been added to the cart!`,
-        color: "green",
-        radius: "md",
+      toast({
+        title: "Account created.",
+        description: "We've created your account for you.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
       });
     },
     removeProductFromCart(product, quantity) {
       removeProduct({ id: product!.id, quantity: quantity });
-      showNotification({
-        title: "Cart updated!",
-        message: `${product?.name} has successfully been removed to the cart!`,
-        color: "green",
-        radius: "md",
+      toast({
+        title: "Account created.",
+        description: "We've created your account for you.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
       });
     },
     emptyCart() {
       emptyCartMutation();
-      showNotification({
-        title: "Cart updated!",
-        message: `Cart has successfully been emptied!`,
-        color: "blue",
-        radius: "md",
+      toast({
+        title: "Account created.",
+        description: "We've created your account for you.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
       });
     },
   };

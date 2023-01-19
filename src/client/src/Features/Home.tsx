@@ -1,27 +1,26 @@
-import { Grid, Container } from "@mantine/core";
-
 import { FeaturedWidget } from "./Home/Widgets/FeaturedWidget";
 import { CategoriesWidget } from "./Home/Widgets/CategoriesWidget";
 import { CarouselWidget } from "./Home/Widgets/CarouselWidget";
+import { Grid, GridItem, Container } from "@chakra-ui/react";
 
-function Home() {
+const Home = () => {
   return (
-    <Container size="lg" my="xl">
+    <Container centerContent my="xl" py={{ base: 14, sm: 20, md: 32 }}>
       <Grid>
-        <Grid.Col xs={12}>
+        <GridItem w="100%">
           <CarouselWidget />
-        </Grid.Col>
+        </GridItem>
 
-        <Grid.Col xs={12}>
+        <GridItem w="100%">
           <FeaturedWidget />
-        </Grid.Col>
+        </GridItem>
 
-        <Grid.Col xs={12}>
+        <GridItem w="100%">
           <CategoriesWidget />
-        </Grid.Col>
+        </GridItem>
       </Grid>
     </Container>
   );
-}
+};
 
 export default Home;

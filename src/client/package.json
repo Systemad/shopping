@@ -10,7 +10,10 @@
     "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.16",
+    "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@mantine/carousel": "^5.10.1",
     "@mantine/core": "^5.10.1",
     "@mantine/form": "^5.10.1",
@@ -25,7 +28,7 @@
     "@types/node": "^18.11.18",
     "embla-carousel-autoplay": "^7.0.6",
     "embla-carousel-react": "^7.0.6",
-    "framer-motion": "^8.4.6",
+    "framer-motion": "^8.5.0",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "lodash.sortby": "^4.7.0",

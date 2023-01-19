@@ -1,17 +1,17 @@
 import {
-  Group,
-  Stack,
-  Paper,
-  Image,
-  Text,
-  Title,
-  Rating,
-  NumberInput,
-  ActionIcon,
-  Button,
+  SimpleGrid,
   Grid,
-  NumberInputHandlers,
-} from "@mantine/core";
+  GridItem,
+  Image,
+  Stack,
+  HStack,
+  Text,
+  Box,
+  Button,
+  IconButton,
+  Input,
+  useNumberInput,
+} from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { PageContainer } from "../Components/PageContainer";
@@ -29,8 +29,8 @@ export function ProductPage() {
 
   return (
     <PageContainer>
-      <Grid justify="center" align="flex-start">
-        <Grid.Col span="auto" style={{ minHeight: 80 }}>
+      <Grid justifyContent={"center"} alignContent="flex-start">
+        <GridItem>
           <Stack align="end-start" bg="green">
             <Image
               fit="contain"
@@ -39,13 +39,13 @@ export function ProductPage() {
               src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1936&q=80"
             />
           </Stack>
-        </Grid.Col>
-        <Grid.Col span={5} style={{ minHeight: 400 }}>
+        </GridItem>
+        <GridItem>
           <Image src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1936&q=80" />
-        </Grid.Col>
-        <Grid.Col span="auto">
+        </GridItem>
+        <GridItem>
           <ProductInformation product={product} />
-        </Grid.Col>
+        </GridItem>
       </Grid>
     </PageContainer>
   );
@@ -56,59 +56,45 @@ interface ProductInformationProps {
 }
 function ProductInformation({ product }: ProductInformationProps) {
   const [value, setValue] = useState(0);
-  const handlers = useRef<NumberInputHandlers>();
+
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      step: 0.01,
+      defaultValue: 1.53,
+      min: 1,
+      max: 6,
+      precision: 2,
+    });
+
+  const inc = getIncrementButtonProps();
+  const dec = getDecrementButtonProps();
+  const input = getInputProps();
 
   const { addProductToCart } = useCart();
 
   return (
-    <Paper w={400}>
+    <Box w={400}>
       <Stack color="red" p="md">
-        <Title order={1} ta="center">
-          {product?.name}
-        </Title>
+        <Text>{product?.name}</Text>
 
-        <Group position="apart">
-          <Title order={4}>Price: ${product?.price}</Title>
-          <Rating value={3.5} fractions={2} readOnly />
-        </Group>
+        <HStack>
+          <Text>Price: ${product?.price}</Text>
+        </HStack>
 
-        <Title order={2} fz="xl">
-          Description
-        </Title>
+        <Text>Description</Text>
         <Text>{product?.description}</Text>
 
-        <Group position="center" spacing={5}>
-          <ActionIcon
-            size={36}
-            variant="default"
-            onClick={() => handlers?.current?.decrement()}
-          >
-            –
-          </ActionIcon>
-
-          <NumberInput
-            hideControls
-            value={value}
-            onChange={(val) => setValue(val!)}
-            handlersRef={handlers}
-            max={5}
-            min={1}
-            step={1}
-            styles={{ input: { width: 44, textAlign: "center" } }}
-          />
-
-          <ActionIcon
-            size={36}
-            variant="default"
-            onClick={() => handlers?.current?.increment()}
-          >
-            +
-          </ActionIcon>
+        <HStack spacing={5}>
+          <HStack maxW="320px">
+            <Button {...inc}>+</Button>
+            <Input {...input} />
+            <Button {...dec}>-</Button>
+          </HStack>
           <Button onClick={() => addProductToCart(product!, value)}>
             Add to cart
           </Button>
-        </Group>
+        </HStack>
       </Stack>
-    </Paper>
+    </Box>
   );
 }

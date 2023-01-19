@@ -1,7 +1,15 @@
-import { MantineThemeOverride } from "@mantine/core";
+// theme.ts
 
-export const defaultTheme: MantineThemeOverride = {
-  colorScheme: "light",
-  primaryColor: "indigo",
-  defaultRadius: "lg",
+// 1. import `extendTheme` function
+import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
+
+// 2. Add your color mode config
+const config: ThemeConfig = {
+  initialColorMode: "light",
+  useSystemColorMode: false,
 };
+
+// 3. extend the theme
+const maintheme = extendTheme({ config });
+
+export default maintheme;

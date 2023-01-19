@@ -1,61 +1,19 @@
-import {
-  Card,
-  Image,
-  Text,
-  Group,
-  Badge,
-  createStyles,
-  Center,
-  Button,
-  Paper,
-  ActionIcon,
-} from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { IconHeart } from "@tabler/icons";
 import { useNavigate } from "react-router-dom";
 import { ProductDetail } from "../API/productAPI";
 import { useCart } from "../../ShoppingCart/Hooks/useCart";
-
-const useStyles = createStyles((theme) => ({
-  card: {
-    backgroundColor:
-      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
-  },
-
-  imageSection: {
-    padding: theme.spacing.md,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderBottom: `1px solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]
-    }`,
-  },
-
-  label: {
-    marginBottom: theme.spacing.xs,
-    lineHeight: 1,
-    fontWeight: 700,
-    fontSize: theme.fontSizes.xs,
-    letterSpacing: -0.25,
-    textTransform: "uppercase",
-  },
-
-  section: {
-    padding: theme.spacing.md,
-    borderTop: `1px solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]
-    }`,
-  },
-
-  icon: {
-    marginRight: 5,
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[2]
-        : theme.colors.gray[5],
-  },
-}));
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  HStack,
+  IconButton,
+  Button,
+  Text,
+  Image,
+  Badge,
+} from "@chakra-ui/react";
 
 interface ProductCardProps {
   product: ProductDetail;
@@ -64,7 +22,6 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { cart, addProductToCart } = useCart();
 
-  const { classes } = useStyles();
   const navigate = useNavigate();
 
   const [lastVisitedIds, setLastVisitedids] = useLocalStorage<string[]>({
@@ -77,33 +34,73 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Card withBorder radius="md" className={classes.card}>
-      <Card.Section className={classes.imageSection}>
-        <Image src={product.imageUrl} alt={product.name} />
-      </Card.Section>
+    <Card borderRadius={"md"}>
+      <Image src={product.imageUrl} alt={product.name} />
 
-      <Group position="apart" mt="xs">
-        <Text weight={500}>{product.name}</Text>
-        <Text size="xl" weight={700} sx={{ lineHeight: 2 }}>
-          ${product.price}
-        </Text>
-        <Badge variant="outline">25% off</Badge>
-      </Group>
-
-      <Card.Section className={classes.section}>
-        <Group spacing={30}>
+      <CardBody>
+        <HStack mt="xs">
+          <Text>{product.name}</Text>
+          <Text size="xl" sx={{ lineHeight: 2 }}>
+            ${product.price}
+          </Text>
+          <Badge variant="outline">25% off</Badge>
+        </HStack>
+      </CardBody>
+      <CardFooter>
+        <HStack spacing={30}>
           <Button
             onClick={() => addProductToCart(product, 1)}
-            radius="xl"
+            borderRadius="xl"
             style={{ flex: 1 }}
           >
             Add to cart
           </Button>
-          <ActionIcon color="red" size="xl" radius="xl" variant="transparent">
-            <IconHeart size={34} />
-          </ActionIcon>
-        </Group>
-      </Card.Section>
+          <IconButton
+            aria-label="add-wishlist"
+            icon={<IconHeart size={34} />}
+            color="red"
+            size="xl"
+            borderRadius="xl"
+            variant="transparent"
+          />
+        </HStack>
+      </CardFooter>
     </Card>
   );
 }
+
+/*
+
+<Card maxW='sm'>
+  <CardBody>
+    <Image
+      src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+      alt='Green double couch with wooden legs'
+      borderRadius='lg'
+    />
+    <Stack mt='6' spacing='3'>
+      <Heading size='md'>Living room Sofa</Heading>
+      <Text>
+        This sofa is perfect for modern tropical spaces, baroque inspired
+        spaces, earthy toned spaces and for people who love a chic design with a
+        sprinkle of vintage design.
+      </Text>
+      <Text color='blue.600' fontSize='2xl'>
+        $450
+      </Text>
+    </Stack>
+  </CardBody>
+  <Divider />
+  <CardFooter>
+    <ButtonGroup spacing='2'>
+      <Button variant='solid' colorScheme='blue'>
+        Buy now
+      </Button>
+      <Button variant='ghost' colorScheme='blue'>
+        Add to cart
+      </Button>
+    </ButtonGroup>
+  </CardFooter>
+</Card>
+
+*/

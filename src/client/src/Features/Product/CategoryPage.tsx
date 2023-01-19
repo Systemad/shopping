@@ -1,6 +1,5 @@
-import { SimpleGrid, Title, Divider } from "@mantine/core";
 import { useParams } from "react-router-dom";
-
+import { SimpleGrid, Heading, Divider } from "@chakra-ui/react";
 import { PageContainer } from "../Components/PageContainer";
 import { useCategoryGetItemsForCategoryQuery } from "./API/categoryAPI";
 
@@ -20,11 +19,9 @@ export function CategoryPage() {
 
   return (
     <PageContainer>
-      <Title ta="center" order={1}>
-        {categoryId.toUpperCase()}
-      </Title>
+      <Heading>{categoryId.toUpperCase()}</Heading>
       <Divider my="xs" />
-      <SimpleGrid cols={4}>
+      <SimpleGrid columns={4}>
         {products?.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

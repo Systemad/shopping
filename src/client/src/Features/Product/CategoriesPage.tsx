@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@mantine/core";
+import { SimpleGrid } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 import { PageContainer } from "../Components/PageContainer";
@@ -15,7 +15,7 @@ export function CategoriesPage() {
 
   return (
     <PageContainer>
-      <SimpleGrid cols={3}>
+      <SimpleGrid columns={3}>
         {categories?.map((cat) => (
           <CategoryCard key={`category-${cat}`} name={cat} />
         ))}
