@@ -40,7 +40,6 @@ public class ProductGrain : Grain, IProductGrain
             await categoryGrain.RemoveProduct(GrainKey);
             await _state.ClearStateAsync();    
         }
-        
     }
 
     public Task<int> GetProductAvailability() => Task.FromResult(_state.State.Quantity);

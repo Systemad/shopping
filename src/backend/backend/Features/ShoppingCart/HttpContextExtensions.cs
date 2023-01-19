@@ -9,16 +9,19 @@ internal static class HttpContextExtensions
         var cookie = httpContextAccessor?.HttpContext?.Request.Cookies[cartKey];
         if (cookie is not null)
             return cookie;
-        
-        var cookieId = Guid.NewGuid();
+
+        var cookieId = Guid.NewGuid().ToString();
         // Add reminder in grain to remove cart
-        var options = new CookieOptions
+        var cookieOptions = new CookieOptions
         {
-            Expires = DateTime.UtcNow.AddDays(2)
+            //Path = "/",
+            HttpOnly = false,
+            Expires = DateTime.UtcNow.AddDays(2),
+            IsEssential = true
         };
         // // Set expiration of this cookie to yesterday to remove it.
         // Response.Cookies["SetAspNetIdentityCookiesExpiration"].Expires = DateTime.UtcNow.AddDays(-1);
-        httpContextAccessor?.HttpContext?.Response.Cookies.Append(cartKey, cookieId.ToString(), options);
-        return cookieId.ToString();
+        httpContextAccessor?.HttpContext?.Response.Cookies.Append(cartKey, cookieId, cookieOptions);
+        return cookieId;
     }
 }

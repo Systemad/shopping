@@ -20,7 +20,6 @@ public class CategoryGrain : Grain, ICategoryGrain
     public override async Task OnActivateAsync(CancellationToken cancellationToken)
     {
         await SeedCache(); // Fix potential seeding issue
-        await base.OnActivateAsync(cancellationToken);
     }
     
     public async Task AddOrUpdateProduct(ProductDetail productDetail)
@@ -52,7 +51,7 @@ public class CategoryGrain : Grain, ICategoryGrain
             return;
         }
         
-        await Parallel.ForEachAsync(_state.State.ProductIds, async (id, _) =>
+        await Parallel.ForEachAsync(_state.State.ProductIds,  async (id, _) =>
         {
             var productGrain = GrainFactory.GetGrain<IProductGrain>(id);
             _cache[id] = await productGrain.GetProductDetails();

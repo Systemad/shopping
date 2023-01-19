@@ -28,7 +28,7 @@ public class ShoppingCartController : ControllerBase
     /// </summary>
     /// <returns>A list of clients items in shopping cart</returns>
     [AllowAnonymous]
-    [HttpGet]
+    [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CartItem>))]
     public async Task<ActionResult> GetShoppingCart()
     {
@@ -40,35 +40,19 @@ public class ShoppingCartController : ControllerBase
     
     [AllowAnonymous]
     [HttpPost("add/{id}/{quantity:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CartItem>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> AddItemToCart(string id, int quantity)
     {
-        //var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
-        var cookie = HttpContext.Request.Cookies["temp_cartId"];
-        //string newGuid;
-    
-        if (cookie == null)
-        {
-            cookie = Guid.NewGuid().ToString();
-            var cookieOptions = new CookieOptions
-            {
-                //Path = "/",
-                HttpOnly = false,
-                Expires = DateTime.UtcNow.AddDays(2),
-                IsEssential = true
-            };
-            HttpContext?.Response.Cookies.Append("temp_cartId", cookie, cookieOptions);
-        }
-        
-        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(cookie);
+        var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
+        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(clientSession);
         await cartGrain.AddOrUpdateItem(id, quantity);
         var cart = await cartGrain.GetAllItems();
         return Ok(cart);
     }
     
     [AllowAnonymous]
-    [HttpPost("remove/{id}/{quantity:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CartItem>))]
+    [HttpDelete("remove/{id}/{quantity:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> RemoveItemFromCart(string id, int quantity)
     {
         var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
