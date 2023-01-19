@@ -3,15 +3,12 @@ import {
   Stepper,
   Button,
   Group,
-  Flex,
-  Paper,
   createStyles,
   Container,
   Avatar,
   Text,
   Divider,
   Center,
-  Title,
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -47,7 +44,7 @@ export function CheckoutPage() {
   return (
     <Container py={48}>
       <div className={classes.wrapper}>
-        {cart.length === 1 && (
+        {cart.length <= 0 && (
           <Center style={{ height: 200 }}>
             <Text fz="xl" weight={400}>
               Cart is empty
@@ -55,7 +52,6 @@ export function CheckoutPage() {
           </Center>
         )}
 
-        <CheckoutStepper />
         {cart.length > 0 && <CheckoutStepper />}
       </div>
     </Container>
@@ -100,17 +96,28 @@ function CheckoutStepper() {
     },
   });
 
-  const checkoutComplete = form.isValid() && active === 1;
+  const shouldAllowSelectStep = (step: number) => {
+    if (step === 1) return form.isValid();
+
+    return true;
+  };
+  //highestStepVisited >= step && active !== step;
+  //const checkoutComplete = active == 2 ? form.isValid() : active != 2;
   return (
     <>
-      <Stepper active={active} onStepClick={setActive} breakpoint="sm">
+      <Stepper
+        active={active}
+        onStepClick={setActive}
+        breakpoint="sm"
+        allowNextStepsSelect={false}
+      >
         <Stepper.Step label="Your cart" description="Cart summary">
           {cart.map((cartItem) => (
             <Item item={cartItem} />
           ))}
           <Divider />
           <Text fz={"xl"} weight={500} ta="end">
-            Total cost: {totalCost}
+            Total cost: ${totalCost}
           </Text>
         </Stepper.Step>
         <Stepper.Step label="Details" description="Checkout details">
@@ -150,7 +157,7 @@ function CheckoutStepper() {
         <Button variant="default" onClick={prevStep}>
           Back
         </Button>
-        <Button disabled={checkoutComplete} onClick={nextStep}>
+        <Button disabled={active == 1 && form.isValid()} onClick={nextStep}>
           Next step
         </Button>
       </Group>
@@ -163,15 +170,18 @@ interface ItemProps {
 function Item({ item }: ItemProps) {
   return (
     <Group mb="lg" position="center">
-      <Avatar size={"xl"} src={item.productDetail.category} />
+      <Avatar size={"xl"} src={item.productDetail.imageUrl} />
       <div style={{ flex: 1 }}>
-        <Group>
-          <Text size="xl" weight={500}>
+        <Group position="apart">
+          <Text size="xl" weight={400}>
             {item.productDetail.name}
           </Text>
-          <Text size="xl" weight={400}>
+          <Text size="xl" weight={500}>
             ${item.productDetail.price}
           </Text>
+          <Button color="red" variant="subtle">
+            Remove
+          </Button>
         </Group>
 
         <Text color="dimmed" size="lg">

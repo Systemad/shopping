@@ -14,7 +14,7 @@
   "host": "localhost:7099",
   "schemes": ["https"],
   "paths": {
-    "/cart": {
+    "/cart/all": {
       "get": {
         "tags": ["ShoppingCart"],
         "operationId": "ShoppingCart_GetShoppingCart",
@@ -37,7 +37,6 @@
       "post": {
         "tags": ["ShoppingCart"],
         "operationId": "ShoppingCart_AddItemToCart",
-        "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
             "type": "string",
@@ -57,23 +56,15 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CartItem"
-              }
-            }
+            "description": ""
           }
         }
       }
     },
     "/cart/remove/{id}/{quantity}": {
-      "post": {
+      "delete": {
         "tags": ["ShoppingCart"],
         "operationId": "ShoppingCart_RemoveItemFromCart",
-        "produces": ["text/plain", "application/json", "text/json"],
         "parameters": [
           {
             "type": "string",
@@ -93,14 +84,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CartItem"
-              }
-            }
+            "description": ""
           }
         }
       }

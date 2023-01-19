@@ -12,9 +12,10 @@ import {
   Space,
 } from "@mantine/core";
 import { SwitchToggle } from "../Theme/SwitchToggle";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { IconShoppingCart } from "@tabler/icons";
 import { ShoppingCartMenu } from "../ShoppingCart/Components/ShoppingCartMenu";
+import { CategoryParam } from "../Product/params";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -83,21 +84,18 @@ const Links: HeaderLink[] = [
 ];
 
 const MainHeader = ({ toggleShoppingCartDrawer }: MainHeaderProps) => {
-  const [active, setActive] = useState(Links[0].link);
+  const { categoryId } = useParams<keyof CategoryParam>() as CategoryParam;
   const { classes, cx } = useStyles();
 
+  const currentPath = baseCategory + "/" + categoryId;
   const items = Links.map((link) => (
     <Box
       key={link.label}
       component={Link}
       to={link.link}
       className={cx(classes.link, {
-        [classes.linkActive]: active === link.link,
+        [classes.linkActive]: currentPath === link.link,
       })}
-      onClick={(event) => {
-        //event.preventDefault();
-        setActive(link.link);
-      }}
     >
       {link.label}
     </Box>

@@ -5,6 +5,7 @@ import {
   useShoppingCartAddItemToCartMutation,
   useShoppingCartEmptyCartMutation,
   useShoppingCartGetShoppingCartQuery,
+  useShoppingCartRemoveItemFromCartMutation,
 } from "../API/shoppingCartAPI";
 
 type UseCart = {
@@ -18,12 +19,12 @@ type UseCart = {
 export function useCart(): UseCart {
   const { data: cartItems } = useShoppingCartGetShoppingCartQuery();
   const [addProduct] = useShoppingCartAddItemToCartMutation();
-  const [removeProduct] = useShoppingCartAddItemToCartMutation();
+  const [removeProduct] = useShoppingCartRemoveItemFromCartMutation();
   const [emptyCartMutation] = useShoppingCartEmptyCartMutation();
 
   const cost = cartItems?.reduce((sum: number, product: CartItem) => {
     sum += product.productDetail.price * product.quantity;
-    return sum;
+    return +sum.toFixed(2);
   }, 0);
 
   return {
@@ -33,15 +34,28 @@ export function useCart(): UseCart {
       addProduct({ id: product!.id, quantity: quantity });
       showNotification({
         title: "Cart updated!",
-        message: `${product?.name} has successfully been added to the cart`,
+        message: `${product?.name} has successfully been added to the cart!`,
+        color: "green",
         radius: "md",
       });
     },
     removeProductFromCart(product, quantity) {
       removeProduct({ id: product!.id, quantity: quantity });
+      showNotification({
+        title: "Cart updated!",
+        message: `${product?.name} has successfully been removed to the cart!`,
+        color: "green",
+        radius: "md",
+      });
     },
     emptyCart() {
       emptyCartMutation();
+      showNotification({
+        title: "Cart updated!",
+        message: `Cart has successfully been emptied!`,
+        color: "blue",
+        radius: "md",
+      });
     },
   };
 }

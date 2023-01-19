@@ -10,7 +10,7 @@ const injectedRtkApi = api
         ShoppingCartGetShoppingCartApiResponse,
         ShoppingCartGetShoppingCartApiArg
       >({
-        query: () => ({ url: `/cart` }),
+        query: () => ({ url: `/cart/all` }),
         providesTags: ["ShoppingCart"],
       }),
       shoppingCartAddItemToCart: build.mutation<
@@ -29,7 +29,7 @@ const injectedRtkApi = api
       >({
         query: (queryArg) => ({
           url: `/cart/remove/${queryArg.id}/${queryArg.quantity}`,
-          method: "POST",
+          method: "DELETE",
         }),
         invalidatesTags: ["ShoppingCart"],
       }),
@@ -47,14 +47,12 @@ export { injectedRtkApi as shoppingCartSplitApi };
 export type ShoppingCartGetShoppingCartApiResponse =
   /** status 200 A list of clients items in shopping cart */ CartItem[];
 export type ShoppingCartGetShoppingCartApiArg = void;
-export type ShoppingCartAddItemToCartApiResponse =
-  /** status 200  */ CartItem[];
+export type ShoppingCartAddItemToCartApiResponse = unknown;
 export type ShoppingCartAddItemToCartApiArg = {
   id: string;
   quantity: number;
 };
-export type ShoppingCartRemoveItemFromCartApiResponse =
-  /** status 200  */ CartItem[];
+export type ShoppingCartRemoveItemFromCartApiResponse = unknown;
 export type ShoppingCartRemoveItemFromCartApiArg = {
   id: string;
   quantity: number;
