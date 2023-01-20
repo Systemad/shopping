@@ -34,29 +34,29 @@ export function useCart(): UseCart {
     addProductToCart(product, quantity) {
       addProduct({ id: product!.id, quantity: quantity });
       toast({
-        title: "Account created.",
-        description: "We've created your account for you.",
+        title: "Cart updated!",
+        description: "Product successfully added to cart!",
         status: "success",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
       });
     },
     removeProductFromCart(product, quantity) {
       removeProduct({ id: product!.id, quantity: quantity });
       toast({
-        title: "Account created.",
-        description: "We've created your account for you.",
+        title: "Cart updated!",
+        description: "Product successfully removed from cart!",
         status: "success",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
       });
     },
     emptyCart() {
       emptyCartMutation();
       toast({
-        title: "Account created.",
-        description: "We've created your account for you.",
-        status: "success",
+        title: "Cart updated!",
+        description: "Cart emptied",
+        status: "info",
         duration: 9000,
         isClosable: true,
       });

@@ -16,6 +16,7 @@ import {
   Avatar,
   Button,
   Box,
+  Flex,
 } from "@chakra-ui/react";
 import { IconShoppingCart, IconX } from "@tabler/icons";
 import { useNavigate } from "react-router-dom";
@@ -58,13 +59,13 @@ export function ShoppingCartMenu() {
                     borderRadius={"md"}
                   />
 
-                  <div style={{ flex: 1 }}>
+                  <Flex>
                     <Text>{item.productDetail.name}</Text>
                     <HStack>
                       <Text size="xs">{item.productDetail.category}</Text>
                       <Text size="xs">${item.productDetail.price}</Text>
                     </HStack>
-                  </div>
+                  </Flex>
                   <HStack>
                     <Text size="sm">Quantity: {item.quantity}</Text>
                     <IconButton
@@ -80,7 +81,7 @@ export function ShoppingCartMenu() {
             ))}
         </PopoverBody>
         <PopoverFooter>
-          {cart.length === 0 && (
+          {cart.length > 0 && (
             <>
               <HStack p="xs" align="stretch">
                 <Text>Total</Text>

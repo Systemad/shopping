@@ -15,12 +15,9 @@ public class CategoryGrain : Grain, ICategoryGrain
     {
         _state = state;
     }
-
-    private string GrainKey => this.GetPrimaryKeyString(); 
-    public override async Task OnActivateAsync(CancellationToken cancellationToken)
-    {
-        await SeedCache(); // Fix potential seeding issue
-    }
+    
+    public override Task OnActivateAsync(CancellationToken cancellationToken) => SeedCache(); // Fix potential seeding issue
+    
     
     public async Task AddOrUpdateProduct(ProductDetail productDetail)
     {
@@ -50,11 +47,20 @@ public class CategoryGrain : Grain, ICategoryGrain
         {
             return;
         }
-        
-        await Parallel.ForEachAsync(_state.State.ProductIds,  async (id, _) =>
+
+        var tasks = new List<Task>();
+
+        foreach (var product in _state.State.ProductIds)
         {
-            var productGrain = GrainFactory.GetGrain<IProductGrain>(id);
-            _cache[id] = await productGrain.GetProductDetails();
-        });
+            tasks.Add(SeedTask(product));
+        }
+
+        await Task.WhenAll(tasks);
+    }
+
+    private async Task SeedTask(string id)
+    {
+        var productGrain = GrainFactory.GetGrain<IProductGrain>(id);
+        _cache[id] = await productGrain.GetProductDetails();
     }
 }

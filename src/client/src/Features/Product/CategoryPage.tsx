@@ -19,9 +19,9 @@ export function CategoryPage() {
 
   return (
     <PageContainer>
-      <Heading>{categoryId.toUpperCase()}</Heading>
-      <Divider my="xs" />
-      <SimpleGrid columns={4}>
+      <Heading textAlign={"center"}>{categoryId.toUpperCase()}</Heading>
+      <Divider my="6" />
+      <SimpleGrid spacing="6" columns={4}>
         {products?.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

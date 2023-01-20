@@ -1,9 +1,19 @@
-import { useHover } from "@mantine/hooks";
 import { IconArrowRight } from "@tabler/icons";
 import { useNavigate } from "react-router-dom";
 import { DynamicTablerIcons } from "../../Components/DynamicTablerIcons";
 
-import { Box, Center, Stack, Button, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Stack,
+  Button,
+  Heading,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Divider,
+} from "@chakra-ui/react";
 
 interface CategoryCardProps {
   name: string;
@@ -11,12 +21,31 @@ interface CategoryCardProps {
 
 // TODO: Add Category Object, and subcategories
 export function CategoryCard({ name }: CategoryCardProps) {
-  const { hovered, ref } = useHover();
   const navigate = useNavigate();
   return (
-    <Center>
-      <Stack>
-        <Heading>{name}</Heading>
+    <Card size="md" align="center">
+      <CardBody>
+        <Stack>
+          <DynamicTablerIcons iconName={name} size={100} />
+          <Heading as="h4" size="md">
+            {name}
+          </Heading>
+        </Stack>
+      </CardBody>
+      <Divider />
+      <CardFooter>
+        <Button
+          rightIcon={<IconArrowRight />}
+          onClick={() => navigate(name.toLowerCase())}
+        >
+          View products
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
+
+/*
         {hovered ? (
           <>
             Render sub category list
@@ -36,7 +65,4 @@ export function CategoryCard({ name }: CategoryCardProps) {
             <DynamicTablerIcons iconName={name} size={100} />
           </>
         )}
-      </Stack>
-    </Center>
-  );
-}
+*/

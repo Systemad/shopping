@@ -1,23 +1,22 @@
+import { Grid, GridItem, Container, Button } from "@chakra-ui/react";
+
 import { FeaturedWidget } from "./Home/Widgets/FeaturedWidget";
 import { CategoriesWidget } from "./Home/Widgets/CategoriesWidget";
-import { CarouselWidget } from "./Home/Widgets/CarouselWidget";
-import { Grid, GridItem, Container } from "@chakra-ui/react";
+import { PromotionWidget } from "./Home/Widgets/PromotionWidget";
 
 const Home = () => {
   return (
-    <Container centerContent my="xl" py={{ base: 14, sm: 20, md: 32 }}>
-      <Grid>
-        <GridItem w="100%">
-          <CarouselWidget />
+    <Container maxW={"6xl"} flex={"1 0 auto"} py={8} mt={20}>
+      <Grid gap={6} h="100vh">
+        <GridItem w={"100%"}>
+          <PromotionWidget />
         </GridItem>
 
         <GridItem w="100%">
           <FeaturedWidget />
         </GridItem>
 
-        <GridItem w="100%">
-          <CategoriesWidget />
-        </GridItem>
+        <GridItem w="100%" bg="blue.500" />
       </Grid>
     </Container>
   );

@@ -1,4 +1,3 @@
-import { useLocalStorage } from "@mantine/hooks";
 import { IconHeart } from "@tabler/icons";
 import { useNavigate } from "react-router-dom";
 import { ProductDetail } from "../API/productAPI";
@@ -13,6 +12,7 @@ import {
   Text,
   Image,
   Badge,
+  Stack,
 } from "@chakra-ui/react";
 
 interface ProductCardProps {
@@ -24,46 +24,43 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const navigate = useNavigate();
 
-  const [lastVisitedIds, setLastVisitedids] = useLocalStorage<string[]>({
-    key: "last-visisted",
-  });
-
-  const navigateTo = () => {
-    setLastVisitedids([...lastVisitedIds, product.id]);
-    navigate(product.id);
-  };
-
   return (
     <Card borderRadius={"md"}>
-      <Image src={product.imageUrl} alt={product.name} />
-
       <CardBody>
-        <HStack mt="xs">
+        <Image borderRadius="lg" src={product.imageUrl} alt={product.name} />
+        <HStack mt="6" spacing="3">
           <Text>{product.name}</Text>
-          <Text size="xl" sx={{ lineHeight: 2 }}>
-            ${product.price}
-          </Text>
-          <Badge variant="outline">25% off</Badge>
+          <Stack>
+            <Text size="xl">${product.price}</Text>
+            <Badge variant="outline">25% off</Badge>
+          </Stack>
         </HStack>
       </CardBody>
-      <CardFooter>
-        <HStack spacing={30}>
-          <Button
-            onClick={() => addProductToCart(product, 1)}
-            borderRadius="xl"
-            style={{ flex: 1 }}
-          >
-            Add to cart
-          </Button>
-          <IconButton
-            aria-label="add-wishlist"
-            icon={<IconHeart size={34} />}
-            color="red"
-            size="xl"
-            borderRadius="xl"
-            variant="transparent"
-          />
-        </HStack>
+      <CardFooter justify="space-between" flexWrap="wrap">
+        <Button
+          onClick={() => addProductToCart(product, 1)}
+          borderRadius="md"
+          flex="1"
+          variant="ghost"
+        >
+          Add to cart
+        </Button>
+        <Button
+          onClick={() => navigate(product.id)}
+          borderRadius="md"
+          flex="1"
+          variant="ghost"
+        >
+          View
+        </Button>
+        <IconButton
+          aria-label="add-wishlist"
+          icon={<IconHeart size={34} />}
+          color="red"
+          borderRadius="md"
+          flex="1"
+          variant="ghost"
+        />
       </CardFooter>
     </Card>
   );
