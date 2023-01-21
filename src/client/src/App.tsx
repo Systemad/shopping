@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import Home from "./Features/Home";
-import { useState } from "react";
+
 import { CategoriesPage } from "./Features/Product/CategoriesPage";
 import { CategoryPage } from "./Features/Product/CategoryPage";
 import { ProductPage } from "./Features/Product/ProductPage";

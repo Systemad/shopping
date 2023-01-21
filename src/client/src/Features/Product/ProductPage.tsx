@@ -1,18 +1,16 @@
 import {
-  SimpleGrid,
-  Grid,
-  GridItem,
-  Image,
-  Stack,
-  HStack,
-  Text,
   Box,
   Button,
-  IconButton,
+  Grid,
+  GridItem,
+  HStack,
+  Image,
   Input,
+  Stack,
+  Text,
   useNumberInput,
 } from "@chakra-ui/react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { PageContainer } from "../Components/PageContainer";
 import { useCart } from "../ShoppingCart/Hooks/useCart";

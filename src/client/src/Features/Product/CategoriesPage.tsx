@@ -1,18 +1,11 @@
-import { SimpleGrid } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { SimpleGrid, Container } from "@chakra-ui/react";
 
-import { Container } from "@chakra-ui/react";
-import { PageContainer } from "../Components/PageContainer";
 import { useCategoryGetCategoriesQuery } from "./API/categoryAPI";
 
 import { CategoryCard } from "./Components/CategoryCard";
 
 export function CategoriesPage() {
-  const {
-    data: categories,
-    error,
-    isLoading,
-  } = useCategoryGetCategoriesQuery();
+  const { data: categories } = useCategoryGetCategoriesQuery();
 
   return (
     <Container maxW={"5xl"} flex={"1 0 auto"} py={8} mt={20}>
