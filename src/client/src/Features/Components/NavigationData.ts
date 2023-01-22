@@ -9,7 +9,7 @@ interface HeaderLink {
   link: string;
   label: string;
 }
-const baseCategory = "categories";
+const baseCategory = "category";
 const Links: HeaderLink[] = [
   { link: "/", label: "Home" },
   { link: `${baseCategory}/hardware`, label: "Hardware" },
@@ -21,6 +21,14 @@ const Links: HeaderLink[] = [
 
 export const NAV_ITEMS: Array<NavItem> = [
   {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Categories",
+    href: "categories",
+  },
+  {
     label: "Hardware",
     href: `${baseCategory}/hardware`,
   },
@@ -29,37 +37,11 @@ export const NAV_ITEMS: Array<NavItem> = [
     href: `${baseCategory}/software`,
   },
   {
-    label: "All Categories",
-    href: "categories",
+    label: "Accessories",
+    href: `${baseCategory}/accessories`,
   },
   {
-    label: "Inspiration",
-    children: [
-      {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Find Work",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
+    label: "Promotions",
+    href: `${baseCategory}/promotions`,
   },
 ];

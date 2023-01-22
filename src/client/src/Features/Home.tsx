@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <Container maxW={"6xl"} flex={"1 0 auto"} py={8} mt={20}>
       <Grid gap={6} h="100vh">
-        <GridItem w={"100%"}>
+        <GridItem rowSpan={4} w={"100%"}>
           <PromotionWidget />
         </GridItem>
 
