@@ -8,9 +8,7 @@ import {
   ColumnDef,
   SortingState,
   getSortedRowModel,
-  createColumnHelper,
 } from "@tanstack/react-table";
-import { ProductDetail } from "../API/productAPI";
 
 export type DataTableProps<Data extends object> = {
   data: Data[];

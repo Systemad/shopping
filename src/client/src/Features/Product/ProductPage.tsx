@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  HStack,
-  Image,
-  Input,
-  Stack,
-  Text,
-  useNumberInput,
-} from "@chakra-ui/react";
+import { Box, Button, Grid, GridItem, HStack, Image, Input, Stack, Text, useNumberInput } from "@chakra-ui/react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { PageContainer } from "../Components/PageContainer";
@@ -55,14 +44,13 @@ interface ProductInformationProps {
 function ProductInformation({ product }: ProductInformationProps) {
   const [value, setValue] = useState(0);
 
-  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
-    useNumberInput({
-      step: 0.01,
-      defaultValue: 1.53,
-      min: 1,
-      max: 6,
-      precision: 2,
-    });
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } = useNumberInput({
+    step: 0.01,
+    defaultValue: 1.53,
+    min: 1,
+    max: 6,
+    precision: 2,
+  });
 
   const inc = getIncrementButtonProps();
   const dec = getDecrementButtonProps();
@@ -88,9 +76,7 @@ function ProductInformation({ product }: ProductInformationProps) {
             <Input {...input} />
             <Button {...dec}>-</Button>
           </HStack>
-          <Button onClick={() => addProductToCart(product!, value)}>
-            Add to cart
-          </Button>
+          <Button onClick={() => addProductToCart(product!, value)}>Add to cart</Button>
         </HStack>
       </Stack>
     </Box>

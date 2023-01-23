@@ -20,7 +20,6 @@ import {
 
 import { useForm } from "@mantine/form";
 
-import { productSpliApi } from "../API/productAPI";
 import {
   productSpliApi as categoryApi,
   useCategoryGetCategoriesQuery,
@@ -33,71 +32,14 @@ import { IconEdit, IconTrash, IconEye } from "@tabler/icons";
 import { useAppDispatch } from "../../../redux/hooks";
 import { DataTable } from "./Table";
 import { createColumnHelper } from "@tanstack/react-table";
-import { store } from "../../../redux/store";
 
 const columnHelper = createColumnHelper<ProductDetail>();
-
-const columns = [
-  columnHelper.accessor("id", {
-    cell: (info) => info.getValue(),
-    header: "ID",
-  }),
-  columnHelper.accessor("name", {
-    cell: (info) => info.getValue(),
-    header: "Name",
-  }),
-  columnHelper.accessor("description", {
-    cell: (info) => info.getValue(),
-    header: "Description",
-  }),
-  columnHelper.accessor("category", {
-    cell: (info) => info.getValue(),
-    header: "Category",
-  }),
-  columnHelper.accessor("quantity", {
-    cell: (info) => info.getValue(),
-    header: "Quantity",
-    meta: {
-      isNumeric: true,
-    },
-  }),
-  columnHelper.accessor("price", {
-    cell: (info) => info.getValue(),
-    header: "Price",
-    meta: {
-      isNumeric: true,
-    },
-  }),
-  columnHelper.accessor("imageUrl", {
-    cell: (info) => info.getValue(),
-    header: "Image",
-  }),
-  columnHelper.accessor("createdAt", {
-    cell: (info) => info.getValue(),
-    header: "Created Date",
-  }),
-  columnHelper.display({
-    id: "actions",
-    cell: (props) => (
-      <IconButton
-        aria-label="delete-product"
-        icon={<IconTrash size={16} />}
-        onClick={() => {
-          store.dispatch(
-            productSpliApi.endpoints.productDeleteProductById.initiate({ productId: props.row.original.id }),
-          );
-          store.dispatch(categoryApi.util.invalidateTags(["Category"]));
-        }}
-      />
-    ),
-  }),
-];
 
 export function ProductManagerPage() {
   const [currentProduct, setCurrentProduct] = useState<ProductDetail | undefined>(undefined);
   const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure();
 
-  //const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [category, setCategory] = useState<string>("music");
 
   const { data: categories } = useCategoryGetCategoriesQuery();
@@ -120,11 +62,80 @@ export function ProductManagerPage() {
   });
 
   type FormValues = typeof form.values;
-  const handleSubmit = (values: FormValues) => updateProduct(values);
-
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(event.target.value);
+  const handleSubmit = (values: FormValues) => {
+    updateProduct(values);
+    onEditClose();
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => setCategory(event.target.value);
+
+  const columns = [
+    columnHelper.accessor("id", {
+      cell: (info) => info.getValue(),
+      header: "ID",
+    }),
+    columnHelper.accessor("name", {
+      cell: (info) => info.getValue(),
+      header: "Name",
+    }),
+    columnHelper.accessor("description", {
+      cell: (info) => info.getValue(),
+      header: "Description",
+    }),
+    columnHelper.accessor("category", {
+      cell: (info) => info.getValue(),
+      header: "Category",
+    }),
+    columnHelper.accessor("quantity", {
+      cell: (info) => info.getValue(),
+      header: "Quantity",
+      meta: {
+        isNumeric: true,
+      },
+    }),
+    columnHelper.accessor("price", {
+      cell: (info) => info.getValue(),
+      header: "Price",
+      meta: {
+        isNumeric: true,
+      },
+    }),
+    columnHelper.accessor("imageUrl", {
+      cell: (info) => info.getValue(),
+      header: "Image",
+    }),
+    columnHelper.accessor("createdAt", {
+      cell: (info) => info.getValue(),
+      header: "Created Date",
+    }),
+    columnHelper.display({
+      id: "actions",
+      cell: (props) => (
+        <IconButton
+          aria-label="delete-product"
+          icon={<IconTrash size={16} />}
+          onClick={() => {
+            deleteProduct({ productId: props.row.original.id });
+            dispatch(categoryApi.util.invalidateTags(["Category"]));
+          }}
+        />
+      ),
+    }),
+    columnHelper.display({
+      id: "actions",
+      cell: (props) => (
+        <IconButton
+          aria-label="delete-product"
+          icon={<IconEdit size={16} />}
+          onClick={() => {
+            form.setValues(props.row.original);
+            onEditOpen();
+            dispatch(categoryApi.util.invalidateTags(["Category"]));
+          }}
+        />
+      ),
+    }),
+  ];
 
   return (
     <Box mt="20" p="10">
@@ -135,31 +146,40 @@ export function ProductManagerPage() {
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={form.onSubmit(handleSubmit)}>
+              <Text mb="8px">Product ID</Text>
               <Input
                 id="ID"
                 //placeholder=
                 //data-autofocus
                 {...form.getInputProps("id")}
-                disabled
+                isReadOnly
               />
+
+              <Text mb="8px">ID</Text>
               <Input id="Name" data-autofocus {...form.getInputProps("name")} />
+
+              <Text mb="8px">Name</Text>
               <Input id="Description" data-autofocus {...form.getInputProps("description")} />
+
+              <Text mb="8px">Category</Text>
               <Input id="Category" data-autofocus {...form.getInputProps("category")} />
+
+              <Text mb="8px">Quantity</Text>
               <Input id="Quantity" data-autofocus {...form.getInputProps("quantity")} />
+
+              <Text mb="8px">Price USD</Text>
               <Input id="Price" data-autofocus {...form.getInputProps("price")} />
+
+              <Text mb="8px">Image</Text>
               <Input id="Image" data-autofocus {...form.getInputProps("imageUrl")} />
-              <Input id="Category" data-autofocus {...form.getInputProps("createdAt")} disabled />
+
+              <Text mb="8px">Created date</Text>
+              <Input isReadOnly id="CreatedAt" data-autofocus {...form.getInputProps("createdAt")} disabled />
               <Button w="100%" mt="md" type="submit">
                 Submit
               </Button>
             </form>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onEditClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
 
