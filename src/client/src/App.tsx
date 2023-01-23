@@ -45,12 +45,11 @@ const router = createBrowserRouter([
         element: <CheckoutPage />,
       },
       */
-      /*
+
       {
         path: "admin/test",
         element: <ProductManagerPage />,
       },
-      */
     ],
   },
 ]);

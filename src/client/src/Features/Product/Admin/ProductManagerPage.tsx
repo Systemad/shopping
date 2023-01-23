@@ -1,205 +1,178 @@
-import sortBy from "lodash/sortBy";
+import { useState } from "react";
 
 import {
-  ActionIcon,
-  Group,
-  Paper,
-  Select,
-  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Button,
-  TextInput,
-} from "@mantine/core";
-import { openConfirmModal, openModal } from "@mantine/modals";
+  Input,
+  useDisclosure,
+  Box,
+  HStack,
+  IconButton,
+  Text,
+  Select,
+} from "@chakra-ui/react";
+
 import { useForm } from "@mantine/form";
-import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import { useEffect, useState } from "react";
+
+import { productSpliApi } from "../API/productAPI";
 import {
-  productSpliApi,
+  productSpliApi as categoryApi,
   useCategoryGetCategoriesQuery,
   useCategoryGetItemsForCategoryQuery,
 } from "../API/categoryAPI";
 
-import {
-  ProductDetail,
-  useProductDeleteProductByIdMutation,
-  useProductUpdateProductMutation,
-} from "../API/productAPI";
+import { ProductDetail, useProductDeleteProductByIdMutation, useProductUpdateProductMutation } from "../API/productAPI";
 
 import { IconEdit, IconTrash, IconEye } from "@tabler/icons";
 import { useAppDispatch } from "../../../redux/hooks";
+import { DataTable } from "./Table";
+import { createColumnHelper } from "@tanstack/react-table";
+import { store } from "../../../redux/store";
+
+const columnHelper = createColumnHelper<ProductDetail>();
+
+const columns = [
+  columnHelper.accessor("id", {
+    cell: (info) => info.getValue(),
+    header: "ID",
+  }),
+  columnHelper.accessor("name", {
+    cell: (info) => info.getValue(),
+    header: "Name",
+  }),
+  columnHelper.accessor("description", {
+    cell: (info) => info.getValue(),
+    header: "Description",
+  }),
+  columnHelper.accessor("category", {
+    cell: (info) => info.getValue(),
+    header: "Category",
+  }),
+  columnHelper.accessor("quantity", {
+    cell: (info) => info.getValue(),
+    header: "Quantity",
+    meta: {
+      isNumeric: true,
+    },
+  }),
+  columnHelper.accessor("price", {
+    cell: (info) => info.getValue(),
+    header: "Price",
+    meta: {
+      isNumeric: true,
+    },
+  }),
+  columnHelper.accessor("imageUrl", {
+    cell: (info) => info.getValue(),
+    header: "Image",
+  }),
+  columnHelper.accessor("createdAt", {
+    cell: (info) => info.getValue(),
+    header: "Created Date",
+  }),
+  columnHelper.display({
+    id: "actions",
+    cell: (props) => (
+      <IconButton
+        aria-label="delete-product"
+        icon={<IconTrash size={16} />}
+        onClick={() => {
+          store.dispatch(
+            productSpliApi.endpoints.productDeleteProductById.initiate({ productId: props.row.original.id }),
+          );
+          store.dispatch(categoryApi.util.invalidateTags(["Category"]));
+        }}
+      />
+    ),
+  }),
+];
 
 export function ProductManagerPage() {
-  const dispatch = useAppDispatch();
-  const [category, setCategory] = useState<string | null>(null);
+  const [currentProduct, setCurrentProduct] = useState<ProductDetail | undefined>(undefined);
+  const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure();
+
+  //const dispatch = useAppDispatch();
+  const [category, setCategory] = useState<string>("music");
 
   const { data: categories } = useCategoryGetCategoriesQuery();
   const { data: products, refetch } = useCategoryGetItemsForCategoryQuery(
     {
       category: category ?? "music",
     },
-    { refetchOnMountOrArgChange: true }
+    { refetchOnMountOrArgChange: true },
   );
 
   const [deleteProduct] = useProductDeleteProductByIdMutation();
   const [updateProduct] = useProductUpdateProductMutation();
 
-  const openDeleteModal = (product: ProductDetail) =>
-    openConfirmModal({
-      title: "Please confirm your action",
-      children: <Text size="lg">Do you wish to delete this product?</Text>,
-      labels: { confirm: "Confirm deletion", cancel: "Cancel" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => {
-        deleteProduct({ productId: product.id });
-        dispatch(productSpliApi.util.invalidateTags(["Category"]));
-      },
-    });
-
   const form = useForm<ProductDetail>({
     initialValues: undefined,
     validate: {
-      name: (value) =>
-        value.length < 2 ? "Product name must have at least 2 letters" : null,
-      description: (value) =>
-        value.length < 2
-          ? "Description name must have at least 2 letters"
-          : null,
+      name: (value: string) => (value.length < 2 ? "Product name must have at least 2 letters" : null),
+      description: (value: string) => (value.length < 2 ? "Description name must have at least 2 letters" : null),
     },
   });
 
   type FormValues = typeof form.values;
   const handleSubmit = (values: FormValues) => updateProduct(values);
 
-  const openEditModal = (product: ProductDetail) => {
-    // TODO: this doesn't override initial value
-    form.setValues(product);
-    form.resetDirty();
-
-    openModal({
-      title: "Update product",
-      children: (
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <TextInput
-            label="ID"
-            //placeholder=
-            //data-autofocus
-            {...form.getInputProps("id")}
-            disabled
-          />
-          <TextInput
-            label="Name"
-            data-autofocus
-            {...form.getInputProps("name")}
-          />
-          <TextInput
-            label="Description"
-            data-autofocus
-            {...form.getInputProps("description")}
-          />
-          <TextInput
-            label="Category"
-            data-autofocus
-            {...form.getInputProps("category")}
-          />
-          <TextInput
-            label="Quantity"
-            data-autofocus
-            {...form.getInputProps("quantity")}
-          />
-          <TextInput
-            label="Price"
-            data-autofocus
-            {...form.getInputProps("price")}
-          />
-          <TextInput
-            label="Image"
-            data-autofocus
-            {...form.getInputProps("imageUrl")}
-          />
-          <TextInput
-            label="Category"
-            data-autofocus
-            {...form.getInputProps("createdAt")}
-            disabled
-          />
-          <Button fullWidth onClick={() => updateProduct(product)} mt="md">
-            Submit
-          </Button>
-        </form>
-      ),
-    });
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(event.target.value);
   };
 
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
-    columnAccessor: "name",
-    direction: "asc",
-  });
-
-  const [records, setRecords] = useState(sortBy(products, "name"));
-  useEffect(() => {
-    const data = sortBy(products, sortStatus.columnAccessor);
-    setRecords(sortStatus.direction === "desc" ? data.reverse() : data);
-  }, [products, sortStatus]);
-
   return (
-    <Paper>
-      {categories && (
-        <Select value={category} onChange={setCategory} data={categories} />
-      )}
+    <Box mt="20" p="10">
+      <Modal isOpen={isEditOpen} onClose={onEditClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Product</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <form onSubmit={form.onSubmit(handleSubmit)}>
+              <Input
+                id="ID"
+                //placeholder=
+                //data-autofocus
+                {...form.getInputProps("id")}
+                disabled
+              />
+              <Input id="Name" data-autofocus {...form.getInputProps("name")} />
+              <Input id="Description" data-autofocus {...form.getInputProps("description")} />
+              <Input id="Category" data-autofocus {...form.getInputProps("category")} />
+              <Input id="Quantity" data-autofocus {...form.getInputProps("quantity")} />
+              <Input id="Price" data-autofocus {...form.getInputProps("price")} />
+              <Input id="Image" data-autofocus {...form.getInputProps("imageUrl")} />
+              <Input id="Category" data-autofocus {...form.getInputProps("createdAt")} disabled />
+              <Button w="100%" mt="md" type="submit">
+                Submit
+              </Button>
+            </form>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onEditClose}>
+              Close
+            </Button>
+            <Button variant="ghost">Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
-      <DataTable
-        withBorder
-        borderRadius="lg"
-        withColumnBorders
-        striped
-        highlightOnHover
-        columns={[
-          {
-            accessor: "id",
-            title: "ID",
-            textAlignment: "right",
-          },
-          { accessor: "name", sortable: true },
-          {
-            accessor: "quantity",
-            sortable: true,
-            render: ({ quantity }) => (
-              <Text weight={700} color={quantity > 0 ? "blue" : "red"}>
-                {quantity}
-              </Text>
-            ),
-          },
-          { accessor: "category" },
-          { accessor: "price", title: "Price (USD)", sortable: true },
-          {
-            accessor: "actions",
-            title: <Text mr="xs">Row actions</Text>,
-            textAlignment: "right",
-            render: (product) => (
-              <Group spacing={4} position="right" noWrap>
-                <ActionIcon
-                  color="green"
-                  onClick={() => openDeleteModal(product)}
-                >
-                  <IconEye size={16} />
-                </ActionIcon>
-                <ActionIcon color="blue" onClick={() => openEditModal(product)}>
-                  <IconEdit size={16} />
-                </ActionIcon>
-                <ActionIcon
-                  color="red"
-                  onClick={() => openDeleteModal(product)}
-                >
-                  <IconTrash size={16} />
-                </ActionIcon>
-              </Group>
-            ),
-          },
-        ]}
-        onSortStatusChange={setSortStatus}
-        sortStatus={sortStatus}
-        records={records}
-      />
-    </Paper>
+      <Box>
+        {categories && (
+          <Select value={category} onChange={handleChange}>
+            {categories.map((category) => (
+              <option key={`category-${category}`}>{category}</option>
+            ))}
+          </Select>
+        )}
+        {products && <DataTable data={products} columns={columns} />}
+      </Box>
+    </Box>
   );
 }
