@@ -1,19 +1,8 @@
-import { IconHeart } from "@tabler/icons";
+import { IconHeart } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { ProductDetail } from "../API/productAPI";
 import { useCart } from "../../ShoppingCart/Hooks/useCart";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  HStack,
-  IconButton,
-  Button,
-  Text,
-  Image,
-  Badge,
-  Stack,
-} from "@chakra-ui/react";
+import { Card, CardBody, CardFooter, HStack, IconButton, Button, Text, Image, Badge, Stack } from "@chakra-ui/react";
 
 interface ProductCardProps {
   product: ProductDetail;
@@ -37,20 +26,10 @@ export function ProductCard({ product }: ProductCardProps) {
         </HStack>
       </CardBody>
       <CardFooter justify="space-between" flexWrap="wrap">
-        <Button
-          onClick={() => addProductToCart(product, 1)}
-          borderRadius="md"
-          flex="1"
-          variant="ghost"
-        >
+        <Button onClick={() => addProductToCart(product, 1)} borderRadius="md" flex="1" variant="ghost">
           Add to cart
         </Button>
-        <Button
-          onClick={() => navigate(product.id)}
-          borderRadius="md"
-          flex="1"
-          variant="ghost"
-        >
+        <Button onClick={() => navigate(product.id)} borderRadius="md" flex="1" variant="ghost">
           View
         </Button>
         <IconButton

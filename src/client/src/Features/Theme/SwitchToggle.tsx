@@ -1,16 +1,25 @@
-import { useColorMode, Button } from "@chakra-ui/react";
-import { IconSun, IconMoonStars } from "@tabler/icons";
+import { useColorMode, IconButton } from "@chakra-ui/react";
+import { IconSun, IconMoonStars } from "@tabler/icons-react";
 
 export function SwitchToggle() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Button onClick={toggleColorMode}>
-      {colorMode === "light" ? (
-        <IconMoonStars color={"black"} size={20} stroke={1.5} />
-      ) : (
-        <IconSun color={"white"} size={20} stroke={1.5} />
-      )}
-    </Button>
+    <IconButton
+      aria-label="Switch theme"
+      p={3}
+      borderWidth={1}
+      borderColor={"gray.500"}
+      size="xl"
+      borderRadius={"full"}
+      onClick={toggleColorMode}
+      icon={
+        colorMode === "light" ? (
+          <IconMoonStars color={"black"} strokeWidth={1.5} />
+        ) : (
+          <IconSun color={"white"} strokeWidth={1.5} />
+        )
+      }
+    />
   );
 }

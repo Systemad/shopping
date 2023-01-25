@@ -1,4 +1,4 @@
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { DynamicTablerIcons } from "../../Components/DynamicTablerIcons";
 

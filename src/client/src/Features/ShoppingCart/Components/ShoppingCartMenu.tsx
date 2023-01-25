@@ -16,9 +16,10 @@ import {
   Avatar,
   Button,
   Box,
+  Icon,
   Flex,
 } from "@chakra-ui/react";
-import { IconShoppingCart, IconX } from "@tabler/icons";
+import { IconShoppingCart, IconX } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../Hooks/useCart";
 
@@ -30,11 +31,15 @@ export function ShoppingCartMenu() {
     <Popover placement="bottom">
       <PopoverTrigger>
         <IconButton
+          p={3}
+          //colorScheme={"teal"}
+          borderWidth={1}
+          borderColor={"gray.500"}
           aria-label="shoppingcart-button"
-          icon={<IconShoppingCart />}
           size="xl"
-          borderRadius={"md"}
-          variant="filled"
+          borderRadius={"full"}
+          icon={<IconShoppingCart />}
+          //variant="filled"
         />
       </PopoverTrigger>
       <PopoverContent>
@@ -53,11 +58,7 @@ export function ShoppingCartMenu() {
             cart.map((item) => (
               <>
                 <HStack p="xs">
-                  <Avatar
-                    src={item.productDetail.imageUrl}
-                    size={"lg"}
-                    borderRadius={"md"}
-                  />
+                  <Avatar src={item.productDetail.imageUrl} size={"lg"} borderRadius={"md"} />
 
                   <Flex>
                     <Text>{item.productDetail.name}</Text>
@@ -71,9 +72,7 @@ export function ShoppingCartMenu() {
                     <IconButton
                       aria-label="remove-item"
                       icon={<IconX size={18} />}
-                      onClick={() =>
-                        removeProductFromCart(item.productDetail, item.quantity)
-                      }
+                      onClick={() => removeProductFromCart(item.productDetail, item.quantity)}
                     />
                   </HStack>
                 </HStack>
@@ -87,11 +86,7 @@ export function ShoppingCartMenu() {
                 <Text>Total</Text>
                 <Text>${totalCost}</Text>
               </HStack>
-              <Button
-                onClick={() => navigate("checkout")}
-                w="100%"
-                variant="filled"
-              >
+              <Button onClick={() => navigate("checkout")} w="100%" variant="filled">
                 Checkout
               </Button>
             </>

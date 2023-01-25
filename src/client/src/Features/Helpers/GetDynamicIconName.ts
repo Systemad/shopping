@@ -7,7 +7,6 @@ const iconMap: IconMapType = {
   ["Books"]: "IconBooks",
   ["Movies"]: "IconMovie",
   ["Music"]: "IconMusic",
-  //  ["Clothes"]: "IconHanger",
   ["Games"]: "IconHanger",
   ["Other"]: "IconDots",
 };

@@ -3,7 +3,6 @@ import {
   Flex,
   Text,
   IconButton,
-  Button,
   Stack,
   Collapse,
   Icon,
@@ -20,6 +19,7 @@ import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon } from "@ch
 import { NavItem, NAV_ITEMS } from "./NavigationData";
 import { ShoppingCartMenu } from "../ShoppingCart/Components/ShoppingCartMenu";
 import { SwitchToggle } from "../Theme/SwitchToggle";
+import { SignInSignOutButton } from "../Auth/SignInSignOutButton";
 
 export function Navigationbar() {
   const { isOpen, onToggle } = useDisclosure();
@@ -63,7 +63,8 @@ export function Navigationbar() {
           </Flex>
         </Flex>
 
-        <Stack flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
+        <Stack align={"center"} flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
+          <SignInSignOutButton />
           <ShoppingCartMenu />
           <SwitchToggle />
         </Stack>
@@ -90,19 +91,22 @@ const DesktopNav = () => {
               <Link
                 as={NavLink}
                 to={navItem.href ?? ""}
-                p={2}
                 fontSize={"lg"}
+                p={3}
                 fontWeight={600}
                 color={linkColor}
+                borderRadius="full"
                 _activeLink={{
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "teal.400",
-                  borderBottomWidth: "4px",
-                  borderBottomRadius: "xs",
+                  //borderBottomStyle: "solid",
+                  //borderBottomColor: "teal.400",
+                  //borderBottomWidth: "4px",
+                  color: "white",
+                  bgColor: "teal.400",
+                  borderRadius: "full",
                 }}
                 _hover={{
-                  textDecoration: "none",
-                  color: linkHoverColor,
+                  bgColor: "teal.300",
+                  borderRadius: "full",
                 }}
               >
                 {navItem.label}
@@ -126,6 +130,7 @@ const DesktopNav = () => {
 };
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
+  const linkHoverColor = useColorModeValue("gray.800", "white");
   return (
     <Link
       as={NavLink}
@@ -134,26 +139,18 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
       display={"block"}
       p={2}
       rounded={"md"}
-      _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
+      _hover={{
+        textDecoration: "none",
+        color: linkHoverColor,
+      }}
     >
       <Stack direction={"row"} align={"center"}>
-        <Box>
-          <Text transition={"all .3s ease"} _groupHover={{ color: "pink.400" }} fontWeight={500}>
+        <Box _hover={{ bgColor: "white", opacity: "90%", borderRadius: "full", padding: 2 }}>
+          <Text transition={"all .2s ease"} _groupHover={{ color: linkHoverColor }} fontWeight={500}>
             {label}
           </Text>
           <Text fontSize={"sm"}>{subLabel}</Text>
         </Box>
-        <Flex
-          transition={"all .3s ease"}
-          transform={"translateX(-10px)"}
-          opacity={0}
-          _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
-          justify={"flex-end"}
-          align={"center"}
-          flex={1}
-        >
-          <Icon color={"pink.400"} w={5} h={5} as={ChevronRightIcon} />
-        </Flex>
       </Stack>
     </Link>
   );

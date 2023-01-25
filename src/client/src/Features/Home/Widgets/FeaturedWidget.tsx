@@ -1,15 +1,4 @@
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Text,
-  SimpleGrid,
-  Flex,
-  Box,
-  Image,
-} from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Text, SimpleGrid, Flex, Box, Image } from "@chakra-ui/react";
 
 import { WidgetWrapper } from "./WidgetWrapper";
 
@@ -20,7 +9,7 @@ export function FeaturedWidget() {
         <Text size="xl" align="center">
           Our Featured Products
         </Text>
-        <Tabs isFitted isLazy defaultIndex={0}>
+        <Tabs variant={"soft-rounded"} colorScheme={"teal"} isFitted isLazy defaultIndex={0}>
           <TabList>
             <Tab>ALL</Tab>
             <Tab>NEW ARRIVALS</Tab>

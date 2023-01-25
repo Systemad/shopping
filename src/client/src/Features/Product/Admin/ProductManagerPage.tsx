@@ -28,7 +28,7 @@ import {
 
 import { ProductDetail, useProductDeleteProductByIdMutation, useProductUpdateProductMutation } from "../API/productAPI";
 
-import { IconEdit, IconTrash, IconEye } from "@tabler/icons";
+import { IconEdit, IconTrash, IconEye } from "@tabler/icons-react";
 import { useAppDispatch } from "../../../redux/hooks";
 import { DataTable } from "./Table";
 import { createColumnHelper } from "@tanstack/react-table";

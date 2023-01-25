@@ -14,9 +14,13 @@ module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
   parserOptions: {
+    sourceType: "module",
     project: "./tsconfig.json",
     tsconfigRootDir: __dirname,
   },
+  plugins: [
+    "@typescript-eslint"
+  ],
   settings: {
     react: {
       // Tells eslint-plugin-react to automatically detect the version of React to use.

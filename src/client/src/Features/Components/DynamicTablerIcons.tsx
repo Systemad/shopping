@@ -1,4 +1,6 @@
-import * as icons from "@tabler/icons";
+/* eslint-disable import/namespace */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import * as icons from "@tabler/icons-react";
 import { GetDynamicIconAsString } from "../Helpers/GetDynamicIconName";
 
 interface Props {
@@ -11,7 +13,7 @@ interface Props {
 export const DynamicTablerIcons = (props: Props): JSX.Element => {
   const { iconName, size } = props;
 
-  let iconString = GetDynamicIconAsString(iconName);
+  const iconString = GetDynamicIconAsString(iconName);
   // @ts-ignore
   const Icon: JSX.Element = icons[iconString];
 
