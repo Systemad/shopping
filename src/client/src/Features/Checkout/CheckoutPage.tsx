@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { useForm } from "@mantine/form";
-import { IconAlertTriangle } from "@tabler/icons";
 import { useCart } from "../ShoppingCart/Hooks/useCart";
 import { CartItem } from "../ShoppingCart/API/shoppingCartAPI";
 import {

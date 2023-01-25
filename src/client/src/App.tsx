@@ -1,8 +1,17 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Provider } from "react-redux";
+import { MsalProvider } from "@azure/msal-react";
+import { IPublicClientApplication } from "@azure/msal-browser";
 
 import Home from "./Features/Home";
 
+/*
+ ADD OrderGrain
+ Add joirnealed grain, and raiseevents
+
+ ADD more user functions, as wishlist (iWIshListGrain)and able to share them
+ CHECK ADMIN prvielege, if not admin, simply dont render elements / pages
+*/
 import { CategoriesPage } from "./Features/Product/CategoriesPage";
 import { CategoryPage } from "./Features/Product/CategoryPage";
 import { ProductPage } from "./Features/Product/ProductPage";
@@ -53,11 +62,17 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App() {
+type AppProps = {
+  pca: IPublicClientApplication;
+};
+
+function App({ pca }: AppProps) {
   return (
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
+    <MsalProvider instance={pca}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </MsalProvider>
   );
 }
 

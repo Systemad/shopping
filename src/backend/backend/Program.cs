@@ -103,6 +103,9 @@ app.UseSwaggerUi3();
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapGet("/", () => "Hello World!");
 app.MapControllers();
 
