@@ -3,23 +3,10 @@
 // 1. import `extendTheme` function
 import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
 import { StepsTheme as Steps } from "chakra-ui-steps";
-
-const colors = {
-  cupcake: {
-    primary: "#65c3c8",
-    secondary: "#ef9fbc",
-    accent: "#eeaf3a",
-    neutral: "#291334",
-    base100: "#faf7f5",
-    base200: "#efeae6",
-    base300: "#e7e2df",
-    altbase200: "#dbd4d4",
-    primarycontent: "#291334",
-    success: "#36d399",
-    error: "#f87272",
-    info: "#3abff8",
-  },
-};
+import { mode } from "@chakra-ui/theme-tools";
+import type { StyleFunctionProps } from "@chakra-ui/styled-system";
+import { Link } from "./Components/Link";
+import { palette } from "./Colors/colors";
 
 // 2. Add your color mode config
 const config: ThemeConfig = {
@@ -29,10 +16,20 @@ const config: ThemeConfig = {
 
 // 3. extend the theme
 const maintheme = extendTheme({
+  styles: {
+    global: (props: StyleFunctionProps) => ({
+      body: {
+        fontFamily: "body",
+        //color: mode("#191c1c", "#e0e3e3")(props),
+        bg: mode(palette.light.background, palette.dark.background)(props),
+        //lineHeight: "base",
+      },
+    }),
+  },
   config,
-  // colors,
   components: {
     Steps,
+    Link,
   },
 });
 

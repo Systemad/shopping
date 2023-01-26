@@ -31,7 +31,8 @@ export function ShoppingCartMenu() {
     <Popover placement="bottom">
       <PopoverTrigger>
         <IconButton
-          p={3}
+          px={"24px"}
+          py={"12px"}
           //colorScheme={"teal"}
           borderWidth={1}
           borderColor={"gray.500"}

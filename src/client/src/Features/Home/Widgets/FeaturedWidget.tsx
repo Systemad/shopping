@@ -9,7 +9,7 @@ export function FeaturedWidget() {
         <Text size="xl" align="center">
           Our Featured Products
         </Text>
-        <Tabs variant={"soft-rounded"} colorScheme={"teal"} isFitted isLazy defaultIndex={0}>
+        <Tabs variant={"soft-rounded"} colorScheme={"green"} isFitted isLazy defaultIndex={0}>
           <TabList>
             <Tab>ALL</Tab>
             <Tab>NEW ARRIVALS</Tab>

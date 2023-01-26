@@ -15,11 +15,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { NavItem, NAV_ITEMS } from "./NavigationData";
 import { ShoppingCartMenu } from "../ShoppingCart/Components/ShoppingCartMenu";
 import { SwitchToggle } from "../Theme/SwitchToggle";
 import { SignInSignOutButton } from "../Auth/SignInSignOutButton";
+import { palette } from "../Theme/Colors/colors";
 
 export function Navigationbar() {
   const { isOpen, onToggle } = useDisclosure();
@@ -32,13 +33,13 @@ export function Navigationbar() {
         top="0"
         w={"full"}
         //w={"calc(100% - 30px)"}
-        bg={useColorModeValue("white", "gray.700")}
-        color={useColorModeValue("gray.600", "white")}
+        bg={useColorModeValue("#edf5f5", "#1c2626")}
+        color={useColorModeValue(palette.light.onPrimaryContainer, palette.dark.onPrimary)}
         minH={"75px"}
         py={{ base: 3 }}
         px={{ base: 5 }}
-        shadow="lg"
-        borderRadius="lg"
+        shadow="xs"
+        //borderRadius="lg"
         align={"center"}
       >
         <Flex flex={{ base: 1, md: "auto" }} ml={{ base: -2 }} display={{ base: "flex", md: "none" }}>
@@ -88,27 +89,7 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <Link
-                as={NavLink}
-                to={navItem.href ?? ""}
-                fontSize={"lg"}
-                p={3}
-                fontWeight={600}
-                color={linkColor}
-                borderRadius="full"
-                _activeLink={{
-                  //borderBottomStyle: "solid",
-                  //borderBottomColor: "teal.400",
-                  //borderBottomWidth: "4px",
-                  color: "white",
-                  bgColor: "teal.400",
-                  borderRadius: "full",
-                }}
-                _hover={{
-                  bgColor: "teal.300",
-                  borderRadius: "full",
-                }}
-              >
+              <Link as={NavLink} variant="navbar" to={navItem.href ?? ""}>
                 {navItem.label}
               </Link>
             </PopoverTrigger>
