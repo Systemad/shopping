@@ -1,6 +1,7 @@
 import { Box, Container, Link, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 
 import { NavLink } from "react-router-dom";
+import { cupcake } from "../Theme/Colors/cupcake";
 
 const Logo = () => {
   return (
@@ -26,8 +27,7 @@ export const Footer = () => {
       left="0"
       right="0"
       //mt="auto"
-      bg={useColorModeValue("gray.50", "gray.900")}
-      color={useColorModeValue("gray.700", "gray.200")}
+      bgColor={cupcake["base-200"]}
     >
       <Container as={Stack} maxW={"6xl"} py={4} spacing={4} justify={"center"} align={"center"}>
         <Logo />
@@ -47,7 +47,7 @@ export const Footer = () => {
         </Stack>
       </Container>
 
-      <Box borderTopWidth={1} borderStyle={"solid"} borderColor={useColorModeValue("gray.200", "gray.700")}>
+      <Box>
         <Container
           as={Stack}
           maxW={"6xl"}

@@ -18,9 +18,8 @@ import { NavLink } from "react-router-dom";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { NavItem, NAV_ITEMS } from "./NavigationData";
 import { ShoppingCartMenu } from "../ShoppingCart/Components/ShoppingCartMenu";
-import { SwitchToggle } from "../Theme/SwitchToggle";
 import { SignInSignOutButton } from "../Auth/SignInSignOutButton";
-import { palette } from "../Theme/Colors/colors";
+import { cupcake } from "../Theme/Colors/cupcake";
 
 export function Navigationbar() {
   const { isOpen, onToggle } = useDisclosure();
@@ -33,12 +32,12 @@ export function Navigationbar() {
         top="0"
         w={"full"}
         //w={"calc(100% - 30px)"}
-        bg={useColorModeValue("#edf5f5", "#1c2626")}
-        color={useColorModeValue(palette.light.onPrimaryContainer, palette.dark.onPrimary)}
+        bg={cupcake["base-200"]}
+        //color={useColorModeValue(palette.light.onSurface, palette.dark.onSurface)}
         minH={"75px"}
         py={{ base: 3 }}
         px={{ base: 5 }}
-        shadow="xs"
+        //shadow="md"
         //borderRadius="lg"
         align={"center"}
       >
@@ -67,7 +66,6 @@ export function Navigationbar() {
         <Stack align={"center"} flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} spacing={6}>
           <SignInSignOutButton />
           <ShoppingCartMenu />
-          <SwitchToggle />
         </Stack>
       </Flex>
 
@@ -79,8 +77,6 @@ export function Navigationbar() {
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
-  const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
@@ -89,7 +85,7 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <Link as={NavLink} variant="navbar" to={navItem.href ?? ""}>
+              <Link as={NavLink} variant="navLink" to={navItem.href ?? ""}>
                 {navItem.label}
               </Link>
             </PopoverTrigger>

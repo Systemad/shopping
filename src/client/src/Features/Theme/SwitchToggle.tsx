@@ -7,19 +7,9 @@ export function SwitchToggle() {
   return (
     <IconButton
       aria-label="Switch theme"
-      p={3}
-      borderWidth={1}
-      borderColor={"gray.500"}
-      size="xl"
-      borderRadius={"full"}
+      variant="iconUtil"
       onClick={toggleColorMode}
-      icon={
-        colorMode === "light" ? (
-          <IconMoonStars color={"black"} strokeWidth={1.5} />
-        ) : (
-          <IconSun color={"white"} strokeWidth={1.5} />
-        )
-      }
+      icon={colorMode === "light" ? <IconMoonStars /> : <IconSun />}
     />
   );
 }

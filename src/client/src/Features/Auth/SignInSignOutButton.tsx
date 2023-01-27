@@ -1,5 +1,6 @@
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { Button, Avatar, Menu, MenuButton, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
+import { palette } from "../Theme/Colors/colors";
 import { loginRequest } from "./Authconfig";
 
 export const SignInSignOutButton = () => {
@@ -34,19 +35,7 @@ export const SignInSignOutButton = () => {
       )}
 
       {!isAuthenticated && (
-        <Button
-          onClick={handleLogin}
-          display={{ base: "none", md: "inline-flex" }}
-          fontSize={"lg"}
-          p={3}
-          fontWeight={600}
-          color={"white"}
-          borderRadius={"full"}
-          bg={"teal.400"}
-          _hover={{
-            bg: "teal.300",
-          }}
-        >
+        <Button variant="auth" onClick={handleLogin} display={{ base: "none", md: "inline-flex" }}>
           Sign In
         </Button>
       )}
