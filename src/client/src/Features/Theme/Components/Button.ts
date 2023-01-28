@@ -16,8 +16,8 @@ const iconUtil = defineStyle({
 const auth = defineStyle({
   fontSize: "lg",
   fontWeight: 600,
-  bgColor: cupcake.primary,
-  color: cupcake["primary-content"],
+  bgColor: cupcake.secondary,
+  color: cupcake["secondary-content"],
   _hover: {
     bgColor: "#65c3c833",
     textDecoration: "none",

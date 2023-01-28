@@ -1,4 +1,4 @@
-import { Text, Paper, Box, Group, ScrollArea } from "@mantine/core";
+import { Text, HStack, Flex, Box } from "@chakra-ui/react";
 import { useCategoryGetCategoriesQuery } from "../../Product/API/categoryAPI";
 
 import { WidgetWrapper } from "./WidgetWrapper";
@@ -7,20 +7,18 @@ export function CategoriesWidget() {
   const { data: categories } = useCategoryGetCategoriesQuery();
   return (
     <WidgetWrapper>
-      <Text fz="xl" ta="center">
-        Check out our other categories
-      </Text>
-      <ScrollArea type="always">
-        <Group p={2} position="center" noWrap>
+      <Text size="xl">Check out our other categories</Text>
+      <Flex overflowX={"scroll"}>
+        <HStack p={2}>
           {categories?.map((cat) => (
             <CategoryItem key={`widget-category-${cat}`} />
           ))}
-        </Group>
-      </ScrollArea>
+        </HStack>
+      </Flex>
     </WidgetWrapper>
   );
 }
 
 function CategoryItem() {
-  return <Box style={{ borderRadius: "md" }} w={150} h={135} bg="blue"></Box>;
+  return <Box borderRadius={"lg"} w={150} h={135} bg="blue"></Box>;
 }

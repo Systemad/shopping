@@ -1,6 +1,5 @@
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { Button, Avatar, Menu, MenuButton, MenuList, MenuItem, MenuDivider } from "@chakra-ui/react";
-import { palette } from "../Theme/Colors/colors";
 import { loginRequest } from "./Authconfig";
 
 export const SignInSignOutButton = () => {
@@ -26,7 +25,7 @@ export const SignInSignOutButton = () => {
             <MenuItem>Wishlist</MenuItem>
             <MenuDivider />
             <MenuItem>
-              <Button w="full" variant="ghost" onClick={handleLogout} fontSize={"sm"} fontWeight={600}>
+              <Button w="full" variant="auth" onClick={handleLogout}>
                 Sign out
               </Button>
             </MenuItem>

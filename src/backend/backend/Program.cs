@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using backend.Features.Auth;
 using backend.Features.FakeData;
 using Orleans.Configuration;
 
@@ -49,6 +50,8 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
         });
     }
 });
+
+builder.Services.AddAzureB2C(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { DynamicTablerIcons } from "../../Components/DynamicTablerIcons";
 
 import { Box, Center, Stack, Button, Heading, Card, CardHeader, CardBody, CardFooter, Divider } from "@chakra-ui/react";
+import { cupcake } from "../../Theme/Colors/cupcake";
 
 interface CategoryCardProps {
   name: string;
@@ -11,9 +12,9 @@ interface CategoryCardProps {
 export function CategoryCard({ name }: CategoryCardProps) {
   const navigate = useNavigate();
   return (
-    <Card size="md" align="center">
+    <Card borderRadius={"lg"} size="md" align="center">
       <CardBody>
-        <Stack>
+        <Stack align="center">
           <DynamicTablerIcons iconName={name} size={100} />
           <Heading as="h4" size="md">
             {name}
@@ -22,8 +23,13 @@ export function CategoryCard({ name }: CategoryCardProps) {
       </CardBody>
       <Divider />
       <CardFooter>
-        <Button rightIcon={<IconArrowRight />} onClick={() => navigate(name.toLowerCase())}>
-          View products
+        <Button
+          outline={"1px solid"}
+          outlineColor={cupcake["info-conent"]}
+          rightIcon={<IconArrowRight />}
+          onClick={() => navigate(name.toLowerCase())}
+        >
+          View
         </Button>
       </CardFooter>
     </Card>

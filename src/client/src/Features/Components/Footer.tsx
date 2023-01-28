@@ -1,4 +1,4 @@
-import { Box, Container, Link, Stack, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Link, Stack, Text } from "@chakra-ui/react";
 
 import { NavLink } from "react-router-dom";
 import { cupcake } from "../Theme/Colors/cupcake";

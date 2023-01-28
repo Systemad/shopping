@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { ProductDetail } from "../API/productAPI";
 import { useCart } from "../../ShoppingCart/Hooks/useCart";
 import { Card, CardBody, CardFooter, HStack, IconButton, Button, Text, Image, Badge, Stack } from "@chakra-ui/react";
+import { cupcake } from "../../Theme/Colors/cupcake";
 
 interface ProductCardProps {
   product: ProductDetail;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const { cart, addProductToCart } = useCart();
+  const { addProductToCart } = useCart();
 
   const navigate = useNavigate();
 
@@ -26,17 +27,25 @@ export function ProductCard({ product }: ProductCardProps) {
         </HStack>
       </CardBody>
       <CardFooter justify="space-between" flexWrap="wrap">
-        <Button onClick={() => addProductToCart(product, 1)} borderRadius="md" flex="1" variant="ghost">
+        <Button
+          onClick={() => addProductToCart(product, 1)}
+          borderRadius="full"
+          px={6}
+          flex="1"
+          variant="solid"
+          bgColor={cupcake.primary}
+          color={cupcake["primary-content"]}
+        >
           Add to cart
         </Button>
-        <Button onClick={() => navigate(product.id)} borderRadius="md" flex="1" variant="ghost">
+        <Button onClick={() => navigate(product.id)} borderRadius="full" flex="1" variant="ghost">
           View
         </Button>
         <IconButton
           aria-label="add-wishlist"
           icon={<IconHeart size={34} />}
           color="red"
-          borderRadius="md"
+          borderRadius="full"
           flex="1"
           variant="ghost"
         />

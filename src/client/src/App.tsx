@@ -25,6 +25,7 @@ const router = createBrowserRouter([
     element: <AppShellWrapper />,
     children: [
       {
+        index: true,
         path: "/",
         element: <Home />,
       },
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
         */
       },
       {
-        path: "category/:categoryId",
+        path: "categories/:categoryId",
         element: <CategoryPage />,
       },
       {
