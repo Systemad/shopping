@@ -20,6 +20,8 @@ builder.Host.UseOrleans((ctx, siloBuilder) =>
         siloBuilder.AddMemoryGrainStorage("categoryStore");
         siloBuilder.AddMemoryGrainStorage("promotionStore");
         siloBuilder.AddMemoryGrainStorage("promotionManagerStore");
+        siloBuilder.AddMemoryGrainStorage("wishlistStore");
+        siloBuilder.AddMemoryGrainStorage("userStore");
         //siloBuilder.UseInMemoryReminderService();
         siloBuilder.AddStartupTask<SeedData>();
     }

@@ -1,8 +1,10 @@
 ﻿using backend.Features.Product.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Features.Product;
 
+[Authorize]
 [ApiController]
 [Route("product")]
 public class ProductController : ControllerBase
@@ -19,6 +21,7 @@ public class ProductController : ControllerBase
     /// </summary>
     /// <param name="productId">The ID of the product</param>
     /// <returns>A ProductDetail object</returns>
+    [AllowAnonymous]
     [HttpGet("productId")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDetail))]
     public async Task<IActionResult> GetProduct(string productId)
@@ -29,6 +32,7 @@ public class ProductController : ControllerBase
     }
     
     //[Obsolete("WIP")]
+    [AllowAnonymous]
     [HttpGet("productIds")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductDetail>))]
     public async Task<IActionResult> GetProductsById([FromQuery] string[] productIds)

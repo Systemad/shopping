@@ -1,6 +1,7 @@
-﻿namespace backend.Features.ShoppingCart;
+﻿using System.Security.Claims;
 
-// TODO: FIX
+namespace backend.Features;
+
 internal static class HttpContextExtensions
 {
     internal static string SetOrCreateCookieCartId(this IHttpContextAccessor httpContextAccessor)
@@ -24,4 +25,10 @@ internal static class HttpContextExtensions
         httpContextAccessor?.HttpContext?.Response.Cookies.Append(cartKey, cookieId, cookieOptions);
         return cookieId;
     }
+
+    internal static string TryGetUserId(this IHttpContextAccessor httpContextAccessor) =>
+    //{
+        httpContextAccessor.HttpContext.User.Claims.Single(e => e.Type == ClaimTypes.NameIdentifier).Value;
+        //return userId;
+    //}
 }
