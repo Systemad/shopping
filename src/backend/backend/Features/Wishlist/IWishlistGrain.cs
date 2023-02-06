@@ -2,7 +2,7 @@
 
 namespace backend.Features.Wishlist;
 
-public interface IWishlistGrain : IGrainWithGuidKey
+public interface IWishlistGrain : IGrainWithStringKey
 {
     Task ChangePublicStatus(bool status);
     Task AddProductToWishlist(string productId);

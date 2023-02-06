@@ -1,4 +1,6 @@
-﻿using backend.Features.ShoppingCart.Models;
+﻿using System.Security.Claims;
+using backend.Features.ShoppingCart.Models;
+using backend.Features.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +19,8 @@ public class ShoppingCartController : ControllerBase
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IGrainFactory _grainFactory;
     
+    private string GetUserId => new(User.Claims.Single(e => e.Type == ClaimTypes.NameIdentifier).Value);
+    
     public ShoppingCartController(IGrainFactory grainFactory, IHttpContextAccessor httpContextAccessor)
     {
         _grainFactory = grainFactory;
@@ -32,8 +36,8 @@ public class ShoppingCartController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CartItem>))]
     public async Task<ActionResult> GetShoppingCart()
     {
-        var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
-        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(clientSession);
+        var cartId = await GetShoppingCardId();
+        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(cartId);
         var items = await cartGrain.GetAllItems();
         return Ok(items);
     }
@@ -43,8 +47,8 @@ public class ShoppingCartController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> AddItemToCart(string id, int quantity)
     {
-        var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
-        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(clientSession);
+        var cartId = await GetShoppingCardId();
+        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(cartId);
         await cartGrain.AddOrUpdateItem(id, quantity);
         var cart = await cartGrain.GetAllItems();
         return Ok(cart);
@@ -55,8 +59,8 @@ public class ShoppingCartController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> RemoveItemFromCart(string id, int quantity)
     {
-        var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
-        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(clientSession);
+        var cartId = await GetShoppingCardId();
+        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(cartId);
         await cartGrain.RemoveItem(id, quantity);
         var cart = await cartGrain.GetAllItems();
         return Ok(cart);
@@ -67,10 +71,21 @@ public class ShoppingCartController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> EmptyCart()
     {
-        var clientSession = _httpContextAccessor.SetOrCreateCookieCartId();
-        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(clientSession);
+        var cartId = await GetShoppingCardId();
+        var cartGrain = _grainFactory.GetGrain<IShoppingCartGrain>(cartId);
         await cartGrain.EmptyCart();
         return Ok();
     }
-    
+
+    private async ValueTask<string> GetShoppingCardId()
+    {
+        if (!string.IsNullOrWhiteSpace(GetUserId))
+        {
+            var userGrain = _grainFactory.GetGrain<IUserGrain>(GetUserId);
+            var cartId = await userGrain.GetShoppingCartId();
+            return cartId;
+        }
+        var id =  _httpContextAccessor.SetOrCreateCookieCartId();
+        return id;
+    }
 }

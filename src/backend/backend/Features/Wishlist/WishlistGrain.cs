@@ -8,7 +8,9 @@ public class WishlistGrain : Grain, IWishlistGrain
 {
     private readonly IPersistentState<WishlistState> _state;
 
-    public WishlistGrain([PersistentState("Wishlist", "wishlistStore")] IPersistentState<WishlistState> state)
+    public WishlistGrain(
+        [PersistentState("Wishlist", "wishlistStore")]
+        IPersistentState<WishlistState> state)
     {
         _state = state;
     }
@@ -31,7 +33,6 @@ public class WishlistGrain : Grain, IWishlistGrain
         await _state.WriteStateAsync();
     }
     
-    // TODO: Call this in usergrain, and in usergrain create new WishlistDTO with this info
     public async Task<(bool IsPublic, string Name, List<ProductDetail> products)> GetWishlist()
     {
         var productList = new List<ProductDetail>();
@@ -40,8 +41,6 @@ public class WishlistGrain : Grain, IWishlistGrain
             var productGrain = GrainFactory.GetGrain<IProductGrain>(id);
             productList.Add(await productGrain.GetProductDetails());
         }
-
         return (_state.State.IsPublic, _state.State.Name, productList);
     }
-
 }

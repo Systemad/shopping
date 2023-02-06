@@ -1,11 +1,11 @@
-﻿namespace backend.Features.User;
+﻿using backend.Features.Wishlist;
+
+namespace backend.Features.User;
 
 public interface IUserGrain : IGrainWithStringKey
 {
-    // TODO: 
-    /* AddProductToShoppingCart
-     * AddProductToWishlist
-     * Get ID from State, just call their grains add add / manager product 
-     * 
-     */
+    Task SetUserInfo(string username, string email);
+    Task<WishlistDto> GetWishlist();
+    Task<string> GetShoppingCartId();
+    Task<string> GetWishlistId();
 }
