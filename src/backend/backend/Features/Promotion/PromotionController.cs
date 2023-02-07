@@ -1,15 +1,17 @@
-﻿using backend.Features.Promotion.Interfaces;
+﻿using Asp.Versioning;
+using backend.Features.Promotion.Interfaces;
 using backend.Features.Promotion.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Features.Campaign;
+namespace backend.Features.Promotion;
 
 /// <summary>
 /// API Controller for promotion 
 /// </summary>
 [ApiController]
-[Route("promotion")]
+[ApiVersion(1.0)]
+[Route("v/{version:apiVersion}/promotion")]
 public class PromotionController : ControllerBase
 {
     /// <summary>

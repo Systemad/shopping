@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
+using Asp.Versioning;
 using backend.Features.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Features.Wishlist;
@@ -7,8 +9,11 @@ namespace backend.Features.Wishlist;
 /// <summary>
 /// API Controller for user wishlist
 /// </summary>
+
 [ApiController]
-[Route("wishlist")]
+[Authorize]
+[ApiVersion(1.0)]
+[Route("v/{version:apiVersion}/wishlist")]
 public class WishlistController : ControllerBase
 {
     /// <summary>
@@ -45,7 +50,7 @@ public class WishlistController : ControllerBase
         return Ok();
     }
     
-    [HttpDelete("remove/{productId}/")]
+    [HttpDelete("remove/{productId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> RemoveProductFromWishlist(string productId)
     {

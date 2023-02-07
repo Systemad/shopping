@@ -1,4 +1,5 @@
-﻿using backend.Features.Product.Models;
+﻿using Asp.Versioning;
+using backend.Features.Product.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +7,8 @@ namespace backend.Features.Product;
 
 [Authorize]
 [ApiController]
-[Route("product")]
+[ApiVersion(1.0)]
+[Route("v/{version:apiVersion}/product")]
 public class ProductController : ControllerBase
 {
     private readonly IGrainFactory _grainFactory;

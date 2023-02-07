@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Asp.Versioning;
 using backend.Features.ShoppingCart.Models;
 using backend.Features.User;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +11,8 @@ namespace backend.Features.ShoppingCart;
 /// API Controller for shopping cart
 /// </summary>
 [ApiController]
-[Route("cart")]
+[ApiVersion(1.0)]
+[Route("v/{version:apiVersion}/cart")]
 public class ShoppingCartController : ControllerBase
 {
     /// <summary>

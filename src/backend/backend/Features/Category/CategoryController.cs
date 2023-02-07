@@ -1,4 +1,5 @@
-﻿using backend.Features.Product;
+﻿using Asp.Versioning;
+using backend.Features.Product;
 using backend.Features.Product.Models;
 using backend.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,8 @@ namespace backend.Features.Category;
 /// API Controller for Inventory grain. An Inventory represents a category, which consists of products
 /// </summary>
 [ApiController]
-[Route("category")]
+[ApiVersion(1.0)]
+[Route("v/{version:apiVersion}/category")]
 public class CategoryController : ControllerBase
 {
     private readonly IGrainFactory _grainFactory;

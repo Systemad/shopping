@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Asp.Versioning;
 using backend.Features.Auth;
 using backend.Features.FakeData;
 using Orleans.Configuration;
@@ -73,6 +74,11 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
+builder.Services.AddApiVersioning(options =>
+{
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+
 
 builder.Services.AddSwaggerDocument(config =>
 {
