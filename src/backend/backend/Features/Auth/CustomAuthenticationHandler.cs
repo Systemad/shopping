@@ -7,7 +7,6 @@ using Microsoft.Extensions.Options;
 
 namespace backend.Features.Auth;
 
-// TODO: change AuthenticationSchemeOptions ?
 public class CustomAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
 
