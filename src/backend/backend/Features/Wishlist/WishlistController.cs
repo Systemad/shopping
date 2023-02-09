@@ -13,7 +13,7 @@ namespace backend.Features.Wishlist;
 [ApiController]
 [Authorize]
 [ApiVersion(1.0)]
-[Route("v/{version:apiVersion}/wishlist")]
+[Route("v{version:apiVersion}/wishlist")]
 public class WishlistController : ControllerBase
 {
     /// <summary>

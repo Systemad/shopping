@@ -16,7 +16,7 @@ public class CategoryGrain : Grain, ICategoryGrain
         _state = state;
     }
     
-    public override Task OnActivateAsync(CancellationToken cancellationToken) => SeedCache(); // Fix potential seeding issue
+    public override Task OnActivateAsync(CancellationToken cancellationToken) => SeedCache();
     
     
     public async Task AddOrUpdateProduct(ProductDetail productDetail)
@@ -44,17 +44,13 @@ public class CategoryGrain : Grain, ICategoryGrain
     private async Task SeedCache()
     {
         if (_state is not { State.ProductIds.Count: > 0  })
-        {
             return;
-        }
 
         var tasks = new List<Task>();
-
         foreach (var product in _state.State.ProductIds)
         {
             tasks.Add(SeedTask(product));
         }
-
         await Task.WhenAll(tasks);
     }
 

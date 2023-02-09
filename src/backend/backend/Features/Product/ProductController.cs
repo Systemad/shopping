@@ -8,7 +8,7 @@ namespace backend.Features.Product;
 [Authorize]
 [ApiController]
 [ApiVersion(1.0)]
-[Route("v/{version:apiVersion}/product")]
+[Route("v{version:apiVersion}/product")]
 public class ProductController : ControllerBase
 {
     private readonly IGrainFactory _grainFactory;

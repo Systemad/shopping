@@ -11,7 +11,7 @@ namespace backend.Features.Promotion;
 /// </summary>
 [ApiController]
 [ApiVersion(1.0)]
-[Route("v/{version:apiVersion}/promotion")]
+[Route("v{version:apiVersion}/promotion")]
 public class PromotionController : ControllerBase
 {
     /// <summary>

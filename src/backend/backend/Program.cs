@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 using Asp.Versioning;
+using backend.Extensions;
 using backend.Features.FakeData;
 using backend.Features.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -83,7 +84,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         builder.Configuration.Bind("AzureADB2C", options);
         options.Events ??= new OpenIdConnectEvents();
-        options.Events.OnUserInformationReceived += async context =>
+        options.Events.OnTokenValidated += async context =>
         {
             var orleansService = context.HttpContext.RequestServices.GetRequiredService<IGrainFactory>();
             var userId = context.HttpContext.User.Claims.Single(e => e.Type == ClaimTypes.NameIdentifier).Value;
@@ -91,6 +92,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             var email = context.HttpContext.User.Claims.Single(e => e.Type == ClaimTypes.GivenName).Value;
             var userGrain = orleansService.GetGrain<IUserGrain>(userId);
             await userGrain.SetUserInfo(name, email);
+            Console.WriteLine($"OnUserInformationReceived {userId} {name}");
             await Task.CompletedTask.ConfigureAwait(false); // ??
         };
     });
@@ -118,7 +120,7 @@ builder.Services.AddApiVersioning(options =>
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
 });
 
-builder.Services.AddSwaggerDocuments();
+builder.Services.AddSwaggerDocuments(builder.Configuration);
 // builder.Services.AddOutputCache();
 var app = builder.Build();
 

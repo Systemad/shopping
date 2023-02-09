@@ -12,7 +12,7 @@ namespace backend.Features.ShoppingCart;
 /// </summary>
 [ApiController]
 [ApiVersion(1.0)]
-[Route("v/{version:apiVersion}/cart")]
+[Route("v{version:apiVersion}/cart")]
 public class ShoppingCartController : ControllerBase
 {
     /// <summary>

@@ -10,7 +10,7 @@ namespace backend.Features.Category;
 /// </summary>
 [ApiController]
 [ApiVersion(1.0)]
-[Route("v/{version:apiVersion}/category")]
+[Route("v{version:apiVersion}/category")]
 public class CategoryController : ControllerBase
 {
     private readonly IGrainFactory _grainFactory;
