@@ -23,7 +23,8 @@ public static class SwaggerExtension
                     Url = "https://github.com/Systemad/"
                 };
             };
-            
+            // Redux code generation does not work with this, find a way to exclude this when generating spec
+            /*
             config.AddSecurity("bearer", Enumerable.Empty<string>(), new OpenApiSecurityScheme
             {
                 Type = OpenApiSecuritySchemeType.OAuth2,
@@ -49,6 +50,7 @@ public static class SwaggerExtension
                 }
             });
             config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("bearer"));
+            */
         });
     }
 }

@@ -1,133 +1,176 @@
 {
   "x-generator": "NSwag v13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))",
+
   "swagger": "2.0",
+
   "info": {
     "title": "Shopping APi",
+
     "description": "Web API for Shopping",
+
     "contact": {
       "name": "systemad",
+
       "url": "https://github.com/Systemad/",
+
       "email": ""
     },
+
     "version": "v1"
   },
+
   "host": "localhost:7099",
+
   "schemes": ["https"],
+
   "paths": {
     "/v{version}/wishlist/all": {
       "get": {
         "tags": ["Wishlist"],
+
         "operationId": "Wishlist_GetWishlist",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "",
+
             "schema": {
               "$ref": "#/definitions/WishlistDto"
             }
           }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+        }
       }
     },
+
     "/v{version}/wishlist/add/{productId}": {
       "post": {
         "tags": ["Wishlist"],
+
         "operationId": "Wishlist_AddProductToWishlist",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "productId",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
           }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+        }
       }
     },
+
     "/v{version}/wishlist/remove/{productId}": {
       "delete": {
         "tags": ["Wishlist"],
+
         "operationId": "Wishlist_RemoveProductFromWishlist",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "productId",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
           }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+        }
       }
     },
+
     "/v{version}/cart/all": {
       "get": {
         "tags": ["ShoppingCart"],
+
         "operationId": "ShoppingCart_GetShoppingCart",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "A list of clients items in shopping cart",
+
             "schema": {
               "type": "array",
+
               "items": {
                 "$ref": "#/definitions/CartItem"
               }
@@ -136,34 +179,53 @@
         }
       }
     },
+
     "/v{version}/cart/add/{id}/{quantity}": {
       "post": {
         "tags": ["ShoppingCart"],
+
         "operationId": "ShoppingCart_AddItemToCart",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "id",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "integer",
+
             "name": "quantity",
+
             "in": "path",
+
             "required": true,
+
             "format": "int32",
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
@@ -171,34 +233,53 @@
         }
       }
     },
+
     "/v{version}/cart/remove/{id}/{quantity}": {
       "delete": {
         "tags": ["ShoppingCart"],
+
         "operationId": "ShoppingCart_RemoveItemFromCart",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "id",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "integer",
+
             "name": "quantity",
+
             "in": "path",
+
             "required": true,
+
             "format": "int32",
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
@@ -206,19 +287,27 @@
         }
       }
     },
+
     "/v{version}/cart/empty": {
       "post": {
         "tags": ["ShoppingCart"],
+
         "operationId": "ShoppingCart_EmptyCart",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
@@ -226,26 +315,38 @@
         }
       }
     },
+
     "/v{version}/promotion/all": {
       "get": {
         "tags": ["Promotion"],
+
         "operationId": "Promotion_GetAllPromotions",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "",
+
             "schema": {
               "type": "array",
+
               "items": {
                 "$ref": "#/definitions/PromotionState"
               }
@@ -254,26 +355,38 @@
         }
       }
     },
+
     "/v{version}/promotion/all/active": {
       "get": {
         "tags": ["Promotion"],
+
         "operationId": "Promotion_GetActivePromotions",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "",
+
             "schema": {
               "type": "array",
+
               "items": {
                 "$ref": "#/definitions/PromotionState"
               }
@@ -282,26 +395,38 @@
         }
       }
     },
+
     "/v{version}/promotion/all/inactive": {
       "get": {
         "tags": ["Promotion"],
+
         "operationId": "Promotion_GetNonActivePromotions",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "",
+
             "schema": {
               "type": "array",
+
               "items": {
                 "$ref": "#/definitions/PromotionState"
               }
@@ -310,36 +435,54 @@
         }
       }
     },
+
     "/v{version}/promotion/add": {
       "post": {
         "tags": ["Promotion"],
+
         "operationId": "Promotion_CreatePromotion",
+
         "consumes": ["application/json", "text/json", "application/*+json"],
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "name": "promotionCreationDto",
+
             "in": "body",
+
             "required": true,
+
             "schema": {
               "$ref": "#/definitions/PromotionCreationDto"
             },
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "201": {
             "x-nullable": false,
+
             "description": "",
+
             "schema": {
               "type": "array",
+
               "items": {
                 "$ref": "#/definitions/PromotionState"
               }
@@ -348,29 +491,43 @@
         }
       }
     },
+
     "/v{version}/promotion/update": {
       "put": {
         "tags": ["Promotion"],
+
         "operationId": "Promotion_UpdatePromotion",
+
         "consumes": ["application/json", "text/json", "application/*+json"],
+
         "parameters": [
           {
             "name": "promotionState",
+
             "in": "body",
+
             "required": true,
+
             "schema": {
               "$ref": "#/definitions/PromotionState"
             },
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
@@ -378,33 +535,51 @@
         }
       }
     },
+
     "/v{version}/promotion/add/{promotionId}/{productId}": {
       "post": {
         "tags": ["Promotion"],
+
         "operationId": "Promotion_AddProductToPromotion",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "promotionId",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "productId",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
@@ -412,33 +587,51 @@
         }
       }
     },
+
     "/v{version}/promotion/remove/{promotionId}/{productId}": {
       "delete": {
         "tags": ["Promotion"],
+
         "operationId": "Promotion_RemoveProductFromPromotion",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "promotionId",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "productId",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
@@ -446,33 +639,51 @@
         }
       }
     },
+
     "/v{version}/promotion/status/{promotionId}/active/{status}": {
       "put": {
         "tags": ["Promotion"],
+
         "operationId": "Promotion_SetPromotionStatus",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "promotionId",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "boolean",
+
             "name": "status",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
@@ -480,32 +691,49 @@
         }
       }
     },
+
     "/v{version}/product/productId": {
       "get": {
         "tags": ["Product"],
+
         "summary": "Fetch a product by its ID",
+
         "operationId": "Product_GetProduct",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "string",
+
             "name": "productId",
+
             "in": "query",
+
             "description": "The ID of the product",
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "A ProductDetail object",
+
             "schema": {
               "$ref": "#/definitions/ProductDetail"
             }
@@ -513,36 +741,54 @@
         }
       }
     },
+
     "/v{version}/product/productIds": {
       "get": {
         "tags": ["Product"],
+
         "operationId": "Product_GetProductsById",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "array",
+
             "name": "productIds",
+
             "in": "query",
+
             "collectionFormat": "multi",
+
             "x-nullable": true,
+
             "items": {
               "type": "string"
             }
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "",
+
             "schema": {
               "type": "array",
+
               "items": {
                 "$ref": "#/definitions/ProductDetail"
               }
@@ -551,174 +797,244 @@
         }
       }
     },
+
     "/v{version}/product/create": {
       "post": {
         "tags": ["Product"],
+
         "operationId": "Product_CreateProduct",
+
         "consumes": ["application/json", "text/json", "application/*+json"],
+
         "parameters": [
           {
             "name": "productCreationDto",
+
             "in": "body",
+
             "required": true,
+
             "schema": {
               "$ref": "#/definitions/ProductCreationDto"
             },
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "201": {
             "description": ""
           }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+        }
       }
     },
+
     "/v{version}/product/delete/{productId}": {
       "delete": {
         "tags": ["Product"],
+
         "operationId": "Product_DeleteProductById",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "productId",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
           }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+        }
       }
     },
+
     "/v{version}/product/update": {
       "put": {
         "tags": ["Product"],
+
         "operationId": "Product_UpdateProduct",
+
         "parameters": [
           {
             "type": "string",
+
             "name": "Id",
+
             "in": "query",
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "Name",
+
             "in": "query",
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "Description",
+
             "in": "query",
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "Category",
+
             "in": "query",
+
             "x-schema": {
               "$ref": "#/definitions/ProductCategory"
             },
+
             "x-nullable": false,
+
             "enum": ["Accessories", "Hardware", "Software", "Books", "Movies", "Music", "Games", "Other"]
           },
+
           {
             "type": "integer",
+
             "name": "Quantity",
+
             "in": "query",
+
             "format": "int32",
+
             "x-nullable": false
           },
+
           {
             "type": "number",
+
             "name": "Price",
+
             "in": "query",
+
             "format": "decimal",
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "ImageUrl",
+
             "in": "query",
+
             "x-nullable": true
           },
+
           {
             "type": "string",
+
             "name": "CreatedAt",
+
             "in": "query",
+
             "format": "date-time",
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "description": ""
           }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+        }
       }
     },
+
     "/v{version}/category/all": {
       "get": {
         "tags": ["Category"],
+
         "summary": "Get all categories",
+
         "operationId": "Category_GetCategories",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "A list of ProductCategory",
+
             "schema": {
               "type": "array",
+
               "items": {
                 "type": "string"
               }
@@ -727,44 +1043,70 @@
         }
       }
     },
+
     "/v{version}/category/{category}": {
       "get": {
         "tags": ["Category"],
+
         "summary": "Get items of a specific category, default is 10",
+
         "operationId": "Category_GetItemsForCategory",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "string",
+
             "name": "category",
+
             "in": "path",
+
             "required": true,
+
             "description": "Enter a category to fetch items of",
+
             "x-nullable": true
           },
+
           {
             "type": "integer",
+
             "name": "limit",
+
             "in": "query",
+
             "description": "Enter amount, leave empty if default amount should be retrieved",
+
             "format": "int32",
+
             "default": 10,
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "List of products",
+
             "schema": {
               "type": "array",
+
               "items": {
                 "$ref": "#/definitions/ProductDetail"
               }
@@ -773,36 +1115,56 @@
         }
       }
     },
+
     "/v{version}/category/random": {
       "get": {
         "tags": ["Category"],
+
         "summary": "Get total items of a random category, default is 10",
+
         "operationId": "Category_GetItemsOfRandomCategory",
+
         "produces": ["text/plain", "application/json", "text/json"],
+
         "parameters": [
           {
             "type": "integer",
+
             "name": "limit",
+
             "in": "query",
+
             "description": "Enter amount, leave empty if default amount should be retrieved",
+
             "format": "int32",
+
             "default": 10,
+
             "x-nullable": false
           },
+
           {
             "type": "string",
+
             "name": "version",
+
             "in": "path",
+
             "required": true,
+
             "x-nullable": false
           }
         ],
+
         "responses": {
           "200": {
             "x-nullable": false,
+
             "description": "List of products",
+
             "schema": {
               "type": "array",
+
               "items": {
                 "$ref": "#/definitions/ProductDetail"
               }
@@ -812,177 +1174,216 @@
       }
     }
   },
+
   "definitions": {
     "WishlistDto": {
       "type": "object",
+
       "required": ["ownerId", "owner", "wishlistId", "name", "isPublic", "products"],
+
       "properties": {
         "ownerId": {
           "type": "string"
         },
+
         "owner": {
           "type": "string"
         },
+
         "wishlistId": {
           "type": "string"
         },
+
         "name": {
           "type": "string"
         },
+
         "isPublic": {
           "type": "boolean"
         },
+
         "products": {
           "type": "array",
+
           "items": {
             "$ref": "#/definitions/ProductDetail"
           }
         }
       }
     },
+
     "ProductDetail": {
       "type": "object",
+
       "required": ["id", "name", "description", "category", "quantity", "price", "imageUrl", "createdAt"],
+
       "properties": {
         "id": {
           "type": "string"
         },
+
         "name": {
           "type": "string"
         },
+
         "description": {
           "type": "string"
         },
+
         "category": {
           "$ref": "#/definitions/ProductCategory"
         },
+
         "quantity": {
           "type": "integer",
+
           "format": "int32"
         },
+
         "price": {
           "type": "number",
+
           "format": "decimal"
         },
+
         "imageUrl": {
           "type": "string"
         },
+
         "createdAt": {
           "type": "string",
+
           "format": "date-time"
         }
       }
     },
+
     "ProductCategory": {
       "type": "string",
+
       "description": "",
+
       "x-enumNames": ["Accessories", "Hardware", "Software", "Books", "Movies", "Music", "Games", "Other"],
+
       "enum": ["Accessories", "Hardware", "Software", "Books", "Movies", "Music", "Games", "Other"]
     },
+
     "CartItem": {
       "type": "object",
+
       "required": ["userId", "quantity", "productDetail"],
+
       "properties": {
         "userId": {
           "type": "string"
         },
+
         "quantity": {
           "type": "integer",
+
           "format": "int32"
         },
+
         "productDetail": {
           "$ref": "#/definitions/ProductDetail"
         }
       }
     },
+
     "PromotionState": {
       "type": "object",
+
       "required": ["id", "name", "productIds", "active"],
+
       "properties": {
         "id": {
           "type": "string"
         },
+
         "name": {
           "type": "string"
         },
+
         "description": {
           "type": "string"
         },
+
         "productIds": {
           "type": "array",
+
           "items": {
             "type": "string"
           }
         },
+
         "bannerImg": {
           "type": "string"
         },
+
         "active": {
           "type": "boolean"
         }
       }
     },
+
     "PromotionCreationDto": {
       "type": "object",
+
       "required": ["name", "active"],
+
       "properties": {
         "name": {
           "type": "string"
         },
+
         "description": {
           "type": "string"
         },
+
         "bannerImg": {
           "type": "string"
         },
+
         "active": {
           "type": "boolean"
         }
       }
     },
+
     "ProductCreationDto": {
       "type": "object",
+
       "required": ["name", "description", "category", "quantity", "price", "imageUrl"],
+
       "properties": {
         "name": {
           "type": "string"
         },
+
         "description": {
           "type": "string"
         },
+
         "category": {
           "$ref": "#/definitions/ProductCategory"
         },
+
         "quantity": {
           "type": "integer",
+
           "format": "int32"
         },
+
         "price": {
           "type": "number",
+
           "format": "decimal"
         },
+
         "imageUrl": {
           "type": "string"
         }
       }
     }
-  },
-  "securityDefinitions": {
-    "bearer": {
-      "type": "oauth2",
-      "description": "Type into the text box: Bearer {your JWT token}.",
-      "name": "Authorization",
-      "flow": "implicit",
-      "authorizationUrl": "https://danovas.b2clogin.com/danovas.onmicrosoft.com/B2C_1_signupsignin1/oauth2/v2.0/authorize",
-      "tokenUrl": "https://danovas.b2clogin.com/danovas.onmicrosoft.com/B2C_1_signupsignin1/oauth2/v2.0/token",
-      "scopes": {
-        "https://danovas.onmicrosoft.com/89be5e10-1770-45d7-813a-d47242ae2163/API.Access": "Access the api as the signed-in user"
-      }
-    }
-  },
-  "security": [
-    {
-      "bearer": []
-    }
-  ]
+  }
 }
