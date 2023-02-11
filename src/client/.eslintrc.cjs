@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   extends: [
     // By extending from a plugin config, we can get recommended rules without having to add them manually.
     "eslint:recommended",
@@ -11,30 +12,32 @@ module.exports = {
     // Make sure it's always the last config, so it gets the chance to override other configs.
     //"eslint-config-prettier",
   ],
-  root: true,
   parser: "@typescript-eslint/parser",
-  parserOptions: {
-    sourceType: "module",
-    project: "./tsconfig.json",
-    tsconfigRootDir: __dirname,
-  },
-  plugins: [
-    "@typescript-eslint"
-  ],
+  parserOptions: { "project": ["./tsconfig.json"] },
+  
+  //parserOptions: {
+    //sourceType: "module",
+    //parser: "@typescript-eslint/parser",
+  //  project: "./tsconfig.json",
+    //tsconfigRootDir: __dirname,
+  //},
+  plugins: ["@typescript-eslint"],
   settings: {
     react: {
-      // Tells eslint-plugin-react to automatically detect the version of React to use.
       version: "detect",
     },
-    // Tells eslint how to resolve imports
-    "import/resolver": {
-      node: {
-        paths: ["src", "src/**"],
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
-      },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx", ".cts"]
     },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json",
+      }
+    }
   },
   rules: {
     "react/react-in-jsx-scope": "off",
+    "import/no-unresolved": "error"
   },
 };

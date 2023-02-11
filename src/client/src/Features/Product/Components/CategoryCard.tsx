@@ -1,9 +1,9 @@
-import { IconArrowRight } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { DynamicTablerIcons } from "../../Components/DynamicTablerIcons";
 
-import { Box, Center, Stack, Button, Heading, Card, CardHeader, CardBody, CardFooter, Divider } from "@chakra-ui/react";
+import { Stack, Button, Heading, Card, CardBody, CardFooter, Divider } from "@chakra-ui/react";
 import { cupcake } from "../../Theme/Colors/cupcake";
+import { IconArrowRight } from "@tabler/icons-react";
 
 interface CategoryCardProps {
   name: string;

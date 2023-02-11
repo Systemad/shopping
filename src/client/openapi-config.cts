@@ -25,11 +25,3 @@ const config: ConfigFile = {
 };
 
 export default config;
-
-/*
-src\Features\ShoppingCart
-    "./src/Features/Category/API/categoryAPI.ts": {
-      filterEndpoints: [/category/i],
-      exportName: "categorySplitApi",
-    },
-*/

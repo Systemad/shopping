@@ -1,11 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import App from "./App";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import maintheme from "./Features/Theme/theme";
 
 // MSAL imports
-import { PublicClientApplication, EventType, EventMessage, AuthenticationResult } from "@azure/msal-browser";
+import { PublicClientApplication, EventType, AuthenticationResult, EventMessage } from "@azure/msal-browser";
 import { msalConfig } from "./Features/Auth/Authconfig";
 
 export const msalInstance = new PublicClientApplication(msalConfig);
@@ -24,7 +24,7 @@ msalInstance.addEventCallback((event: EventMessage) => {
   }
 });
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider theme={maintheme}>
       <ColorModeScript initialColorMode={maintheme.config.initialColorMode} />

@@ -14,11 +14,114 @@
   "host": "localhost:7099",
   "schemes": ["https"],
   "paths": {
-    "/cart/all": {
+    "/v{version}/wishlist/all": {
+      "get": {
+        "tags": ["Wishlist"],
+        "operationId": "Wishlist_GetWishlist",
+        "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WishlistDto"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v{version}/wishlist/add/{productId}": {
+      "post": {
+        "tags": ["Wishlist"],
+        "operationId": "Wishlist_AddProductToWishlist",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v{version}/wishlist/remove/{productId}": {
+      "delete": {
+        "tags": ["Wishlist"],
+        "operationId": "Wishlist_RemoveProductFromWishlist",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v{version}/cart/all": {
       "get": {
         "tags": ["ShoppingCart"],
         "operationId": "ShoppingCart_GetShoppingCart",
         "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
@@ -33,7 +136,7 @@
         }
       }
     },
-    "/cart/add/{id}/{quantity}": {
+    "/v{version}/cart/add/{id}/{quantity}": {
       "post": {
         "tags": ["ShoppingCart"],
         "operationId": "ShoppingCart_AddItemToCart",
@@ -52,6 +155,13 @@
             "required": true,
             "format": "int32",
             "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
@@ -61,7 +171,7 @@
         }
       }
     },
-    "/cart/remove/{id}/{quantity}": {
+    "/v{version}/cart/remove/{id}/{quantity}": {
       "delete": {
         "tags": ["ShoppingCart"],
         "operationId": "ShoppingCart_RemoveItemFromCart",
@@ -80,6 +190,13 @@
             "required": true,
             "format": "int32",
             "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
@@ -89,10 +206,19 @@
         }
       }
     },
-    "/cart/empty": {
+    "/v{version}/cart/empty": {
       "post": {
         "tags": ["ShoppingCart"],
         "operationId": "ShoppingCart_EmptyCart",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "description": ""
@@ -100,11 +226,20 @@
         }
       }
     },
-    "/promotion/all": {
+    "/v{version}/promotion/all": {
       "get": {
         "tags": ["Promotion"],
         "operationId": "Promotion_GetAllPromotions",
         "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
@@ -119,11 +254,20 @@
         }
       }
     },
-    "/promotion/all/active": {
+    "/v{version}/promotion/all/active": {
       "get": {
         "tags": ["Promotion"],
         "operationId": "Promotion_GetActivePromotions",
         "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
@@ -138,11 +282,20 @@
         }
       }
     },
-    "/promotion/all/inactive": {
+    "/v{version}/promotion/all/inactive": {
       "get": {
         "tags": ["Promotion"],
         "operationId": "Promotion_GetNonActivePromotions",
         "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
@@ -157,7 +310,7 @@
         }
       }
     },
-    "/promotion/add": {
+    "/v{version}/promotion/add": {
       "post": {
         "tags": ["Promotion"],
         "operationId": "Promotion_CreatePromotion",
@@ -171,6 +324,13 @@
             "schema": {
               "$ref": "#/definitions/PromotionCreationDto"
             },
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
             "x-nullable": false
           }
         ],
@@ -188,7 +348,7 @@
         }
       }
     },
-    "/promotion/update": {
+    "/v{version}/promotion/update": {
       "put": {
         "tags": ["Promotion"],
         "operationId": "Promotion_UpdatePromotion",
@@ -202,6 +362,13 @@
               "$ref": "#/definitions/PromotionState"
             },
             "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
@@ -211,7 +378,7 @@
         }
       }
     },
-    "/promotion/add/{promotionId}/{productId}": {
+    "/v{version}/promotion/add/{promotionId}/{productId}": {
       "post": {
         "tags": ["Promotion"],
         "operationId": "Promotion_AddProductToPromotion",
@@ -229,6 +396,13 @@
             "in": "path",
             "required": true,
             "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
@@ -238,7 +412,7 @@
         }
       }
     },
-    "/promotion/remove/{promotionId}/{productId}": {
+    "/v{version}/promotion/remove/{promotionId}/{productId}": {
       "delete": {
         "tags": ["Promotion"],
         "operationId": "Promotion_RemoveProductFromPromotion",
@@ -256,6 +430,13 @@
             "in": "path",
             "required": true,
             "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
@@ -265,7 +446,7 @@
         }
       }
     },
-    "/promotion/status/{promotionId}/active/{status}": {
+    "/v{version}/promotion/status/{promotionId}/active/{status}": {
       "put": {
         "tags": ["Promotion"],
         "operationId": "Promotion_SetPromotionStatus",
@@ -283,6 +464,13 @@
             "in": "path",
             "required": true,
             "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
@@ -292,7 +480,7 @@
         }
       }
     },
-    "/product/productId": {
+    "/v{version}/product/productId": {
       "get": {
         "tags": ["Product"],
         "summary": "Fetch a product by its ID",
@@ -305,6 +493,13 @@
             "in": "query",
             "description": "The ID of the product",
             "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
@@ -318,7 +513,7 @@
         }
       }
     },
-    "/product/productIds": {
+    "/v{version}/product/productIds": {
       "get": {
         "tags": ["Product"],
         "operationId": "Product_GetProductsById",
@@ -333,6 +528,13 @@
             "items": {
               "type": "string"
             }
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
@@ -349,7 +551,7 @@
         }
       }
     },
-    "/product/create": {
+    "/v{version}/product/create": {
       "post": {
         "tags": ["Product"],
         "operationId": "Product_CreateProduct",
@@ -363,16 +565,28 @@
               "$ref": "#/definitions/ProductCreationDto"
             },
             "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
           "201": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
-    "/product/delete/{productId}": {
+    "/v{version}/product/delete/{productId}": {
       "delete": {
         "tags": ["Product"],
         "operationId": "Product_DeleteProductById",
@@ -383,16 +597,28 @@
             "in": "path",
             "required": true,
             "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
-    "/product/update": {
+    "/v{version}/product/update": {
       "put": {
         "tags": ["Product"],
         "operationId": "Product_UpdateProduct",
@@ -423,16 +649,7 @@
               "$ref": "#/definitions/ProductCategory"
             },
             "x-nullable": false,
-            "enum": [
-              "Accessories",
-              "Hardware",
-              "Software",
-              "Books",
-              "Movies",
-              "Music",
-              "Games",
-              "Other"
-            ]
+            "enum": ["Accessories", "Hardware", "Software", "Books", "Movies", "Music", "Games", "Other"]
           },
           {
             "type": "integer",
@@ -460,21 +677,42 @@
             "in": "query",
             "format": "date-time",
             "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
-    "/category/all": {
+    "/v{version}/category/all": {
       "get": {
         "tags": ["Category"],
         "summary": "Get all categories",
         "operationId": "Category_GetCategories",
         "produces": ["text/plain", "application/json", "text/json"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
@@ -489,7 +727,7 @@
         }
       }
     },
-    "/category/{category}": {
+    "/v{version}/category/{category}": {
       "get": {
         "tags": ["Category"],
         "summary": "Get items of a specific category, default is 10",
@@ -512,6 +750,13 @@
             "format": "int32",
             "default": 10,
             "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "x-nullable": false
           }
         ],
         "responses": {
@@ -528,7 +773,7 @@
         }
       }
     },
-    "/category/random": {
+    "/v{version}/category/random": {
       "get": {
         "tags": ["Category"],
         "summary": "Get total items of a random category, default is 10",
@@ -542,6 +787,13 @@
             "description": "Enter amount, leave empty if default amount should be retrieved",
             "format": "int32",
             "default": 10,
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "version",
+            "in": "path",
+            "required": true,
             "x-nullable": false
           }
         ],
@@ -561,34 +813,36 @@
     }
   },
   "definitions": {
-    "CartItem": {
+    "WishlistDto": {
       "type": "object",
-      "required": ["userId", "quantity", "productDetail"],
+      "required": ["ownerId", "owner", "wishlistId", "name", "isPublic", "products"],
       "properties": {
-        "userId": {
+        "ownerId": {
           "type": "string"
         },
-        "quantity": {
-          "type": "integer",
-          "format": "int32"
+        "owner": {
+          "type": "string"
         },
-        "productDetail": {
-          "$ref": "#/definitions/ProductDetail"
+        "wishlistId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isPublic": {
+          "type": "boolean"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductDetail"
+          }
         }
       }
     },
     "ProductDetail": {
       "type": "object",
-      "required": [
-        "id",
-        "name",
-        "description",
-        "category",
-        "quantity",
-        "price",
-        "imageUrl",
-        "createdAt"
-      ],
+      "required": ["id", "name", "description", "category", "quantity", "price", "imageUrl", "createdAt"],
       "properties": {
         "id": {
           "type": "string"
@@ -622,26 +876,24 @@
     "ProductCategory": {
       "type": "string",
       "description": "",
-      "x-enumNames": [
-        "Accessories",
-        "Hardware",
-        "Software",
-        "Books",
-        "Movies",
-        "Music",
-        "Games",
-        "Other"
-      ],
-      "enum": [
-        "Accessories",
-        "Hardware",
-        "Software",
-        "Books",
-        "Movies",
-        "Music",
-        "Games",
-        "Other"
-      ]
+      "x-enumNames": ["Accessories", "Hardware", "Software", "Books", "Movies", "Music", "Games", "Other"],
+      "enum": ["Accessories", "Hardware", "Software", "Books", "Movies", "Music", "Games", "Other"]
+    },
+    "CartItem": {
+      "type": "object",
+      "required": ["userId", "quantity", "productDetail"],
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "productDetail": {
+          "$ref": "#/definitions/ProductDetail"
+        }
+      }
     },
     "PromotionState": {
       "type": "object",
@@ -690,14 +942,7 @@
     },
     "ProductCreationDto": {
       "type": "object",
-      "required": [
-        "name",
-        "description",
-        "category",
-        "quantity",
-        "price",
-        "imageUrl"
-      ],
+      "required": ["name", "description", "category", "quantity", "price", "imageUrl"],
       "properties": {
         "name": {
           "type": "string"
@@ -721,5 +966,23 @@
         }
       }
     }
-  }
+  },
+  "securityDefinitions": {
+    "bearer": {
+      "type": "oauth2",
+      "description": "Type into the text box: Bearer {your JWT token}.",
+      "name": "Authorization",
+      "flow": "implicit",
+      "authorizationUrl": "https://danovas.b2clogin.com/danovas.onmicrosoft.com/B2C_1_signupsignin1/oauth2/v2.0/authorize",
+      "tokenUrl": "https://danovas.b2clogin.com/danovas.onmicrosoft.com/B2C_1_signupsignin1/oauth2/v2.0/token",
+      "scopes": {
+        "https://danovas.onmicrosoft.com/89be5e10-1770-45d7-813a-d47242ae2163/API.Access": "Access the api as the signed-in user"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ]
 }

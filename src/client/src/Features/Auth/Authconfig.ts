@@ -1,4 +1,4 @@
-import { BrowserCacheLocation, Configuration, LogLevel, RedirectRequest } from "@azure/msal-browser";
+import { BrowserCacheLocation, Configuration, RedirectRequest } from "@azure/msal-browser";
 
 const ua = window.navigator.userAgent;
 const msie = ua.indexOf("MSIE ");

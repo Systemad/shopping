@@ -1,9 +1,9 @@
-import { IconHeart } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { ProductDetail } from "../API/productAPI";
 import { useCart } from "../../ShoppingCart/Hooks/useCart";
 import { Card, CardBody, CardFooter, HStack, IconButton, Button, Text, Image, Badge, Stack } from "@chakra-ui/react";
 import { cupcake } from "../../Theme/Colors/cupcake";
+import { IconHeart } from "@tabler/icons-react";
 
 interface ProductCardProps {
   product: ProductDetail;

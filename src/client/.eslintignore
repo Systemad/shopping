@@ -1,5 +1,6 @@
 node_modules/
 dist/
-.prettierrc.js
-.eslintrc.js
+.prettierrc.cjs
+.eslintrc.cjs
+.openapi-config.cts
 env.d.ts
