@@ -79,7 +79,11 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
     .Enrich.FromLogContext()
     .WriteTo.Console());
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+    })
     .AddMicrosoftIdentityWebApp(options =>
     {
         builder.Configuration.Bind("AzureADB2C", options);
@@ -96,7 +100,28 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             await Task.CompletedTask.ConfigureAwait(false); // ??
         };
     });
-
+/*
+builder.Services.Configure<JwtBearerOptions>(
+    JwtBearerDefaults.AuthenticationScheme,
+    options =>
+    {
+        options.TokenValidationParameters.NameClaimType = "name";
+        options.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = async context =>
+            {
+                var orleansService = context.HttpContext.RequestServices.GetRequiredService<IGrainFactory>();
+                var userId = context.HttpContext.User.Claims.Single(e => e.Type == ClaimTypes.NameIdentifier).Value;
+                var name =  context.HttpContext.User.Claims.Single(e => e.Type == ClaimTypes.Name).Value;
+                var email = context.HttpContext.User.Claims.Single(e => e.Type == ClaimTypes.GivenName).Value;
+                var userGrain = orleansService.GetGrain<IUserGrain>(userId);
+                await userGrain.SetUserInfo(name, email);
+                Console.WriteLine($"!!!!!!!!OnUserInformationReceived {userId} {name}");
+                await Task.CompletedTask.ConfigureAwait(false); // ??
+            }
+        };
+    });
+*/
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
@@ -115,9 +140,31 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
+/*
 builder.Services.AddApiVersioning(options =>
 {
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+*/
+var apiVersioningBuilder = builder.Services.AddApiVersioning(options =>
+{
+    options.ReportApiVersions = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    // Use whatever reader you want
+    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("x-api-version"),
+        new MediaTypeApiVersionReader("x-api-version"));
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+}); 
+
+apiVersioningBuilder.AddApiExplorer(setup =>
+{
+    setup.GroupNameFormat = "'v'VVV";
+    setup.SubstituteApiVersionInUrl = true;
 });
 
 builder.Services.AddSwaggerDocuments(builder.Configuration);

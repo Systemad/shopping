@@ -6,50 +6,38 @@ const injectedRtkApi = api
   })
   .injectEndpoints({
     endpoints: (build) => ({
-      categoryGetCategories: build.query<
-        CategoryGetCategoriesApiResponse,
-        CategoryGetCategoriesApiArg
-      >({
-        query: () => ({ url: `/category/all` }),
+      categoryGetCategories: build.query<CategoryGetCategoriesApiResponse, CategoryGetCategoriesApiArg>({
+        query: () => ({ url: `/v1/category/all` }),
         providesTags: ["Category"],
       }),
       categoryGetItemsForCategory: build.query<
         CategoryGetItemsForCategoryApiResponse,
         CategoryGetItemsForCategoryApiArg
       >({
-        query: (queryArg) => ({
-          url: `/category/${queryArg.category}`,
-          params: { limit: queryArg.limit },
-        }),
+        query: (queryArg) => ({ url: `/v1/category/${queryArg.category}`, params: { limit: queryArg.limit } }),
         providesTags: ["Category"],
       }),
       categoryGetItemsOfRandomCategory: build.query<
         CategoryGetItemsOfRandomCategoryApiResponse,
         CategoryGetItemsOfRandomCategoryApiArg
       >({
-        query: (queryArg) => ({
-          url: `/category/random`,
-          params: { limit: queryArg.limit },
-        }),
+        query: (queryArg) => ({ url: `/v1/category/random`, params: { limit: queryArg.limit } }),
         providesTags: ["Category"],
       }),
     }),
     overrideExisting: false,
   });
 export { injectedRtkApi as productSpliApi };
-export type CategoryGetCategoriesApiResponse =
-  /** status 200 A list of ProductCategory */ string[];
+export type CategoryGetCategoriesApiResponse = /** status 200 A list of ProductCategory */ string[];
 export type CategoryGetCategoriesApiArg = void;
-export type CategoryGetItemsForCategoryApiResponse =
-  /** status 200 List of products */ ProductDetail[];
+export type CategoryGetItemsForCategoryApiResponse = /** status 200 List of products */ ProductDetail[];
 export type CategoryGetItemsForCategoryApiArg = {
   /** Enter a category to fetch items of */
   category: string;
   /** Enter amount, leave empty if default amount should be retrieved */
   limit?: number;
 };
-export type CategoryGetItemsOfRandomCategoryApiResponse =
-  /** status 200 List of products */ ProductDetail[];
+export type CategoryGetItemsOfRandomCategoryApiResponse = /** status 200 List of products */ ProductDetail[];
 export type CategoryGetItemsOfRandomCategoryApiArg = {
   /** Enter amount, leave empty if default amount should be retrieved */
   limit?: number;

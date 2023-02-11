@@ -4,15 +4,18 @@ using backend.Features.ShoppingCart.Models;
 using backend.Features.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 
 namespace backend.Features.ShoppingCart;
 
 /// <summary>
 /// API Controller for shopping cart
 /// </summary>
+[Authorize]
+[RequiredScope("API.Access")]
+[Route("v{version:apiVersion}/cart")]
 [ApiController]
 [ApiVersion(1.0)]
-[Route("v{version:apiVersion}/cart")]
 public class ShoppingCartController : ControllerBase
 {
     /// <summary>
@@ -21,7 +24,9 @@ public class ShoppingCartController : ControllerBase
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IGrainFactory _grainFactory;
     
+    // TODO :Fix
     private string GetUserId => new(User.Claims.Single(e => e.Type == ClaimTypes.NameIdentifier).Value);
+    private Guid GetUserId2 => new(User.Claims.Single(e => e.Type == ClaimTypes.NameIdentifier).Value);
     
     public ShoppingCartController(IGrainFactory grainFactory, IHttpContextAccessor httpContextAccessor)
     {
@@ -81,6 +86,8 @@ public class ShoppingCartController : ControllerBase
 
     private async ValueTask<string> GetShoppingCardId()
     {
+        var hey = GetUserId;
+        var hey2 = GetUserId2;
         if (!string.IsNullOrWhiteSpace(GetUserId))
         {
             var userGrain = _grainFactory.GetGrain<IUserGrain>(GetUserId);

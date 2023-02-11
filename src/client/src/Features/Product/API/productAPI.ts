@@ -1,17 +1,31 @@
 import { emptySplitApi as api } from "../../../redux/emptySplitApi";
-export const addTagTypes = ["Promotion", "Product"] as const;
+export const addTagTypes = ["Wishlist", "Promotion", "Product"] as const;
 const injectedRtkApi = api
   .enhanceEndpoints({
     addTagTypes,
   })
   .injectEndpoints({
     endpoints: (build) => ({
+      wishlistAddProductToWishlist: build.mutation<
+        WishlistAddProductToWishlistApiResponse,
+        WishlistAddProductToWishlistApiArg
+      >({
+        query: (queryArg) => ({ url: `/v1/wishlist/add/${queryArg.productId}`, method: "POST" }),
+        invalidatesTags: ["Wishlist"],
+      }),
+      wishlistRemoveProductFromWishlist: build.mutation<
+        WishlistRemoveProductFromWishlistApiResponse,
+        WishlistRemoveProductFromWishlistApiArg
+      >({
+        query: (queryArg) => ({ url: `/v1/wishlist/remove/${queryArg.productId}`, method: "DELETE" }),
+        invalidatesTags: ["Wishlist"],
+      }),
       promotionAddProductToPromotion: build.mutation<
         PromotionAddProductToPromotionApiResponse,
         PromotionAddProductToPromotionApiArg
       >({
         query: (queryArg) => ({
-          url: `/promotion/add/${queryArg.promotionId}/${queryArg.productId}`,
+          url: `/v1/promotion/add/${queryArg.promotionId}/${queryArg.productId}`,
           method: "POST",
         }),
         invalidatesTags: ["Promotion"],
@@ -21,58 +35,30 @@ const injectedRtkApi = api
         PromotionRemoveProductFromPromotionApiArg
       >({
         query: (queryArg) => ({
-          url: `/promotion/remove/${queryArg.promotionId}/${queryArg.productId}`,
+          url: `/v1/promotion/remove/${queryArg.promotionId}/${queryArg.productId}`,
           method: "DELETE",
         }),
         invalidatesTags: ["Promotion"],
       }),
-      productGetProduct: build.query<
-        ProductGetProductApiResponse,
-        ProductGetProductApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/product/productId`,
-          params: { productId: queryArg.productId },
-        }),
+      productGetProduct: build.query<ProductGetProductApiResponse, ProductGetProductApiArg>({
+        query: (queryArg) => ({ url: `/v1/product/productId`, params: { productId: queryArg.productId } }),
         providesTags: ["Product"],
       }),
-      productGetProductsById: build.query<
-        ProductGetProductsByIdApiResponse,
-        ProductGetProductsByIdApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/product/productIds`,
-          params: { productIds: queryArg.productIds },
-        }),
+      productGetProductsById: build.query<ProductGetProductsByIdApiResponse, ProductGetProductsByIdApiArg>({
+        query: (queryArg) => ({ url: `/v1/product/productIds`, params: { productIds: queryArg.productIds } }),
         providesTags: ["Product"],
       }),
-      productCreateProduct: build.mutation<
-        ProductCreateProductApiResponse,
-        ProductCreateProductApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/product/create`,
-          method: "POST",
-          body: queryArg.productCreationDto,
-        }),
+      productCreateProduct: build.mutation<ProductCreateProductApiResponse, ProductCreateProductApiArg>({
+        query: (queryArg) => ({ url: `/v1/product/create`, method: "POST", body: queryArg.productCreationDto }),
         invalidatesTags: ["Product"],
       }),
-      productDeleteProductById: build.mutation<
-        ProductDeleteProductByIdApiResponse,
-        ProductDeleteProductByIdApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/product/delete/${queryArg.productId}`,
-          method: "DELETE",
-        }),
+      productDeleteProductById: build.mutation<ProductDeleteProductByIdApiResponse, ProductDeleteProductByIdApiArg>({
+        query: (queryArg) => ({ url: `/v1/product/delete/${queryArg.productId}`, method: "DELETE" }),
         invalidatesTags: ["Product"],
       }),
-      productUpdateProduct: build.mutation<
-        ProductUpdateProductApiResponse,
-        ProductUpdateProductApiArg
-      >({
+      productUpdateProduct: build.mutation<ProductUpdateProductApiResponse, ProductUpdateProductApiArg>({
         query: (queryArg) => ({
-          url: `/product/update`,
+          url: `/v1/product/update`,
           method: "PUT",
           params: {
             Id: queryArg.id,
@@ -91,6 +77,14 @@ const injectedRtkApi = api
     overrideExisting: false,
   });
 export { injectedRtkApi as productSpliApi };
+export type WishlistAddProductToWishlistApiResponse = unknown;
+export type WishlistAddProductToWishlistApiArg = {
+  productId: string;
+};
+export type WishlistRemoveProductFromWishlistApiResponse = unknown;
+export type WishlistRemoveProductFromWishlistApiArg = {
+  productId: string;
+};
 export type PromotionAddProductToPromotionApiResponse = unknown;
 export type PromotionAddProductToPromotionApiArg = {
   promotionId: string;
@@ -101,14 +95,12 @@ export type PromotionRemoveProductFromPromotionApiArg = {
   promotionId: string;
   productId: string;
 };
-export type ProductGetProductApiResponse =
-  /** status 200 A ProductDetail object */ ProductDetail;
+export type ProductGetProductApiResponse = /** status 200 A ProductDetail object */ ProductDetail;
 export type ProductGetProductApiArg = {
   /** The ID of the product */
   productId?: string;
 };
-export type ProductGetProductsByIdApiResponse =
-  /** status 200  */ ProductDetail[];
+export type ProductGetProductsByIdApiResponse = /** status 200  */ ProductDetail[];
 export type ProductGetProductsByIdApiArg = {
   productIds?: string[];
 };
@@ -125,15 +117,7 @@ export type ProductUpdateProductApiArg = {
   id?: string;
   name?: string;
   description?: string;
-  category?:
-    | "Accessories"
-    | "Hardware"
-    | "Software"
-    | "Books"
-    | "Movies"
-    | "Music"
-    | "Games"
-    | "Other";
+  category?: "Accessories" | "Hardware" | "Software" | "Books" | "Movies" | "Music" | "Games" | "Other";
   quantity?: number;
   price?: number;
   imageUrl?: string;
@@ -167,6 +151,8 @@ export type ProductCreationDto = {
   imageUrl: string;
 };
 export const {
+  useWishlistAddProductToWishlistMutation,
+  useWishlistRemoveProductFromWishlistMutation,
   usePromotionAddProductToPromotionMutation,
   usePromotionRemoveProductFromPromotionMutation,
   useProductGetProductQuery,

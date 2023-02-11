@@ -1,12 +1,13 @@
 ﻿using Asp.Versioning;
-using backend.Features.Product;
 using backend.Features.Product.Models;
 using backend.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 
 namespace backend.Features.Category;
 /// <summary>
-/// API Controller for Inventory grain. An Inventory represents a category, which consists of products
+/// API Controller for Category grain. An Category represents a category, which consists of products
 /// </summary>
 [ApiController]
 [ApiVersion(1.0)]

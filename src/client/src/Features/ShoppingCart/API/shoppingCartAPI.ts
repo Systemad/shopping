@@ -10,34 +10,22 @@ const injectedRtkApi = api
         ShoppingCartGetShoppingCartApiResponse,
         ShoppingCartGetShoppingCartApiArg
       >({
-        query: () => ({ url: `/cart/all` }),
+        query: () => ({ url: `/v1/cart/all` }),
         providesTags: ["ShoppingCart"],
       }),
-      shoppingCartAddItemToCart: build.mutation<
-        ShoppingCartAddItemToCartApiResponse,
-        ShoppingCartAddItemToCartApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/cart/add/${queryArg.id}/${queryArg.quantity}`,
-          method: "POST",
-        }),
+      shoppingCartAddItemToCart: build.mutation<ShoppingCartAddItemToCartApiResponse, ShoppingCartAddItemToCartApiArg>({
+        query: (queryArg) => ({ url: `/v1/cart/add/${queryArg.id}/${queryArg.quantity}`, method: "POST" }),
         invalidatesTags: ["ShoppingCart"],
       }),
       shoppingCartRemoveItemFromCart: build.mutation<
         ShoppingCartRemoveItemFromCartApiResponse,
         ShoppingCartRemoveItemFromCartApiArg
       >({
-        query: (queryArg) => ({
-          url: `/cart/remove/${queryArg.id}/${queryArg.quantity}`,
-          method: "DELETE",
-        }),
+        query: (queryArg) => ({ url: `/v1/cart/remove/${queryArg.id}/${queryArg.quantity}`, method: "DELETE" }),
         invalidatesTags: ["ShoppingCart"],
       }),
-      shoppingCartEmptyCart: build.mutation<
-        ShoppingCartEmptyCartApiResponse,
-        ShoppingCartEmptyCartApiArg
-      >({
-        query: () => ({ url: `/cart/empty`, method: "POST" }),
+      shoppingCartEmptyCart: build.mutation<ShoppingCartEmptyCartApiResponse, ShoppingCartEmptyCartApiArg>({
+        query: () => ({ url: `/v1/cart/empty`, method: "POST" }),
         invalidatesTags: ["ShoppingCart"],
       }),
     }),
